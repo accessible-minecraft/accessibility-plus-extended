@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.shoaibkhan.accessibiltyplusextended.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "MixinClass"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

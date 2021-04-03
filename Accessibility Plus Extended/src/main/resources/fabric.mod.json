@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "apebyshoaibkhan",
+  "version": "${version}",
+
+  "name": "Accessibility Plus Extended",
+  "description": "",
+  "authors": [
+    "Shoaib Khan"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+  "license": "CC0-1.0",
+  "icon": "",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.shoaibkhan.accessibiltyplusextended.modInit"
+    ]
+  },
+  "mixins": [
+    "modid.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
