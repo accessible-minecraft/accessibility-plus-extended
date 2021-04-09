@@ -8,16 +8,9 @@ import org.lwjgl.glfw.GLFW;
 
 public class modInit implements ModInitializer {
 	HudRenderCallBackClass hudRenderCallBackClass;
-	KeyBinding num_5;
 	@Override
 	public void onInitialize() {
-		System.out.println("Hello Fabric world!");
-		num_5 = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-				"Center Camera",
-				InputUtil.Type.KEYSYM,
-				GLFW.GLFW_KEY_5,
-				"Accessibility Plus Extended"
-		));
-		hudRenderCallBackClass = new HudRenderCallBackClass(num_5);
+		System.out.println("Accessibilty Plus Extended is initializing!");
+		hudRenderCallBackClass = new HudRenderCallBackClass();
 	}
 }

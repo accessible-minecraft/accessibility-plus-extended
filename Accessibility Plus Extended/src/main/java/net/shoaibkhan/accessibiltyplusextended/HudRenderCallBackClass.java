@@ -3,11 +3,14 @@ package net.shoaibkhan.accessibiltyplusextended;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -19,19 +22,18 @@ public class HudRenderCallBackClass {
     private MinecraftClient client;
     private String tempBlock="", tempBlockPos="";
     private String tempEntity="",tempEntityPos="";
-    public  HudRenderCallBackClass(KeyBinding num_5){
+    public  HudRenderCallBackClass(){
         client = MinecraftClient.getInstance();
         HudRenderCallback.EVENT.register((__,___) -> {
             try {
-                if (!client.isPaused()) crosshairTarget();
+                if (!client.isPaused()) {
+                	crosshairTarget();
+                	fallDetector();
+                }
             } catch (Exception e) {
                 System.out.println(e);
             }
-            while (num_5.wasPressed()) {
-                BlockPos pos =  client.player.getBlockPos();
-                Vec3d vec3d = new Vec3d(pos.getX()+0, pos.getY()+1, pos.getZ()+0);
-                client.player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES,vec3d);
-            }
+            
         });
     }
 
@@ -99,5 +101,41 @@ public class HudRenderCallBackClass {
 
     private void narrate(String st){
         client.player.sendMessage(new LiteralText(st), true);
+    }
+    
+    private void fallDetector() {
+    	BlockPos pos = client.player.getBlockPos();
+    	int posX = pos.getX();
+    	int posY = pos.getY();
+    	int posZ = pos.getZ();
+    	int iFac = 0, jFac = 0;
+    	String dir = client.player.getHorizontalFacing().toString().toLowerCase().trim();
+    	if(dir.equalsIgnoreCase("north")) {
+    		iFac = posX + 1;
+    		posX--;
+    		posZ--;
+    		jFac = posZ - 10;
+	    	
+	    	for(int i = posX; i <= iFac; i++) {
+	    		posY = pos.getY();
+	    		for(int j = posZ; j >= jFac; j--) {
+	    			BlockState blockEntity = client.world.getBlockState(new BlockPos(new Vec3d(i,posY,j)));
+	    			String name = blockEntity.getBlock().getTranslationKey();
+	    			name = name.substring(name.lastIndexOf(".")+1);
+	    			if(name.contains("_")) name = name.replace("_", "");
+	    			if(name.equals("air")) {
+	    				int tempY = posY-1;
+	    				while(tempY>1) {
+	    					BlockState tempblockEntity = client.world.getBlockState(new BlockPos(new Vec3d(i,posY,j)));
+	    	    			String tempname = tempblockEntity.getBlock().getTranslationKey();
+	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
+	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
+	    	    			
+	    				}
+	    			}
+	    		}
+	    		System.out.println();
+	    	}
+    	}
     }
 }
