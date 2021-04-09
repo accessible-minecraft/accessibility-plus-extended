@@ -3,32 +3,33 @@ package net.shoaibkhan.accessibiltyplusextended;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.options.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import org.lwjgl.glfw.GLFW;
 
 public class HudRenderCallBackClass {
     private MinecraftClient client;
     private String tempBlock="", tempBlockPos="";
     private String tempEntity="",tempEntityPos="";
+    public static int fallDetectorFlag = 0;
+    private static CustomWait fDObjCustomWait;
+    
     public  HudRenderCallBackClass(){
         client = MinecraftClient.getInstance();
+        fDObjCustomWait = new CustomWait();
         HudRenderCallback.EVENT.register((__,___) -> {
             try {
                 if (!client.isPaused()) {
-                	crosshairTarget();
-                	fallDetector();
+                	if(10000-fallDetectorFlag>=3000){
+                		crosshairTarget();
+                	}
+                	if(fallDetectorFlag<=0){
+                		fallDetector();
+                	}
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -126,15 +127,42 @@ public class HudRenderCallBackClass {
 	    			if(name.equals("air")) {
 	    				int tempY = posY-1;
 	    				while(tempY>1) {
-	    					BlockState tempblockEntity = client.world.getBlockState(new BlockPos(new Vec3d(i,posY,j)));
+	    					BlockState tempblockEntity = client.world.getBlockState(new BlockPos(new Vec3d(i,tempY,j)));
 	    	    			String tempname = tempblockEntity.getBlock().getTranslationKey();
 	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
 	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
-	    	    			
+	    	    			if (tempname.equals("air")) {
+								tempY--;
+							} else {
+								if(posY-tempY >= 5) {
+									client.player.sendMessage(new LiteralText("Warning Fall Detected"), true);
+									if(fDObjCustomWait.isAlive()) fDObjCustomWait.stopThread();
+									fDObjCustomWait = new CustomWait();
+									fDObjCustomWait.setWait(10000, 1, client);
+									fDObjCustomWait.startThread();
+									return;
+								} else {
+									posY = tempY;
+									break;
+								}
+							}
+	    				}
+	    			} else {
+	    				int tempY = posY+1;
+	    				while(tempY<posY+4) {
+	    					BlockState tempblockEntity = client.world.getBlockState(new BlockPos(new Vec3d(i,tempY,j)));
+	    	    			String tempname = tempblockEntity.getBlock().getTranslationKey();
+	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
+	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
+	    	    			if (!tempname.equals("air")) {
+								tempY++;
+							} else {
+								break;
+							}
+	    	    			if(tempY-posY>=3) break;
 	    				}
 	    			}
 	    		}
-	    		System.out.println();
 	    	}
     	}
     }
