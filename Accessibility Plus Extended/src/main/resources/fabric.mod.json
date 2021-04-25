@@ -22,9 +22,7 @@
       "net.shoaibkhan.accessibiltyplusextended.modInit"
     ]
   },
-  "mixins": [
-    "modid.mixins.json"
-  ],
+  "mixins": [],
 
   "depends": {
     "fabricloader": ">=0.7.4",

@@ -8,15 +8,15 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 
 public class HudRenderCallBackClass {
     private MinecraftClient client;
     private String tempBlock="", tempBlockPos="";
     private String tempEntity="",tempEntityPos="";
     public static int fallDetectorFlag = 0;
-    private static CustomWait fDObjCustomWait;
+    public static CustomWait fDObjCustomWait;
+    private static FallDetectorThread[] fallDetectorThreads = {new FallDetectorThread(),new FallDetectorThread(),new FallDetectorThread()};
+    private static int fallDetectorThreadsFlag = 0;
     
     public  HudRenderCallBackClass(){
         client = MinecraftClient.getInstance();
@@ -28,11 +28,20 @@ public class HudRenderCallBackClass {
                 		crosshairTarget();
                 	}
                 	if(fallDetectorFlag<=0){
-                		fallDetector();
+                		for(int i=0; i<fallDetectorThreads.length; i++) {
+                			if(!fallDetectorThreads[i].alive) {
+                				fallDetectorThreads[i].start();
+                			} else if(i==fallDetectorThreads.length-1) {
+                				if(fallDetectorThreads[fallDetectorThreadsFlag].alive) fallDetectorThreads[fallDetectorThreadsFlag].interrupt();
+                				fallDetectorThreads[fallDetectorThreadsFlag] = new FallDetectorThread();
+                				fallDetectorThreads[fallDetectorThreadsFlag].start();
+                				fallDetectorThreadsFlag++;
+                				if(fallDetectorThreadsFlag==fallDetectorThreads.length) fallDetectorThreadsFlag = 0;
+                			}
+                		}
                 	}
                 }
             } catch (Exception e) {
-                System.out.println(e);
             }
             
         });
@@ -104,66 +113,4 @@ public class HudRenderCallBackClass {
         client.player.sendMessage(new LiteralText(st), true);
     }
     
-    private void fallDetector() {
-    	BlockPos pos = client.player.getBlockPos();
-    	int posX = pos.getX();
-    	int posY = pos.getY();
-    	int posZ = pos.getZ();
-    	int iFac = 0, jFac = 0;
-    	String dir = client.player.getHorizontalFacing().toString().toLowerCase().trim();
-    	if(dir.equalsIgnoreCase("north")) {
-    		iFac = posX + 1;
-    		posX--;
-    		posZ--;
-    		jFac = posZ - 10;
-	    	
-	    	for(int i = posX; i <= iFac; i++) {
-	    		posY = pos.getY();
-	    		for(int j = posZ; j >= jFac; j--) {
-	    			BlockState blockEntity = client.world.getBlockState(new BlockPos(new Vec3d(i,posY,j)));
-	    			String name = blockEntity.getBlock().getTranslationKey();
-	    			name = name.substring(name.lastIndexOf(".")+1);
-	    			if(name.contains("_")) name = name.replace("_", "");
-	    			if(name.equals("air")) {
-	    				int tempY = posY-1;
-	    				while(tempY>1) {
-	    					BlockState tempblockEntity = client.world.getBlockState(new BlockPos(new Vec3d(i,tempY,j)));
-	    	    			String tempname = tempblockEntity.getBlock().getTranslationKey();
-	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
-	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
-	    	    			if (tempname.equals("air")) {
-								tempY--;
-							} else {
-								if(posY-tempY >= 5) {
-									client.player.sendMessage(new LiteralText("Warning Fall Detected"), true);
-									if(fDObjCustomWait.isAlive()) fDObjCustomWait.stopThread();
-									fDObjCustomWait = new CustomWait();
-									fDObjCustomWait.setWait(10000, 1, client);
-									fDObjCustomWait.startThread();
-									return;
-								} else {
-									posY = tempY;
-									break;
-								}
-							}
-	    				}
-	    			} else {
-	    				int tempY = posY+1;
-	    				while(tempY<posY+4) {
-	    					BlockState tempblockEntity = client.world.getBlockState(new BlockPos(new Vec3d(i,tempY,j)));
-	    	    			String tempname = tempblockEntity.getBlock().getTranslationKey();
-	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
-	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
-	    	    			if (!tempname.equals("air")) {
-								tempY++;
-							} else {
-								break;
-							}
-	    	    			if(tempY-posY>=3) break;
-	    				}
-	    			}
-	    		}
-	    	}
-    	}
-    }
 }
