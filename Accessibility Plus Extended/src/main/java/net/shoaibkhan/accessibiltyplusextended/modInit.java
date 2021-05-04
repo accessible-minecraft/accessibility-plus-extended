@@ -14,7 +14,7 @@ public class modInit implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		System.out.println("Accessibilty Plus Extended is initializing!");
-		CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_M, "AC Extended"));
+		CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "AC Extended"));
 		hudRenderCallBackClass = new HudRenderCallBackClass(CONFIG_KEY);
 	}
 	

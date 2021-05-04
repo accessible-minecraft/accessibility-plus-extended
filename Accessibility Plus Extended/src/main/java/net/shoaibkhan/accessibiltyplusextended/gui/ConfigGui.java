@@ -27,7 +27,7 @@ public class ConfigGui extends LightweightGuiDescription {
         ConfigButton fdStatus = new ConfigButton("Fall Detector", ELConfig.getFalldetectorkey());
         root.add(fdStatus,12, 2, 10 ,1);
         
-        ConfigButton dcStatus = new ConfigButton("Read crosshair", ELConfig.getDurabilitycheckerkey());
+        ConfigButton dcStatus = new ConfigButton("Durability Checker", ELConfig.getDurabilitycheckerkey());
         root.add(dcStatus,1, 4, 10 ,1);
 
         WButton doneButton = new WButton(new LiteralText("Done"));

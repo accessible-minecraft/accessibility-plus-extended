@@ -35,7 +35,7 @@ public class HudRenderCallBackClass {
         	if(client.player == null) return;
             try {
             	boolean isDPressed = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.d").getCode());
-            	if ( isDPressed && client.currentScreen != null && client.currentScreen instanceof AccessorHandledScreen &&  dPressedCooldownFlag <= 0) {
+            	if ( isDPressed && client.currentScreen != null && client.currentScreen instanceof AccessorHandledScreen &&  dPressedCooldownFlag <= 0 && ELConfig.get(ELConfig.getDurabilitycheckerkey())) {
                     Slot hovered = ((AccessorHandledScreen) client.currentScreen).getFocusedSlot();
                     if(hovered!=null && hovered.getStack().isDamageable()) {
                     	client.player.sendMessage(new LiteralText(hovered.getStack().getMaxDamage()-hovered.getStack().getDamage()+" durability"), true);
@@ -56,7 +56,7 @@ public class HudRenderCallBackClass {
 	            }
             	// ||!(client.currentScreen instanceof AccessorHandledScreen)
                 if ( !client.isPaused() && (client.currentScreen==null))  {
-                	if(10000-fallDetectorFlag>=3000&&ELConfig.get(ELConfig.getReadcrosshairkey())){
+                	if(10000-fallDetectorFlag>=3000 && ELConfig.get(ELConfig.getReadcrosshairkey())){
                 		crosshairTarget();
                 	}
                 	if(fallDetectorFlag<=0&&ELConfig.get(ELConfig.getFalldetectorkey())){
