@@ -6,7 +6,7 @@
   "mixins": [
   ],
   "client": [
-    "MixinClass"
+    "AccessorHandledScreen"
   ],
   "injectors": {
     "defaultRequire": 1

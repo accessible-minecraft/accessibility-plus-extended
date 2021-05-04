@@ -16,7 +16,6 @@ public class CustomWait extends Thread {
     public void run() {
 		if (val==1) {
             HudRenderCallBackClass.fallDetectorFlag = timeOut;
-            System.out.println(HudRenderCallBackClass.fallDetectorFlag);
             while(HudRenderCallBackClass.fallDetectorFlag > 0 && running){
                 try {
                 	if(client.world==null) {
@@ -29,6 +28,21 @@ public class CustomWait extends Thread {
                     
                 }
                 HudRenderCallBackClass.fallDetectorFlag--;
+            }
+        } else if(val==2) {
+        	HudRenderCallBackClass.dPressedCooldownFlag = timeOut;
+            while(HudRenderCallBackClass.dPressedCooldownFlag > 0 && running){
+                try {
+                	if(client.world==null) {
+                		HudRenderCallBackClass.dPressedCooldownFlag = 0;
+                		return;
+                	}
+                	if(client.isPaused()) continue;
+                    Thread.sleep(1);
+                } catch (Exception e) {
+                    
+                }
+                HudRenderCallBackClass.dPressedCooldownFlag--;
             }
         }
     }

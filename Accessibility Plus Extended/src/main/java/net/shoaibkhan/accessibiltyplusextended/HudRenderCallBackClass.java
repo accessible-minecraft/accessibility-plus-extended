@@ -1,38 +1,73 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.shoaibkhan.accessibiltyplusextended.config.ELConfig;
+import net.shoaibkhan.accessibiltyplusextended.gui.ConfigGui;
+import net.shoaibkhan.accessibiltyplusextended.gui.ConfigScreen;
+import net.shoaibkhan.accessibiltyplusextended.mixin.AccessorHandledScreen;
 
 public class HudRenderCallBackClass {
     private MinecraftClient client;
     private String tempBlock="", tempBlockPos="";
     private String tempEntity="",tempEntityPos="";
-    public static int fallDetectorFlag = 0;
-    public static CustomWait fDObjCustomWait;
+    public static int fallDetectorFlag = 0, dPressedCooldownFlag = 0;
+    public static CustomWait fDObjCustomWait,dPressedCooldown;
     private static FallDetectorThread[] fallDetectorThreads = {new FallDetectorThread(),new FallDetectorThread(),new FallDetectorThread()};
     private static int fallDetectorThreadsFlag = 0;
     
-    public  HudRenderCallBackClass(){
-        client = MinecraftClient.getInstance();
+    public  HudRenderCallBackClass(KeyBinding CONFIG_KEY){
         fDObjCustomWait = new CustomWait();
-        HudRenderCallback.EVENT.register((__,___) -> {
+        dPressedCooldown = new CustomWait();
+        
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+        	this.client = client;
+        	if(client.player == null) return;
             try {
-                if (!client.isPaused()) {
-                	if(10000-fallDetectorFlag>=3000){
+            	boolean isDPressed = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.d").getCode());
+            	if ( isDPressed && client.currentScreen != null && client.currentScreen instanceof AccessorHandledScreen &&  dPressedCooldownFlag <= 0) {
+                    Slot hovered = ((AccessorHandledScreen) client.currentScreen).getFocusedSlot();
+                    if(hovered!=null && hovered.getStack().isDamageable()) {
+                    	client.player.sendMessage(new LiteralText(hovered.getStack().getMaxDamage()-hovered.getStack().getDamage()+" durability"), true);
+                    	if(dPressedCooldown.isAlive()) {
+                    		dPressedCooldown.stopThread();
+                    		dPressedCooldownFlag = 0;
+                    	}
+                    	dPressedCooldown = new CustomWait();
+                    	dPressedCooldown.setWait(1000, 2, client);
+                    	dPressedCooldown.startThread();
+                    }
+            	}
+            	
+            	while(CONFIG_KEY.wasPressed()){
+	            	Screen screen = new ConfigScreen(new ConfigGui(client.player,client), "AP Extended Configuration", client.player);
+	                client.openScreen(screen);
+	                return;
+	            }
+            	// ||!(client.currentScreen instanceof AccessorHandledScreen)
+                if ( !client.isPaused() && (client.currentScreen==null))  {
+                	if(10000-fallDetectorFlag>=3000&&ELConfig.get(ELConfig.getReadcrosshairkey())){
                 		crosshairTarget();
                 	}
-                	if(fallDetectorFlag<=0){
+                	if(fallDetectorFlag<=0&&ELConfig.get(ELConfig.getFalldetectorkey())){
                 		for(int i=0; i<fallDetectorThreads.length; i++) {
                 			if(!fallDetectorThreads[i].alive) {
                 				fallDetectorThreads[i].start();
                 			} else if(i==fallDetectorThreads.length-1) {
-                				if(fallDetectorThreads[fallDetectorThreadsFlag].alive) fallDetectorThreads[fallDetectorThreadsFlag].interrupt();
+                				if(fallDetectorThreads[fallDetectorThreadsFlag].alive) {
+                					fallDetectorThreads[fallDetectorThreadsFlag].interrupt();
+                					fallDetectorFlag = 0;
+                				}
                 				fallDetectorThreads[fallDetectorThreadsFlag] = new FallDetectorThread();
                 				fallDetectorThreads[fallDetectorThreadsFlag].start();
                 				fallDetectorThreadsFlag++;
@@ -73,7 +108,7 @@ public class HudRenderCallBackClass {
             case ENTITY:
                 try{
                     EntityHitResult entityHitResult = (EntityHitResult) hit;
-                    if (!(((EntityHitResult) hit).getEntity().getType() + "").equalsIgnoreCase(tempEntity) || !(((EntityHitResult) hit).getEntity().getBlockPos() + "").equalsIgnoreCase(tempEntityPos)) {
+                    if (!(((EntityHitResult) hit).getEntity().getDisplayName() + "").equalsIgnoreCase(tempEntity) || !(((EntityHitResult) hit).getEntity().getBlockPos() + "").equalsIgnoreCase(tempEntityPos)) {
                         tempEntity = ((EntityHitResult) hit).getEntity().getType() + "";
                         tempEntityPos = ((EntityHitResult) hit).getEntity().getBlockPos() + "";
                         tempBlockPos = "";

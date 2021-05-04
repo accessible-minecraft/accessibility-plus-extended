@@ -47,7 +47,7 @@ public class FallDetectorThread extends Thread {
 									client.player.sendMessage(new LiteralText("Warning Fall Detected"), true);
 									if(HudRenderCallBackClass.fDObjCustomWait.isAlive()) HudRenderCallBackClass.fDObjCustomWait.stopThread();
 									HudRenderCallBackClass.fDObjCustomWait = new CustomWait();
-									HudRenderCallBackClass.fDObjCustomWait.setWait(10000, 1, client);
+									HudRenderCallBackClass.fDObjCustomWait.setWait(5000, 1, client);
 									HudRenderCallBackClass.fDObjCustomWait.startThread();
 									return;
 								} else {
@@ -102,7 +102,7 @@ public class FallDetectorThread extends Thread {
 									client.player.sendMessage(new LiteralText("Warning Fall Detected"), true);
 									if(HudRenderCallBackClass.fDObjCustomWait.isAlive()) HudRenderCallBackClass.fDObjCustomWait.stopThread();
 									HudRenderCallBackClass.fDObjCustomWait = new CustomWait();
-									HudRenderCallBackClass.fDObjCustomWait.setWait(10000, 1, client);
+									HudRenderCallBackClass.fDObjCustomWait.setWait(5000, 1, client);
 									HudRenderCallBackClass.fDObjCustomWait.startThread();
 									return;
 								} else {
@@ -157,7 +157,7 @@ public class FallDetectorThread extends Thread {
 									client.player.sendMessage(new LiteralText("Warning Fall Detected"), true);
 									if(HudRenderCallBackClass.fDObjCustomWait.isAlive()) HudRenderCallBackClass.fDObjCustomWait.stopThread();
 									HudRenderCallBackClass.fDObjCustomWait = new CustomWait();
-									HudRenderCallBackClass.fDObjCustomWait.setWait(10000, 1, client);
+									HudRenderCallBackClass.fDObjCustomWait.setWait(5000, 1, client);
 									HudRenderCallBackClass.fDObjCustomWait.startThread();
 									return;
 								} else {
@@ -212,7 +212,7 @@ public class FallDetectorThread extends Thread {
 									client.player.sendMessage(new LiteralText("Warning Fall Detected"), true);
 									if(HudRenderCallBackClass.fDObjCustomWait.isAlive()) HudRenderCallBackClass.fDObjCustomWait.stopThread();
 									HudRenderCallBackClass.fDObjCustomWait = new CustomWait();
-									HudRenderCallBackClass.fDObjCustomWait.setWait(10000, 1, client);
+									HudRenderCallBackClass.fDObjCustomWait.setWait(5000, 1, client);
 									HudRenderCallBackClass.fDObjCustomWait.startThread();
 									return;
 								} else {

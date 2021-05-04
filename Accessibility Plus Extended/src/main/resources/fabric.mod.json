@@ -13,7 +13,7 @@
     "sources": ""
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "",
 
   "environment": "*",
@@ -22,7 +22,9 @@
       "net.shoaibkhan.accessibiltyplusextended.modInit"
     ]
   },
-  "mixins": [],
+  "mixins": [
+	"modid.mixins.json"  
+  ],
 
   "depends": {
     "fabricloader": ">=0.7.4",
