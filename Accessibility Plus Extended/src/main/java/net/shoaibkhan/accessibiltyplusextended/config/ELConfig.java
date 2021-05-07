@@ -16,8 +16,14 @@ public class ELConfig {
     public static final String FallDetectorKey = "fall_detector_key";
     public static final String ReadCrosshairKey = "read_crosshair_key";
     public static final String DurabilityCheckerKey = "durability_checker_key";
+    public static final String EntityNarratorKey = "entity_narrator_key";
 
-    public static String getDurabilitycheckerkey() {
+    public static String getEntitynarratorkey() {
+		return EntityNarratorKey;
+	}
+
+
+	public static String getDurabilitycheckerkey() {
 		return DurabilityCheckerKey;
 	}
 
@@ -150,6 +156,7 @@ public class ELConfig {
         data.add(getFalldetectorkey(), new JsonPrimitive(false));
         data.add(getReadcrosshairkey(), new JsonPrimitive(false));
         data.add(getDurabilitycheckerkey(), new JsonPrimitive(true));
+        data.add(getEntitynarratorkey(), new JsonPrimitive(true));
         saveConfig(data);
         return data;
     }

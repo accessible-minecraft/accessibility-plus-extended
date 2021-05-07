@@ -30,19 +30,18 @@ public class CustomWait extends Thread {
                 HudRenderCallBackClass.fallDetectorFlag--;
             }
         } else if(val==2) {
-        	HudRenderCallBackClass.dPressedCooldownFlag = timeOut;
-            while(HudRenderCallBackClass.dPressedCooldownFlag > 0 && running){
+        	HudRenderCallBackClass.entityNarratorFlag = timeOut;
+            while(HudRenderCallBackClass.entityNarratorFlag > 0 && running){
                 try {
                 	if(client.world==null) {
-                		HudRenderCallBackClass.dPressedCooldownFlag = 0;
+                		HudRenderCallBackClass.entityNarratorFlag = 0;
                 		return;
                 	}
-                	if(client.isPaused()) continue;
                     Thread.sleep(1);
                 } catch (Exception e) {
                     
                 }
-                HudRenderCallBackClass.dPressedCooldownFlag--;
+                HudRenderCallBackClass.entityNarratorFlag--;
             }
         }
     }

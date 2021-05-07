@@ -1,13 +1,11 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -15,63 +13,50 @@ import net.minecraft.util.hit.HitResult;
 import net.shoaibkhan.accessibiltyplusextended.config.ELConfig;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigScreen;
-import net.shoaibkhan.accessibiltyplusextended.mixin.AccessorHandledScreen;
 
 public class HudRenderCallBackClass {
     private MinecraftClient client;
     private String tempBlock="", tempBlockPos="";
     private String tempEntity="",tempEntityPos="";
-    public static int fallDetectorFlag = 0, dPressedCooldownFlag = 0;
-    public static CustomWait fDObjCustomWait,dPressedCooldown;
+    public static int fallDetectorFlag = 0, entityNarratorFlag = 0;
+    public static CustomWait fDObjCustomWait,entityNarrator;
     private static FallDetectorThread[] fallDetectorThreads = {new FallDetectorThread(),new FallDetectorThread(),new FallDetectorThread()};
-    private static int fallDetectorThreadsFlag = 0;
+    private static int fallDetectorThreadFlag = 0;
     
     public  HudRenderCallBackClass(KeyBinding CONFIG_KEY){
         fDObjCustomWait = new CustomWait();
-        dPressedCooldown = new CustomWait();
+        entityNarrator = new CustomWait();
         
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-        	this.client = client;
+        
+        
+        HudRenderCallback.EVENT.register((__, ___) -> {
+        	this.client = MinecraftClient.getInstance();
         	if(client.player == null) return;
             try {
-            	boolean isDPressed = InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.d").getCode());
-            	if ( isDPressed && client.currentScreen != null && client.currentScreen instanceof AccessorHandledScreen &&  dPressedCooldownFlag <= 0 && ELConfig.get(ELConfig.getDurabilitycheckerkey())) {
-                    Slot hovered = ((AccessorHandledScreen) client.currentScreen).getFocusedSlot();
-                    if(hovered!=null && hovered.getStack().isDamageable()) {
-                    	client.player.sendMessage(new LiteralText(hovered.getStack().getMaxDamage()-hovered.getStack().getDamage()+" durability"), true);
-                    	if(dPressedCooldown.isAlive()) {
-                    		dPressedCooldown.stopThread();
-                    		dPressedCooldownFlag = 0;
-                    	}
-                    	dPressedCooldown = new CustomWait();
-                    	dPressedCooldown.setWait(1000, 2, client);
-                    	dPressedCooldown.startThread();
-                    }
-            	}
             	
             	while(CONFIG_KEY.wasPressed()){
 	            	Screen screen = new ConfigScreen(new ConfigGui(client.player,client), "AP Extended Configuration", client.player);
 	                client.openScreen(screen);
 	                return;
 	            }
-            	// ||!(client.currentScreen instanceof AccessorHandledScreen)
+
                 if ( !client.isPaused() && (client.currentScreen==null))  {
-                	if(10000-fallDetectorFlag>=3000 && ELConfig.get(ELConfig.getReadcrosshairkey())){
+                	if(10000-fallDetectorThreadFlag>=3000 && ELConfig.get(ELConfig.getReadcrosshairkey())){
                 		crosshairTarget();
                 	}
-                	if(fallDetectorFlag<=0&&ELConfig.get(ELConfig.getFalldetectorkey())){
+                	if(fallDetectorThreadFlag<=0&&ELConfig.get(ELConfig.getFalldetectorkey())){
                 		for(int i=0; i<fallDetectorThreads.length; i++) {
                 			if(!fallDetectorThreads[i].alive) {
                 				fallDetectorThreads[i].start();
                 			} else if(i==fallDetectorThreads.length-1) {
-                				if(fallDetectorThreads[fallDetectorThreadsFlag].alive) {
-                					fallDetectorThreads[fallDetectorThreadsFlag].interrupt();
-                					fallDetectorFlag = 0;
+                				if(fallDetectorThreads[fallDetectorThreadFlag].alive) {
+                					fallDetectorThreads[fallDetectorThreadFlag].interrupt();
+                					fallDetectorThreadFlag = 0;
                 				}
-                				fallDetectorThreads[fallDetectorThreadsFlag] = new FallDetectorThread();
-                				fallDetectorThreads[fallDetectorThreadsFlag].start();
-                				fallDetectorThreadsFlag++;
-                				if(fallDetectorThreadsFlag==fallDetectorThreads.length) fallDetectorThreadsFlag = 0;
+                				fallDetectorThreads[fallDetectorThreadFlag] = new FallDetectorThread();
+                				fallDetectorThreads[fallDetectorThreadFlag].start();
+                				fallDetectorThreadFlag++;
+                				if(fallDetectorThreadFlag==fallDetectorThreads.length) fallDetectorThreadFlag = 0;
                 			}
                 		}
                 	}
@@ -101,46 +86,70 @@ public class HudRenderCallBackClass {
                     String name = block.getTranslationKey();
                     name = name.substring(name.lastIndexOf('.')+1);
                     if (name.contains("_")) name = name.replace("_"," ");
-                    text = name + ", " + side + " face";
+                    text = name + " " + side;
                     narrate(text);
                 }
                 break;
             case ENTITY:
-                try{
-                    EntityHitResult entityHitResult = (EntityHitResult) hit;
-                    if (!(((EntityHitResult) hit).getEntity().getDisplayName() + "").equalsIgnoreCase(tempEntity) || !(((EntityHitResult) hit).getEntity().getBlockPos() + "").equalsIgnoreCase(tempEntityPos)) {
-                        tempEntity = ((EntityHitResult) hit).getEntity().getType() + "";
-                        tempEntityPos = ((EntityHitResult) hit).getEntity().getBlockPos() + "";
-                        tempBlockPos = "";
-                        tempBlock = "";
-                        text = entityHitResult.getEntity().getType() + "";
-                        text = text.substring(text.lastIndexOf('.') + 1);
-                        if (text.contains("_")) text = text.replace("_", " ");
-                        System.out.println(text);
-                        narrate(text);
-                    }
-                } catch (Exception e) {
-                    try{
-                        BlockHitResult blockHitResult1 = (BlockHitResult) hit;
-                        BlockState blockState1 = client.world.getBlockState(blockHitResult1.getBlockPos());
-                        Block block1 = blockState1.getBlock();
-                        if ((!tempBlock.equalsIgnoreCase(block1 + "") || !(tempBlockPos.equalsIgnoreCase(blockHitResult1.getBlockPos() + ""))) && !(blockState1 + "").toLowerCase().contains("sign")) {
-                            tempBlock = block1 + "";
-                            tempBlockPos = blockHitResult1.getBlockPos() + "";
-                            tempEntityPos = "";
-                            tempEntity = "";
-                            String side = blockHitResult1.getSide().asString();
-                            String name = block1.getTranslationKey();
-                            name = name.substring(name.lastIndexOf('.') + 1);
-                            if (name.contains("_")) name = name.replace("_", " ");
-                            text = name + ", " + side + " face";
-                            narrate(text);
-                        }
-                    } catch (Exception e1){
-                        System.out.println(e1);
-                    }
-                }
-                break;
+            	
+			if (ELConfig.get(ELConfig.getEntitynarratorkey())) {
+				try {
+					EntityHitResult entityHitResult = (EntityHitResult) hit;
+					if ((!(((EntityHitResult) hit).getEntity().getDisplayName() + "").equalsIgnoreCase(tempEntity)
+							|| !(((EntityHitResult) hit).hashCode() + "").equalsIgnoreCase(tempEntityPos))
+							&& entityNarratorFlag <= 0) {
+
+						tempEntity = ((EntityHitResult) hit).getEntity().getType() + "";
+						tempEntityPos = ((EntityHitResult) hit).hashCode() + "";
+						tempBlockPos = "";
+						tempBlock = "";
+						text = entityHitResult.getEntity().getType() + "";
+						text = text.substring(text.lastIndexOf('.') + 1);
+						if (text.contains("_"))
+							text = text.replace("_", " ");
+						String customNameString = "" + ((EntityHitResult) hit).getEntity().getCustomName();
+						if (!customNameString.equalsIgnoreCase("null")) {
+							int indexOfText = customNameString.indexOf("text='");
+							int index = customNameString.indexOf("'", indexOfText + 6);
+							System.out.println(indexOfText + "\t" + index + "\t" + customNameString.length());
+							customNameString = customNameString.substring(indexOfText + 6, index);
+							text = customNameString;
+						}
+						narrate(text);
+						if (entityNarrator.isAlive()) {
+							entityNarrator.stopThread();
+							entityNarratorFlag = 0;
+						}
+						entityNarrator = new CustomWait();
+						entityNarrator.setWait(5000, 2, client);
+						entityNarrator.startThread();
+					}
+				} catch (Exception e) {
+					try {
+						BlockHitResult blockHitResult1 = (BlockHitResult) hit;
+						BlockState blockState1 = client.world.getBlockState(blockHitResult1.getBlockPos());
+						Block block1 = blockState1.getBlock();
+						if ((!tempBlock.equalsIgnoreCase(block1 + "")
+								|| !(tempBlockPos.equalsIgnoreCase(blockHitResult1.getBlockPos() + "")))
+								&& !(blockState1 + "").toLowerCase().contains("sign")) {
+							tempBlock = block1 + "";
+							tempBlockPos = blockHitResult1.getBlockPos() + "";
+							tempEntityPos = "";
+							tempEntity = "";
+							String side = blockHitResult1.getSide().asString();
+							String name = block1.getTranslationKey();
+							name = name.substring(name.lastIndexOf('.') + 1);
+							if (name.contains("_"))
+								name = name.replace("_", " ");
+							text = name + ", " + side + " face";
+							narrate(text);
+						}
+					} catch (Exception e1) {
+						System.out.println(e1);
+					}
+				} 
+			}
+			break;
         }
     }
 

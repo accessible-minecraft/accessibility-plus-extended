@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Accessibility Plus Extended",
-  "description": "",
+  "description": "Discription",
   "authors": [
     "Shoaib Khan"
   ],
@@ -20,7 +20,9 @@
   "entrypoints": {
     "main": [
       "net.shoaibkhan.accessibiltyplusextended.modInit"
-    ]
+    ],
+    "client":[],
+    "server":[]
   },
   "mixins": [
 	"modid.mixins.json"  

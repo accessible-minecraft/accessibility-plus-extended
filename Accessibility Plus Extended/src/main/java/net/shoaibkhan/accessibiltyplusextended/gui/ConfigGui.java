@@ -29,6 +29,9 @@ public class ConfigGui extends LightweightGuiDescription {
         
         ConfigButton dcStatus = new ConfigButton("Durability Checker", ELConfig.getDurabilitycheckerkey());
         root.add(dcStatus,1, 4, 10 ,1);
+        
+        ConfigButton enStatus = new ConfigButton("Entity Narrator", ELConfig.getEntitynarratorkey());
+        root.add(enStatus,12, 4, 10 ,1);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
