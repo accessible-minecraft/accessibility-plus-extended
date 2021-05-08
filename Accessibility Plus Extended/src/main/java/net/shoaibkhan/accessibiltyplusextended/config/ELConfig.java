@@ -15,7 +15,7 @@ public class ELConfig {
     private static String CONFIG_PATH = Paths.get("config", "apextended", "config.json").toString();
     public static final String FallDetectorKey = "fall_detector_key";
     public static final String ReadCrosshairKey = "read_crosshair_key";
-    public static final String DurabilityCheckerKey = "durability_checker_key";
+    public static final String DurabilityCheckKey = "durability_check_key";
     public static final String EntityNarratorKey = "entity_narrator_key";
 
     public static String getEntitynarratorkey() {
@@ -24,7 +24,7 @@ public class ELConfig {
 
 
 	public static String getDurabilitycheckerkey() {
-		return DurabilityCheckerKey;
+		return DurabilityCheckKey;
 	}
 
 

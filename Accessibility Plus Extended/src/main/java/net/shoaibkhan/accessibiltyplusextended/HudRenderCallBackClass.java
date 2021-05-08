@@ -86,6 +86,8 @@ public class HudRenderCallBackClass {
                     String name = block.getTranslationKey();
                     name = name.substring(name.lastIndexOf('.')+1);
                     if (name.contains("_")) name = name.replace("_"," ");
+                    if(side.equalsIgnoreCase("up")) side = "top";
+                    if(side.equalsIgnoreCase("down")) side = "bottom";
                     text = name + " " + side;
                     narrate(text);
                 }

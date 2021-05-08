@@ -15,7 +15,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.shoaibkhan.accessibiltyplusextended.config.ELConfig;
 
-@Mixin(ItemStack.class)
+@Mixin(value=ItemStack.class,priority = 0)
 public abstract class DurabilityMixin {
 	@Inject(at = @At("RETURN"), method = "getTooltip")
 	private void getTooltipMixin(PlayerEntity player, TooltipContext context,CallbackInfoReturnable<List<Text>> info) {
