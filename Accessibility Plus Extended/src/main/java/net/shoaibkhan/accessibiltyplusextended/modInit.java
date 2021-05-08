@@ -10,12 +10,13 @@ import net.minecraft.client.util.InputUtil;
 
 public class modInit implements ModInitializer {
 	HudRenderCallBackClass hudRenderCallBackClass;
-	public static KeyBinding CONFIG_KEY;
+	public static KeyBinding CONFIG_KEY,LockEntityKey;
 	@Override
 	public void onInitialize() {
 		System.out.println("Accessibilty Plus Extended is initializing!");
 		CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("APE Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "APE Extended"));
-		hudRenderCallBackClass = new HudRenderCallBackClass(CONFIG_KEY);
+		LockEntityKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Lock onto Entity", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Y, "APE Extended"));
+		hudRenderCallBackClass = new HudRenderCallBackClass(CONFIG_KEY,LockEntityKey);
 	}
 	
 

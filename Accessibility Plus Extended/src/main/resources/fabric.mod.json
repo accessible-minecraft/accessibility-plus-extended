@@ -20,12 +20,10 @@
   "entrypoints": {
     "main": [
       "net.shoaibkhan.accessibiltyplusextended.modInit"
-    ],
-    "client":[],
-    "server":[]
+    ]
   },
   "mixins": [
-	"modid.mixins.json"  
+	"apebyshoaibkhan.mixins.json"  
   ],
 
   "depends": {

@@ -6,8 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "AccessorHandledScreen",
-    "DurabilityMixin"
+    "DurabilityMixin",
+    "AccessorHandledScreen"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -6,10 +6,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import net.minecraft.command.argument.EntityAnchorArgumentType.EntityAnchor;
+import net.minecraft.entity.Entity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.config.ELConfig;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigScreen;
@@ -22,8 +27,9 @@ public class HudRenderCallBackClass {
     public static CustomWait fDObjCustomWait,entityNarrator;
     private static FallDetectorThread[] fallDetectorThreads = {new FallDetectorThread(),new FallDetectorThread(),new FallDetectorThread()};
     private static int fallDetectorThreadFlag = 0;
+    private static Entity lockedOnEntity = null;
     
-    public  HudRenderCallBackClass(KeyBinding CONFIG_KEY){
+    public  HudRenderCallBackClass(KeyBinding CONFIG_KEY,KeyBinding LockEntityKey){
         fDObjCustomWait = new CustomWait();
         entityNarrator = new CustomWait();
         
@@ -32,12 +38,30 @@ public class HudRenderCallBackClass {
         HudRenderCallback.EVENT.register((__, ___) -> {
         	this.client = MinecraftClient.getInstance();
         	if(client.player == null) return;
+        	boolean isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())||InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
             try {
+            	
+            	if(lockedOnEntity != null) {
+            		if(!lockedOnEntity.isAlive()) lockedOnEntity = null;
+	            	Vec3d vec3d = new Vec3d(lockedOnEntity.getX(),lockedOnEntity.getY()+lockedOnEntity.getHeight()-0.25,lockedOnEntity.getZ());
+	            	client.player.lookAt(EntityAnchor.EYES, vec3d);
+	            	
+            	}
             	
             	while(CONFIG_KEY.wasPressed()){
 	            	Screen screen = new ConfigScreen(new ConfigGui(client.player,client), "AP Extended Configuration", client.player);
 	                client.openScreen(screen);
 	                return;
+	            }
+            	
+            	if(isAltPressed) {
+            		while(LockEntityKey.wasPressed()){
+                		lockedOnEntity = null;
+    	            }
+            	}
+            	
+            	while(LockEntityKey.wasPressed()){
+            		lockedOnEntity = entityLocking();
 	            }
 
                 if ( !client.isPaused() && (client.currentScreen==null))  {
@@ -67,6 +91,28 @@ public class HudRenderCallBackClass {
         });
     }
 
+    private Entity entityLocking() {
+    	HitResult hit = client.crosshairTarget;
+        switch (hit.getType()) {
+            case MISS:
+            	return null;
+            case BLOCK:
+            	return null;
+            case ENTITY:
+				try {
+					EntityHitResult entityHitResult = (EntityHitResult) hit;
+	            	BlockPos blockPos = ((EntityHitResult) hit).getEntity().getBlockPos();
+	            	Vec3d vec3d = new Vec3d(blockPos.getX(),blockPos.getY(),blockPos.getZ());
+	            	client.player.lookAt(EntityAnchor.EYES, vec3d);
+	            	return entityHitResult.getEntity();
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+        }
+		return null;
+    }
+    
     private void crosshairTarget() {
         HitResult hit = client.crosshairTarget;
         String text = "";
