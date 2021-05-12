@@ -2,6 +2,10 @@ package net.shoaibkhan.accessibiltyplusextended;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -28,13 +32,14 @@ public class OreDetectorThread extends Thread {
 			if(name.contains("void_air")) return;
 			name = name.substring(name.lastIndexOf(".")+1);
 			if(name.contains("_")) name = name.replace("_", " ");
-			
-	//		System.out.println("fluid\t"+block.getFluidState(client.world.getBlockState(blockPos)));
 			String fluidState = block.getFluidState(client.world.getBlockState(blockPos))+"";
 			fluidState = fluidState.toLowerCase();
-			if(name.contains("ore")) {
-	//			client.world.playSound(pos, sound, category, volume, pitch, useDistance);
-				System.out.println("ore\t"+name);
+			if( (name.contains("ore")||name.contains("lapis lazuli")) && !modInit.ores.containsKey(name+""+blockPos)) {
+				try {
+					client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f, true);
+				} catch (Exception e) {
+				}
+				modInit.ores.put(name+""+blockPos, 10000);
 			} else if(fluidState.contains("lavafluid") && HudRenderCallBackClass.fallDetectorFlag <= 0) {
 				client.player.sendMessage(new LiteralText("Warning Lava"), true);
 				if(HudRenderCallBackClass.fDObjCustomWait.isAlive()) { 

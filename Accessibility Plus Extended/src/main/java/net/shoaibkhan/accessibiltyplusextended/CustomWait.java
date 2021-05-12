@@ -1,5 +1,7 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
+import java.util.Map;
+
 import net.minecraft.client.MinecraftClient;
 
 public class CustomWait extends Thread {
@@ -43,6 +45,22 @@ public class CustomWait extends Thread {
                 }
                 HudRenderCallBackClass.entityNarratorFlag--;
             }
+        } else if(val==3) {
+        	while(running) {
+        		try {
+					if(!modInit.ores.isEmpty()) {
+						for (Map.Entry<String, Integer> entry : modInit.ores.entrySet()) {
+							entry.setValue(entry.getValue()-1);
+							if(entry.getValue()<=10) {
+								System.out.println("removed "+entry.getKey());
+								modInit.ores.remove(entry.getKey());
+							}
+						}
+					}
+					Thread.sleep(1);
+				} catch (Exception e) {
+				}
+        	}
         }
     }
 

@@ -24,7 +24,7 @@ public class HudRenderCallBackClass {
     private String tempBlock="", tempBlockPos="";
     private String tempEntity="",tempEntityPos="";
     public static int fallDetectorFlag = 0, entityNarratorFlag = 0,oreDetectorFlag = 0;
-    public static CustomWait fDObjCustomWait,entityNarrator;
+    public static CustomWait fDObjCustomWait,entityNarrator, oreThread;
     private static FallDetectorThread[] fallDetectorThreads = {new FallDetectorThread(),new FallDetectorThread(),new FallDetectorThread()};
     private static int fallDetectorThreadFlag = 0;
     private static OreDetectorThread[] oreDetectorThreads = {new OreDetectorThread(),new OreDetectorThread(),new OreDetectorThread()};

@@ -1,21 +1,32 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.lwjgl.glfw.GLFW;
 
 import io.github.cottonmc.cotton.gui.widget.data.Color;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 
 public class modInit implements ModInitializer {
 	HudRenderCallBackClass hudRenderCallBackClass;
 	public static KeyBinding CONFIG_KEY,LockEntityKey;
+	public static Map<String, Integer> ores;
+	private static CustomWait oreThread;
 	@Override
 	public void onInitialize() {
 		System.out.println("Accessibilty Plus Extended is initializing!");
 		CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("APE Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "APE Extended"));
 		LockEntityKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Lock onto Entity", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Y, "APE Extended"));
+		ores = new HashMap<String, Integer>();
+		ores.put("default", 9999);
+        oreThread = new CustomWait();
+        oreThread.setWait(999, 3, MinecraftClient.getInstance());
+        oreThread.startThread();
 		hudRenderCallBackClass = new HudRenderCallBackClass(CONFIG_KEY,LockEntityKey);
 	}
 	
