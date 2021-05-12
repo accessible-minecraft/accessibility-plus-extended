@@ -10,7 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
-import net.shoaibkhan.accessibiltyplusextended.config.ELConfig;
+import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
 public class ConfigGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
@@ -21,17 +21,20 @@ public class ConfigGui extends LightweightGuiDescription {
 
         setRootPanel(root);
 
-        ConfigButton rcStatus = new ConfigButton("Read crosshair", ELConfig.getReadcrosshairkey());
+        ConfigButton rcStatus = new ConfigButton("Read Blocks", Config.getReadblockskey());
         root.add(rcStatus,1, 2, 10 ,1);
         
-        ConfigButton fdStatus = new ConfigButton("Fall Detector", ELConfig.getFalldetectorkey());
-        root.add(fdStatus,12, 2, 10 ,1);
+        ConfigButton enStatus = new ConfigButton("Read Entity", Config.getEntitynarratorkey());
+        root.add(enStatus,12, 2, 10 ,1);
         
-        ConfigButton dcStatus = new ConfigButton("Durability Checker", ELConfig.getDurabilitycheckerkey());
-        root.add(dcStatus,1, 4, 10 ,1);
+        ConfigButton fdStatus = new ConfigButton("Fall Detector", Config.getFalldetectorkey());
+        root.add(fdStatus,1, 4, 10 ,1);
         
-        ConfigButton enStatus = new ConfigButton("Entity Narrator", ELConfig.getEntitynarratorkey());
-        root.add(enStatus,12, 4, 10 ,1);
+        ConfigButton odStatus = new ConfigButton("Ore Detector", Config.getOredetectorkey());
+        root.add(odStatus,12, 4, 10 ,1);
+        
+        ConfigButton dcStatus = new ConfigButton("Durability Checker", Config.getDurabilitycheckerkey());
+        root.add(dcStatus,1, 5, 10 ,1);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);

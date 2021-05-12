@@ -10,13 +10,19 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-public class ELConfig {
+public class Config {
     private static JsonObject data;
     private static String CONFIG_PATH = Paths.get("config", "apextended", "config.json").toString();
     public static final String FallDetectorKey = "fall_detector_key";
-    public static final String ReadCrosshairKey = "read_crosshair_key";
+    public static final String OreDetectorKey = "ore_detector_key";
+	public static final String ReadBlocksKey = "read_blocks_key";
     public static final String DurabilityCheckKey = "durability_check_key";
     public static final String EntityNarratorKey = "entity_narrator_key";
+    
+    
+    public static String getOredetectorkey() {
+		return OreDetectorKey;
+	}
 
     public static String getEntitynarratorkey() {
 		return EntityNarratorKey;
@@ -33,12 +39,12 @@ public class ELConfig {
 	}
 
 
-	public static String getReadcrosshairkey() {
-		return ReadCrosshairKey;
+	public static String getReadblockskey() {
+		return ReadBlocksKey;
 	}
 
 
-	public ELConfig() {
+	public Config() {
     }
 
 
@@ -154,7 +160,8 @@ public class ELConfig {
     private static JsonObject resetData(){
         data = new JsonObject();
         data.add(getFalldetectorkey(), new JsonPrimitive(false));
-        data.add(getReadcrosshairkey(), new JsonPrimitive(false));
+        data.add(getOredetectorkey(), new JsonPrimitive(false));
+        data.add(getReadblockskey(), new JsonPrimitive(false));
         data.add(getDurabilitycheckerkey(), new JsonPrimitive(true));
         data.add(getEntitynarratorkey(), new JsonPrimitive(true));
         saveConfig(data);

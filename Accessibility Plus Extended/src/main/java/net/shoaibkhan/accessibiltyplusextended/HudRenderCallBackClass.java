@@ -15,7 +15,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.shoaibkhan.accessibiltyplusextended.config.ELConfig;
+import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigScreen;
 
@@ -23,10 +23,12 @@ public class HudRenderCallBackClass {
     private MinecraftClient client;
     private String tempBlock="", tempBlockPos="";
     private String tempEntity="",tempEntityPos="";
-    public static int fallDetectorFlag = 0, entityNarratorFlag = 0;
+    public static int fallDetectorFlag = 0, entityNarratorFlag = 0,oreDetectorFlag = 0;
     public static CustomWait fDObjCustomWait,entityNarrator;
     private static FallDetectorThread[] fallDetectorThreads = {new FallDetectorThread(),new FallDetectorThread(),new FallDetectorThread()};
     private static int fallDetectorThreadFlag = 0;
+    private static OreDetectorThread[] oreDetectorThreads = {new OreDetectorThread(),new OreDetectorThread(),new OreDetectorThread()};
+    private static int oreDetectorThreadFlag = 0;
     private static Entity lockedOnEntity = null;
     
     public  HudRenderCallBackClass(KeyBinding CONFIG_KEY,KeyBinding LockEntityKey){
@@ -65,22 +67,44 @@ public class HudRenderCallBackClass {
 	            }
 
                 if ( !client.isPaused() && (client.currentScreen==null))  {
-                	if(10000-fallDetectorThreadFlag>=3000 && ELConfig.get(ELConfig.getReadcrosshairkey())){
+                	
+                	// Read Crosshair
+                	if(10000-fallDetectorFlag>=3000 && (Config.get(Config.getReadblockskey())||Config.get(Config.getEntitynarratorkey()))){
                 		crosshairTarget();
                 	}
-                	if(fallDetectorThreadFlag<=0&&ELConfig.get(ELConfig.getFalldetectorkey())){
+                	
+                	// Fall Detector
+                	if(fallDetectorFlag<=0&&Config.get(Config.getFalldetectorkey())){
                 		for(int i=0; i<fallDetectorThreads.length; i++) {
                 			if(!fallDetectorThreads[i].alive) {
                 				fallDetectorThreads[i].start();
                 			} else if(i==fallDetectorThreads.length-1) {
                 				if(fallDetectorThreads[fallDetectorThreadFlag].alive) {
                 					fallDetectorThreads[fallDetectorThreadFlag].interrupt();
-                					fallDetectorThreadFlag = 0;
+                					fallDetectorFlag = 0;
                 				}
                 				fallDetectorThreads[fallDetectorThreadFlag] = new FallDetectorThread();
                 				fallDetectorThreads[fallDetectorThreadFlag].start();
                 				fallDetectorThreadFlag++;
                 				if(fallDetectorThreadFlag==fallDetectorThreads.length) fallDetectorThreadFlag = 0;
+                			}
+                		}
+                	}
+                	
+                	// Ore Detector
+                	if(fallDetectorFlag<=0&&Config.get(Config.getOredetectorkey())){
+                		for(int i=0; i<oreDetectorThreads.length; i++) {
+                			if(!oreDetectorThreads[i].alive) {
+                				oreDetectorThreads[i].start();
+                			} else if(i==oreDetectorThreads.length-1) {
+                				if(oreDetectorThreads[oreDetectorThreadFlag].alive) {
+                					oreDetectorThreads[oreDetectorThreadFlag].interrupt();
+                					fallDetectorFlag = 0;
+                				}
+                				oreDetectorThreads[oreDetectorThreadFlag] = new OreDetectorThread();
+                				oreDetectorThreads[oreDetectorThreadFlag].start();
+                				oreDetectorThreadFlag++;
+                				if(oreDetectorThreadFlag==oreDetectorThreads.length) oreDetectorThreadFlag = 0;
                 			}
                 		}
                 	}
@@ -120,27 +144,34 @@ public class HudRenderCallBackClass {
             case MISS:
                 break;
             case BLOCK:
-                BlockHitResult blockHitResult = (BlockHitResult) hit;
-                BlockState blockState = client.world.getBlockState(blockHitResult.getBlockPos());
-                Block block = blockState.getBlock();
-                if ((!tempBlock.equalsIgnoreCase(block+"")||!(tempBlockPos.equalsIgnoreCase(blockHitResult.getBlockPos()+""))) && !(blockState+"").toLowerCase().contains("sign")){
-                    tempBlock = block+"";
-                    tempBlockPos = blockHitResult.getBlockPos()+"";
-                    tempEntityPos = "";
-                    tempEntity = "";
-                    String side = blockHitResult.getSide().asString();
-                    String name = block.getTranslationKey();
-                    name = name.substring(name.lastIndexOf('.')+1);
-                    if (name.contains("_")) name = name.replace("_"," ");
-                    if(side.equalsIgnoreCase("up")) side = "top";
-                    if(side.equalsIgnoreCase("down")) side = "bottom";
-                    text = name + " " + side;
-                    narrate(text);
-                }
-                break;
+			if (Config.get(Config.getReadblockskey())) {
+				BlockHitResult blockHitResult = (BlockHitResult) hit;
+				BlockState blockState = client.world.getBlockState(blockHitResult.getBlockPos());
+				Block block = blockState.getBlock();
+				if ((!tempBlock.equalsIgnoreCase(block + "")
+						|| !(tempBlockPos.equalsIgnoreCase(blockHitResult.getBlockPos() + "")))
+						&& !(blockState + "").toLowerCase().contains("sign")) {
+					tempBlock = block + "";
+					tempBlockPos = blockHitResult.getBlockPos() + "";
+					tempEntityPos = "";
+					tempEntity = "";
+					String side = blockHitResult.getSide().asString();
+					String name = block.getTranslationKey();
+					name = name.substring(name.lastIndexOf('.') + 1);
+					if (name.contains("_"))
+						name = name.replace("_", " ");
+					if (side.equalsIgnoreCase("up"))
+						side = "top";
+					if (side.equalsIgnoreCase("down"))
+						side = "bottom";
+					text = name + " " + side;
+					narrate(text);
+				} 
+			}
+			break;
             case ENTITY:
             	
-			if (ELConfig.get(ELConfig.getEntitynarratorkey())) {
+			if (Config.get(Config.getEntitynarratorkey())) {
 				try {
 					EntityHitResult entityHitResult = (EntityHitResult) hit;
 					if ((!(((EntityHitResult) hit).getEntity().getDisplayName() + "").equalsIgnoreCase(tempEntity)
