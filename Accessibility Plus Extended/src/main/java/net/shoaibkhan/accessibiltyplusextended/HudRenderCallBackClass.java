@@ -24,15 +24,16 @@ public class HudRenderCallBackClass {
     private String tempBlock="", tempBlockPos="";
     private String tempEntity="",tempEntityPos="";
     public static int fallDetectorFlag = 0, entityNarratorFlag = 0,oreDetectorFlag = 0;
-    public static CustomWait fDObjCustomWait,entityNarrator, oreThread;
+    public static CustomWait fDObjCustomWait,ODObjCustomWait,entityNarrator, oreThread;
     private static FallDetectorThread[] fallDetectorThreads = {new FallDetectorThread(),new FallDetectorThread(),new FallDetectorThread()};
     private static int fallDetectorThreadFlag = 0;
     private static OreDetectorThread[] oreDetectorThreads = {new OreDetectorThread(),new OreDetectorThread(),new OreDetectorThread()};
-    private static int oreDetectorThreadFlag = 0;
+    public static int oreDetectorThreadFlag = 0;
     private static Entity lockedOnEntity = null;
     
     public  HudRenderCallBackClass(KeyBinding CONFIG_KEY,KeyBinding LockEntityKey){
         fDObjCustomWait = new CustomWait();
+        ODObjCustomWait = new CustomWait();
         entityNarrator = new CustomWait();
         
         
@@ -92,19 +93,14 @@ public class HudRenderCallBackClass {
                 	}
                 	
                 	// Ore Detector
-                	if(fallDetectorFlag<=0&&Config.get(Config.getOredetectorkey())){
+                	if(Config.get(Config.getOredetectorkey())){
                 		for(int i=0; i<oreDetectorThreads.length; i++) {
                 			if(!oreDetectorThreads[i].alive) {
                 				oreDetectorThreads[i].start();
-                			} else if(i==oreDetectorThreads.length-1) {
-                				if(oreDetectorThreads[oreDetectorThreadFlag].alive) {
-                					oreDetectorThreads[oreDetectorThreadFlag].interrupt();
-                					fallDetectorFlag = 0;
-                				}
-                				oreDetectorThreads[oreDetectorThreadFlag] = new OreDetectorThread();
-                				oreDetectorThreads[oreDetectorThreadFlag].start();
-                				oreDetectorThreadFlag++;
-                				if(oreDetectorThreadFlag==oreDetectorThreads.length) oreDetectorThreadFlag = 0;
+                			} else if(oreDetectorThreads[i].alive  && oreDetectorThreads[i].finished) {
+                				oreDetectorThreads[i].interrupt();
+                				oreDetectorThreads[i] = new OreDetectorThread();
+                				oreDetectorThreads[i].start();
                 			}
                 		}
                 	}

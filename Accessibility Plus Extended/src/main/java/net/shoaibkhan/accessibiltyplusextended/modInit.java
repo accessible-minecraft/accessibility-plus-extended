@@ -11,19 +11,27 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 public class modInit implements ModInitializer {
 	HudRenderCallBackClass hudRenderCallBackClass;
 	public static KeyBinding CONFIG_KEY,LockEntityKey;
 	public static Map<String, Integer> ores;
 	private static CustomWait oreThread;
+	public static final Identifier oreSoundID = new Identifier("apebyshoaibkhan:ore");
+	public static SoundEvent oreSoundEvent;
 	@Override
 	public void onInitialize() {
 		System.out.println("Accessibilty Plus Extended is initializing!");
 		CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("APE Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "APE Extended"));
 		LockEntityKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Lock onto Entity", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Y, "APE Extended"));
+		
+		oreSoundEvent = new SoundEvent(oreSoundID);
+		Registry.register(Registry.SOUND_EVENT, oreSoundID, oreSoundEvent);
+		
 		ores = new HashMap<String, Integer>();
-		ores.put("default", 9999);
         oreThread = new CustomWait();
         oreThread.setWait(999, 3, MinecraftClient.getInstance());
         oreThread.startThread();

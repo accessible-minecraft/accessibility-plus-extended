@@ -18,7 +18,13 @@ public class Config {
 	public static final String ReadBlocksKey = "read_blocks_key";
     public static final String DurabilityCheckKey = "durability_check_key";
     public static final String EntityNarratorKey = "entity_narrator_key";
+    public static final String OreDetectorCustomSoundKey = "ore_detector_custom_sound_key";
     
+
+
+    public static String getOredetectorcustomsoundkey() {
+		return OreDetectorCustomSoundKey;
+	}
     
     public static String getOredetectorkey() {
 		return OreDetectorKey;
@@ -162,13 +168,14 @@ public class Config {
         data.add(getFalldetectorkey(), new JsonPrimitive(false));
         data.add(getOredetectorkey(), new JsonPrimitive(false));
         data.add(getReadblockskey(), new JsonPrimitive(false));
+        data.add(getOredetectorcustomsoundkey(), new JsonPrimitive(false));
         data.add(getDurabilitycheckerkey(), new JsonPrimitive(true));
         data.add(getEntitynarratorkey(), new JsonPrimitive(true));
         saveConfig(data);
         return data;
     }
 
-    public static void saveConfig(JsonObject newConfig) {
+	public static void saveConfig(JsonObject newConfig) {
         // Save config to file
 
         String jsonString = new Gson().toJson(data);

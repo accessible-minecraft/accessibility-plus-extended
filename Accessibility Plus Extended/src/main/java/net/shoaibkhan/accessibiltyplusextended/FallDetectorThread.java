@@ -40,7 +40,7 @@ public class FallDetectorThread extends Thread {
 	    	    			if(tempname.contains("void_air")) return;
 	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
 	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
-	    	    			if (tempname.equals("air")) {
+	    	    			if (tempname.contains("air")) {
 								tempY--;
 							} else {
 								if(posY-tempY >= 5) {
@@ -63,7 +63,7 @@ public class FallDetectorThread extends Thread {
 	    	    			if(tempname.contains("void_air")) return;
 	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
 	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
-	    	    			if (!tempname.equals("air")) {
+	    	    			if (!tempname.contains("air")) {
 								tempY++;
 							} else {
 								break;
@@ -95,7 +95,7 @@ public class FallDetectorThread extends Thread {
 	    	    			if(tempname.contains("void_air")) return;
 	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
 	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
-	    	    			if (tempname.equals("air")) {
+	    	    			if (tempname.contains("air")) {
 								tempY--;
 							} else {
 								if(posY-tempY >= 5) {
@@ -118,7 +118,7 @@ public class FallDetectorThread extends Thread {
 	    	    			if(tempname.contains("void_air")) return;
 	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
 	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
-	    	    			if (!tempname.equals("air")) {
+	    	    			if (!tempname.contains("air")) {
 								tempY++;
 							} else {
 								break;
@@ -150,7 +150,7 @@ public class FallDetectorThread extends Thread {
 	    	    			if(tempname.contains("void_air")) return;
 	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
 	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
-	    	    			if (tempname.equals("air")) {
+	    	    			if (tempname.contains("air")) {
 								tempY--;
 							} else {
 								if(posY-tempY >= 5) {
@@ -173,7 +173,7 @@ public class FallDetectorThread extends Thread {
 	    	    			if(tempname.contains("void_air")) return;
 	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
 	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
-	    	    			if (!tempname.equals("air")) {
+	    	    			if (!tempname.contains("air")) {
 								tempY++;
 							} else {
 								break;
@@ -205,7 +205,7 @@ public class FallDetectorThread extends Thread {
 	    	    			if(tempname.contains("void_air")) return;
 	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
 	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
-	    	    			if (tempname.equals("air")) {
+	    	    			if (tempname.contains("air")) {
 								tempY--;
 							} else {
 								if(posY-tempY >= 5) {
@@ -228,7 +228,7 @@ public class FallDetectorThread extends Thread {
 	    	    			if(tempname.contains("void_air")) return;
 	    	    			tempname = tempname.substring(tempname.lastIndexOf(".")+1);
 	    	    			if(tempname.contains("_")) tempname = tempname.replace("_", "");
-	    	    			if (!tempname.equals("air")) {
+	    	    			if (!tempname.contains("air")) {
 								tempY++;
 							} else {
 								break;

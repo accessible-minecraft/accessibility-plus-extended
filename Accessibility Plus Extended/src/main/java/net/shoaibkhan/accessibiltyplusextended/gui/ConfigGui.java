@@ -33,12 +33,15 @@ public class ConfigGui extends LightweightGuiDescription {
         ConfigButton odStatus = new ConfigButton("Ore Detector", Config.getOredetectorkey());
         root.add(odStatus,12, 4, 10 ,1);
         
-        ConfigButton dcStatus = new ConfigButton("Durability Checker", Config.getDurabilitycheckerkey());
-        root.add(dcStatus,1, 5, 10 ,1);
+        ConfigButton odcsStatus = new ConfigButton("Custom Ore Sound", Config.getOredetectorcustomsoundkey());
+        root.add(odcsStatus,1, 6, 10 ,1);
+        
+        ConfigButton dcStatus = new ConfigButton("ToolTip Durability", Config.getDurabilitycheckerkey());
+        root.add(dcStatus,12, 6, 10 ,1);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 7, 10, 7, 1);
+        root.add(doneButton, 8, 10, 7, 1);
 
         WLabel label = new WLabel(new LiteralText("Accessibility Plus Extended"), modInit.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
