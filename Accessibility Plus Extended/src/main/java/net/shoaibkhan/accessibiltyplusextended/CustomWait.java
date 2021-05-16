@@ -25,11 +25,10 @@ public class CustomWait extends Thread {
                 		return;
                 	}
                 	if(client.isPaused()) continue;
+                    HudRenderCallBackClass.fallDetectorFlag--;
                     Thread.sleep(1);
                 } catch (Exception e) {
-                    
                 }
-                HudRenderCallBackClass.fallDetectorFlag--;
             }
         } else if(val==2) {
         	HudRenderCallBackClass.entityNarratorFlag = timeOut;

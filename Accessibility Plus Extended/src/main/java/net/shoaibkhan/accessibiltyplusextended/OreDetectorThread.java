@@ -11,7 +11,10 @@ import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
 public class OreDetectorThread extends Thread {
 	public boolean finished = false, alive=false;
-	private MinecraftClient client; 
+	private MinecraftClient client;
+	public static String[] volume = {"0", "0.05", "0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9", "0.95", "1"};
+	public static String[] pitch = {"0","0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5","-0.5", "-1", "-1.5", "-2", "-2.5", "-3", "-3.5", "-4", "-4.5", "-5"};
+	
 	public void run() {
 		alive=true;
 		client = MinecraftClient.getInstance();
@@ -33,11 +36,8 @@ public class OreDetectorThread extends Thread {
 		if(name.contains("void_air")) return;
 		name = name.substring(name.lastIndexOf(".")+1);
 		if(name.contains("_")) name = name.replace("_", " ");
-		String fluidState = block.getFluidState(client.world.getBlockState(blockPos))+"";
-		fluidState = fluidState.toLowerCase();
-//		System.out.println(name+"\t"+fluidState+"\t"+blockPos);
 		
-		if(fluidState.contains("lavafluid") && !modInit.ores.containsKey("Warning Lava Ore Detector")) {
+		if(name.contains("lava") && !modInit.ores.containsKey("Warning Lava Ore Detector")) {
 			if(!modInit.ores.containsKey("Warning Lava Ore Detector")) {
 				client.player.sendMessage(new LiteralText("Warning Lava"), true);
 				modInit.ores.put("Warning Lava Ore Detector", 5000);
@@ -46,10 +46,21 @@ public class OreDetectorThread extends Thread {
 		
 		if( name.contains("ore") && !modInit.ores.containsKey(name+""+blockPos)) {
 			try {
+				Float vol,pit;
+				try {
+					vol = Float.parseFloat(volume[Config.getInt(Config.getOredetectorvolume())]+"");
+				} catch (Exception e) {
+					vol = 0.2f;
+				}
+				try {
+					pit = Float.parseFloat(pitch[Config.getInt(Config.getOredetectorpitch())]+"");
+				} catch (Exception e) {
+					pit = 1f;
+				}
 				if(Config.get(Config.getOredetectorcustomsoundkey())) {
-					client.world.playSound(blockPos, modInit.oreSoundEvent, SoundCategory.BLOCKS, 0.5f, 1f, true);
+					client.world.playSound(blockPos, modInit.oreSoundEvent, SoundCategory.BLOCKS, vol, pit, true);
 				} else { 
-					client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f, true);
+					client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, vol, pit, true);
 				}
 			} catch (Exception e) {
 			}

@@ -9,7 +9,10 @@ import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.command.argument.EntityAnchorArgumentType.EntityAnchor;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -21,6 +24,7 @@ import net.shoaibkhan.accessibiltyplusextended.gui.ConfigScreen;
 
 public class HudRenderCallBackClass {
     private MinecraftClient client;
+    private PlayerEntity player;
     private String tempBlock="", tempBlockPos="";
     private String tempEntity="",tempEntityPos="";
     public static int fallDetectorFlag = 0, entityNarratorFlag = 0,oreDetectorFlag = 0;
@@ -41,6 +45,7 @@ public class HudRenderCallBackClass {
         HudRenderCallback.EVENT.register((__, ___) -> {
         	this.client = MinecraftClient.getInstance();
         	if(client.player == null) return;
+        	player = client.player;
         	boolean isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())||InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
             try {
             	
@@ -64,7 +69,12 @@ public class HudRenderCallBackClass {
             	}
             	
             	while(LockEntityKey.wasPressed()){
-            		lockedOnEntity = entityLocking();
+            		Entity toBeLocked = entityLocking();
+            		if(toBeLocked!=null) {
+            			MutableText mutableText = (new LiteralText("")).append(toBeLocked.getName());
+            			player.sendMessage(new LiteralText(mutableText.getString()+" "+get_position_difference(toBeLocked.getBlockPos())), true);
+            			lockedOnEntity = toBeLocked;
+            		}
 	            }
 
                 if ( !client.isPaused() && (client.currentScreen==null))  {
@@ -110,27 +120,92 @@ public class HudRenderCallBackClass {
             
         });
     }
-
-    private Entity entityLocking() {
-    	HitResult hit = client.crosshairTarget;
-        switch (hit.getType()) {
-            case MISS:
-            	return null;
-            case BLOCK:
-            	return null;
-            case ENTITY:
-				try {
-					EntityHitResult entityHitResult = (EntityHitResult) hit;
-	            	BlockPos blockPos = ((EntityHitResult) hit).getEntity().getBlockPos();
-	            	Vec3d vec3d = new Vec3d(blockPos.getX(),blockPos.getY(),blockPos.getZ());
-	            	client.player.lookAt(EntityAnchor.EYES, vec3d);
-	            	return entityHitResult.getEntity();
-				} catch (Exception e) {
-					e.printStackTrace();
-					return null;
-				}
+    
+    private String get_position_difference(BlockPos blockPos) {
+    	String dir = client.player.getHorizontalFacing().asString();
+        dir = dir.toLowerCase().trim();
+        
+        String diffXBlockPos = ((double)player.getBlockPos().getX() - blockPos.getX()) + "";
+        String diffYBlockPos = ((double)(player.getBlockPos().getY()+1) - blockPos.getY())+ "";
+        String diffZBlockPos = ((double)player.getBlockPos().getZ() - blockPos.getZ()) + "";
+        
+        diffXBlockPos = diffXBlockPos.substring(0, diffXBlockPos.indexOf("."));
+        diffYBlockPos = diffYBlockPos.substring(0, diffYBlockPos.indexOf("."));
+        diffZBlockPos = diffZBlockPos.substring(0, diffZBlockPos.indexOf("."));
+        
+        if(!diffXBlockPos.equalsIgnoreCase("0")) {
+        	if(dir.contains("east")||dir.contains("west")) {
+        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
+        		diffXBlockPos += " blocks away";
+        	} else if(dir.contains("north")) {
+        		if(diffXBlockPos.contains("-")) diffXBlockPos += " blocks to left";
+        		else diffXBlockPos += " blocks to right";
+        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
+        	} else if(dir.contains("south")) {
+        		if(diffXBlockPos.contains("-")) diffXBlockPos += " blocks to right";
+        		else diffXBlockPos += " blocks to left";
+        		if(diffXBlockPos.contains("-")) diffXBlockPos = diffXBlockPos.replace("-", "");
+        	}
+        } else {
+        	diffXBlockPos = "";
         }
-		return null;
+        
+        if(!diffYBlockPos.equalsIgnoreCase("0")) {
+        	if(diffYBlockPos.contains("-")) {
+        		diffYBlockPos = diffYBlockPos.replace("-", "");
+        		diffYBlockPos += " blocks up";
+        	} else {
+        		diffYBlockPos += " blocks down";
+        	}
+        } else {
+        	diffYBlockPos = "";
+        }
+        
+        if(!diffZBlockPos.equalsIgnoreCase("0")) {
+        	if(dir.contains("north")||dir.contains("south")) {
+        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
+        		diffZBlockPos += " blocks away";
+        	} else if(dir.contains("east")) {
+        		if(diffZBlockPos.contains("-")) diffZBlockPos += " blocks to right";
+        		else diffZBlockPos += " blocks to left";
+        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
+        	} else if(dir.contains("west")) {
+        		if(diffZBlockPos.contains("-")) diffZBlockPos += " blocks to left";
+        		else diffZBlockPos += " blocks to right";
+        		if(diffZBlockPos.contains("-")) diffZBlockPos = diffZBlockPos.replace("-", "");
+        	}
+        } else {
+        	diffZBlockPos = "";
+        }
+        
+        String text = "";
+        if(dir.contains("north")||dir.contains("south")) text = String.format("%s  %s  %s", diffZBlockPos, diffYBlockPos, diffXBlockPos);
+        else text = String.format("%s  %s  %s", diffXBlockPos, diffYBlockPos, diffZBlockPos);
+        return text;
+    }
+    
+    private Entity entityLocking() {
+    	{
+    		double closestDouble=-99999;
+    		Entity closestEntity = null;
+    		try {
+				for (Entity i : client.world.getEntities()) {
+					if (!(i instanceof MobEntity)) continue;
+					BlockPos blockPos = i.getBlockPos();
+					
+					Vec3d entityVec3d = new Vec3d(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+					Vec3d playerVec3d = new Vec3d(client.player.getBlockPos().getX(), client.player.getBlockPos().getY(), client.player.getBlockPos().getZ());
+					if(closestDouble==-99999 || closestDouble>entityVec3d.distanceTo(playerVec3d)) {
+						closestDouble = entityVec3d.distanceTo(playerVec3d);
+						closestEntity = i;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+    		if(closestDouble>10.0) closestEntity = null;
+			return closestEntity;
+    	}
     }
     
     private void crosshairTarget() {
@@ -170,6 +245,7 @@ public class HudRenderCallBackClass {
 			if (Config.get(Config.getEntitynarratorkey())) {
 				try {
 					EntityHitResult entityHitResult = (EntityHitResult) hit;
+					if(((EntityHitResult) hit).getEntity()==lockedOnEntity) break;
 					if ((!(((EntityHitResult) hit).getEntity().getDisplayName() + "").equalsIgnoreCase(tempEntity)
 							|| !(((EntityHitResult) hit).hashCode() + "").equalsIgnoreCase(tempEntityPos))
 							&& entityNarratorFlag <= 0) {

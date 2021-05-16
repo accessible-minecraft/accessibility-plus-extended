@@ -19,9 +19,18 @@ public class Config {
     public static final String DurabilityCheckKey = "durability_check_key";
     public static final String EntityNarratorKey = "entity_narrator_key";
     public static final String OreDetectorCustomSoundKey = "ore_detector_custom_sound_key";
+    public static final String OreDetectorVolume = "ore_detector_volume";
+	public static final String OreDetectorPitch = "ore_detector_pitch";
     
+    
+    public static String getOredetectorvolume() {
+		return OreDetectorVolume;
+	}
 
-
+	public static String getOredetectorpitch() {
+		return OreDetectorPitch;
+	}
+	
     public static String getOredetectorcustomsoundkey() {
 		return OreDetectorCustomSoundKey;
 	}
@@ -82,6 +91,21 @@ public class Config {
         return val;
     }
 
+    public static Integer getInt(String key) {
+    	if (data == null) {
+            loadConfig();
+        }
+        String val;
+        try {
+            val = data.get(key).getAsString();
+            return Integer.parseInt(val);
+        } catch (Exception e) {
+            resetData();
+            val = data.get(key).getAsString();
+            return Integer.parseInt(val);
+        }
+    }
+    
     public static int getOpacity(String key) {
         if (data == null) {
             loadConfig();
@@ -171,6 +195,8 @@ public class Config {
         data.add(getOredetectorcustomsoundkey(), new JsonPrimitive(false));
         data.add(getDurabilitycheckerkey(), new JsonPrimitive(true));
         data.add(getEntitynarratorkey(), new JsonPrimitive(true));
+        data.add(getOredetectorvolume(), new JsonPrimitive("5"));
+        data.add(getOredetectorpitch(), new JsonPrimitive("2"));
         saveConfig(data);
         return data;
     }

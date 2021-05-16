@@ -9,6 +9,7 @@ import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.shoaibkhan.accessibiltyplusextended.OreDetectorThread;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
@@ -38,6 +39,12 @@ public class ConfigGui extends LightweightGuiDescription {
         
         ConfigButton dcStatus = new ConfigButton("ToolTip Durability", Config.getDurabilitycheckerkey());
         root.add(dcStatus,12, 6, 10 ,1);
+        
+        ArrayButton odvButton = new ArrayButton("Volume", Config.getOredetectorvolume(), OreDetectorThread.volume);
+        root.add(odvButton,1, 8, 10 ,1);
+        
+        ArrayButton odpButton = new ArrayButton("Pitch", Config.getOredetectorpitch(), OreDetectorThread.pitch);
+        root.add(odpButton,12, 8, 10 ,1);
 
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
