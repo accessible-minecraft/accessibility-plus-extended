@@ -8,7 +8,6 @@ import org.lwjgl.glfw.GLFW;
 import io.github.cottonmc.cotton.gui.widget.data.Color;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.sound.SoundEvent;
@@ -18,23 +17,23 @@ import net.minecraft.util.registry.Registry;
 public class modInit implements ModInitializer {
 	HudRenderCallBackClass hudRenderCallBackClass;
 	public static KeyBinding CONFIG_KEY,LockEntityKey;
-	public static Map<String, Integer> ores;
-	private static CustomWait oreThread;
+	public static Map<String, Integer> mainThreadMap;
+	private static CustomWait mainThreadCustomWait;
 	public static final Identifier oreSoundID = new Identifier("apebyshoaibkhan:ore");
 	public static SoundEvent oreSoundEvent;
+	
 	@Override
 	public void onInitialize() {
 		System.out.println("Accessibilty Plus Extended is initializing!");
-		CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("APE Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "APE Extended"));
-		LockEntityKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Lock onto Entity", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Y, "APE Extended"));
+		CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("APE Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "AP Extended"));
+		LockEntityKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Lock onto Entity", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Y, "AP Extended"));
 		
 		oreSoundEvent = new SoundEvent(oreSoundID);
 		Registry.register(Registry.SOUND_EVENT, oreSoundID, oreSoundEvent);
 		
-		ores = new HashMap<String, Integer>();
-        oreThread = new CustomWait();
-        oreThread.setWait(999, 3, MinecraftClient.getInstance());
-        oreThread.startThread();
+		mainThreadMap = new HashMap<String, Integer>();
+        mainThreadCustomWait = new CustomWait();
+        mainThreadCustomWait.startThread();
 		hudRenderCallBackClass = new HudRenderCallBackClass(CONFIG_KEY,LockEntityKey);
 	}
 	

@@ -29,7 +29,6 @@ public class DurabilityMixin {
 				int currrRemainingDurability = totalDurability - (itemStack.getDamage());
 				list.add(1, (new LiteralText("Durability: " + currrRemainingDurability + " of " + totalDurability)
 						.formatted(Formatting.GREEN)));
-//				throw new Exception("Crashed\t"+currrRemainingDurability);
 			}
 		}
 	}

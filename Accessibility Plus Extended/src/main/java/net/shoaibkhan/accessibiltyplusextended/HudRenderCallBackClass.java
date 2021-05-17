@@ -28,17 +28,11 @@ public class HudRenderCallBackClass {
     private String tempBlock="", tempBlockPos="";
     private String tempEntity="",tempEntityPos="";
     public static int fallDetectorFlag = 0, entityNarratorFlag = 0,oreDetectorFlag = 0;
-    public static CustomWait fDObjCustomWait,ODObjCustomWait,entityNarrator, oreThread;
     private static FallDetectorThread[] fallDetectorThreads = {new FallDetectorThread(),new FallDetectorThread(),new FallDetectorThread()};
-    private static int fallDetectorThreadFlag = 0;
     private static OreDetectorThread[] oreDetectorThreads = {new OreDetectorThread(),new OreDetectorThread(),new OreDetectorThread()};
-    public static int oreDetectorThreadFlag = 0;
     private static Entity lockedOnEntity = null;
     
     public  HudRenderCallBackClass(KeyBinding CONFIG_KEY,KeyBinding LockEntityKey){
-        fDObjCustomWait = new CustomWait();
-        ODObjCustomWait = new CustomWait();
-        entityNarrator = new CustomWait();
         
         
         
@@ -85,19 +79,14 @@ public class HudRenderCallBackClass {
                 	}
                 	
                 	// Fall Detector
-                	if(fallDetectorFlag<=0&&Config.get(Config.getFalldetectorkey())){
+                	if(Config.get(Config.getFalldetectorkey())){
                 		for(int i=0; i<fallDetectorThreads.length; i++) {
                 			if(!fallDetectorThreads[i].alive) {
                 				fallDetectorThreads[i].start();
-                			} else if(i==fallDetectorThreads.length-1) {
-                				if(fallDetectorThreads[fallDetectorThreadFlag].alive) {
-                					fallDetectorThreads[fallDetectorThreadFlag].interrupt();
-                					fallDetectorFlag = 0;
-                				}
-                				fallDetectorThreads[fallDetectorThreadFlag] = new FallDetectorThread();
-                				fallDetectorThreads[fallDetectorThreadFlag].start();
-                				fallDetectorThreadFlag++;
-                				if(fallDetectorThreadFlag==fallDetectorThreads.length) fallDetectorThreadFlag = 0;
+                			} else if(fallDetectorThreads[i].alive && fallDetectorThreads[i].finished) {
+            					fallDetectorThreads[i].interrupt();
+                				fallDetectorThreads[i] = new FallDetectorThread();
+                				fallDetectorThreads[i].start();
                 			}
                 		}
                 	}
@@ -248,7 +237,7 @@ public class HudRenderCallBackClass {
 					if(((EntityHitResult) hit).getEntity()==lockedOnEntity) break;
 					if ((!(((EntityHitResult) hit).getEntity().getDisplayName() + "").equalsIgnoreCase(tempEntity)
 							|| !(((EntityHitResult) hit).hashCode() + "").equalsIgnoreCase(tempEntityPos))
-							&& entityNarratorFlag <= 0) {
+							&& !modInit.mainThreadMap.containsKey("entity_narrator_key")) {
 
 						tempEntity = ((EntityHitResult) hit).getEntity().getType() + "";
 						tempEntityPos = ((EntityHitResult) hit).hashCode() + "";
@@ -267,13 +256,7 @@ public class HudRenderCallBackClass {
 							text = customNameString;
 						}
 						narrate(text);
-						if (entityNarrator.isAlive()) {
-							entityNarrator.stopThread();
-							entityNarratorFlag = 0;
-						}
-						entityNarrator = new CustomWait();
-						entityNarrator.setWait(5000, 2, client);
-						entityNarrator.startThread();
+						modInit.mainThreadMap.put("entity_narrator_key", 5000);
 					}
 				} catch (Exception e) {
 					try {

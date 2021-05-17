@@ -37,14 +37,14 @@ public class OreDetectorThread extends Thread {
 		name = name.substring(name.lastIndexOf(".")+1);
 		if(name.contains("_")) name = name.replace("_", " ");
 		
-		if(name.contains("lava") && !modInit.ores.containsKey("Warning Lava Ore Detector")) {
-			if(!modInit.ores.containsKey("Warning Lava Ore Detector")) {
+		if(name.contains("lava") && !modInit.mainThreadMap.containsKey("lava_detector_key")) {
+			if(!modInit.mainThreadMap.containsKey("lava_detector_key")) {
 				client.player.sendMessage(new LiteralText("Warning Lava"), true);
-				modInit.ores.put("Warning Lava Ore Detector", 5000);
+				modInit.mainThreadMap.put("lava_detector_key", 5000);
 			}
 		}
 		
-		if( name.contains("ore") && !modInit.ores.containsKey(name+""+blockPos)) {
+		if( name.contains("ore") && !modInit.mainThreadMap.containsKey(name+""+blockPos)) {
 			try {
 				Float vol,pit;
 				try {
@@ -64,7 +64,7 @@ public class OreDetectorThread extends Thread {
 				}
 			} catch (Exception e) {
 			}
-			modInit.ores.put(name+""+blockPos, 10000);
+			modInit.mainThreadMap.put(name+""+blockPos, 10000);
 		} else if( name.contains("air") && val-1>=0 ) {
 	    	int posX = blockPos.getX();
 	    	int posY = blockPos.getY();

@@ -196,7 +196,7 @@ public class Config {
         data.add(getDurabilitycheckerkey(), new JsonPrimitive(true));
         data.add(getEntitynarratorkey(), new JsonPrimitive(true));
         data.add(getOredetectorvolume(), new JsonPrimitive("5"));
-        data.add(getOredetectorpitch(), new JsonPrimitive("2"));
+        data.add(getOredetectorpitch(), new JsonPrimitive("20"));
         saveConfig(data);
         return data;
     }

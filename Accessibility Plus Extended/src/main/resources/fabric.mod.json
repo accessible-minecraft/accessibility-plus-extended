@@ -4,17 +4,17 @@
   "version": "${version}",
 
   "name": "Accessibility Plus Extended",
-  "description": "Discription",
+  "description": "A minecraft mod that adds more accessibility to improve performance.",
   "authors": [
     "Shoaib Khan"
   ],
   "contact": {
-    "homepage": "",
-    "sources": ""
+    "homepage": "https://github.com/shoaib11120/Accessibility-Plus-Extended",
+    "sources": "https://github.com/shoaib11120/Accessibility-Plus-Extended"
   },
 
   "license": "MIT",
-  "icon": "",
+  "icon": "assets/apebyshoaibkhan/A.P.E..png",
 
   "environment": "*",
   "entrypoints": {
@@ -32,6 +32,6 @@
     "minecraft": "1.16.x"
   },
   "suggests": {
-    "another-mod": "*"
+    "another-mod": "https://www.curseforge.com/minecraft/mc-mods/accessibility-plus"
   }
 }
