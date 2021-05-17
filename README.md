@@ -18,7 +18,7 @@
 
  A minecraft java mod that adds more accessibility options to improve performance.
 
- | [Download]() | [Issues](https://github.com/shoaib11120/Accessibility-Plus-Extended/issues) | [Github](https://github.com/shoaib11120/Accessibility-Plus-Extended) |
+ | [Download](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended/files) | [Issues](https://github.com/shoaib11120/Accessibility-Plus-Extended/issues) | [CurseForge](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended/) |
 
 ## Requirements
 
