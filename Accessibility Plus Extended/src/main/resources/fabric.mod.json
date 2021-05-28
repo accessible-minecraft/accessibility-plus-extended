@@ -19,7 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.shoaibkhan.accessibiltyplusextended.modInit"
+      	"net.shoaibkhan.accessibiltyplusextended.modInit"
+    ],
+    "cotton-client-commands": [
+    	"net.shoaibkhan.accessibiltyplusextended.customCommands"
     ]
   },
   "mixins": [
@@ -29,7 +32,8 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.16.x"
+    "minecraft": "1.16.x",
+    "cotton-client-commands": "^1.0.0"
   },
   "suggests": {
     "another-mod": "https://www.curseforge.com/minecraft/mc-mods/accessibility-plus"

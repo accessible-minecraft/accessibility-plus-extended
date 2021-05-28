@@ -9,15 +9,16 @@ import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.accessibiltyplusextended.OreDetectorThread;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
 public class ConfigGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
+    private MinecraftClient client;
 
     public ConfigGui(ClientPlayerEntity player,MinecraftClient client) {
         this.player = player;
+        this.client = client;
         WGridPanel root = new WGridPanel();
 
         setRootPanel(root);
@@ -34,21 +35,16 @@ public class ConfigGui extends LightweightGuiDescription {
         ConfigButton odStatus = new ConfigButton("Ore Detector", Config.getOredetectorkey());
         root.add(odStatus,12, 4, 10 ,1);
         
-        ConfigButton odcsStatus = new ConfigButton("Custom Ore Sound", Config.getOredetectorcustomsoundkey());
-        root.add(odcsStatus,1, 6, 10 ,1);
-        
         ConfigButton dcStatus = new ConfigButton("ToolTip Durability", Config.getDurabilitycheckerkey());
-        root.add(dcStatus,12, 6, 10 ,1);
-        
-        ArrayButton odvButton = new ArrayButton("Volume", Config.getOredetectorvolume(), OreDetectorThread.volume);
-        root.add(odvButton,1, 8, 10 ,1);
-        
-        ArrayButton odpButton = new ArrayButton("Pitch", Config.getOredetectorpitch(), OreDetectorThread.pitch);
-        root.add(odpButton,12, 8, 10 ,1);
+        root.add(dcStatus,7, 6, 10 ,1);
 
+        WButton settingsButton = new WButton(new LiteralText("Settings"));
+        settingsButton.setOnClick(this::onSettingsClick);
+        root.add(settingsButton, 2, 8, 7, 1);
+        
         WButton doneButton = new WButton(new LiteralText("Done"));
         doneButton.setOnClick(this::onDoneClick);
-        root.add(doneButton, 8, 10, 7, 1);
+        root.add(doneButton, 12, 8, 7, 1);
 
         WLabel label = new WLabel(new LiteralText("Accessibility Plus Extended"), modInit.colors("red",100));
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -59,6 +55,11 @@ public class ConfigGui extends LightweightGuiDescription {
 
     private void onDoneClick() {
         this.player.closeScreen();
+    }
+
+    private void onSettingsClick() {
+        this.player.closeScreen();
+        this.client.openScreen(new ConfigScreen(new SettingsGui(client.player,client), "Settings", player));
     }
 
     // private void hbClick(){

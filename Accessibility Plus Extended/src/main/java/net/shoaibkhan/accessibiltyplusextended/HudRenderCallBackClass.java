@@ -1,5 +1,8 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -31,6 +34,16 @@ public class HudRenderCallBackClass {
     private static FallDetectorThread[] fallDetectorThreads = {new FallDetectorThread(),new FallDetectorThread(),new FallDetectorThread()};
     private static OreDetectorThread[] oreDetectorThreads = {new OreDetectorThread(),new OreDetectorThread(),new OreDetectorThread()};
     private static Entity lockedOnEntity = null;
+    private int minColumn = 0;
+    private int maxColumn = 0;
+    private int currentColumn = 0;
+    private int differenceColumn = 0;
+    private int minRow = 0;
+    private int maxRow = 0;
+    private int currentRow = 0;
+    private int differenceRow = 0;
+    private boolean isDPressed, isAPressed, isWPressed, isSPressed;
+    public static boolean isTradeScreenOpen = false;
     
     public  HudRenderCallBackClass(KeyBinding CONFIG_KEY,KeyBinding LockEntityKey){
         
@@ -41,6 +54,21 @@ public class HudRenderCallBackClass {
         	if(client.player == null) return;
         	player = client.player;
         	boolean isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())||InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
+        	
+        	isDPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.d").getCode()));
+			isAPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.a").getCode()));
+			isWPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.w").getCode()));
+			isSPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.s").getCode()));
+			
+			if (client.currentScreen == null) {
+				currentColumn = 0;
+				currentRow = 0;
+				isTradeScreenOpen = false;
+            } else {
+            	Screen screen =  client.currentScreen;
+            	screenHandler(screen);	            	
+            }
+        	
             try {
             	
             	if(lockedOnEntity != null) {
@@ -109,6 +137,86 @@ public class HudRenderCallBackClass {
             
         });
     }
+        
+    private void screenHandler(Screen screen) {
+    	MutableText titleMutableText = new LiteralText("").append(screen.getTitle());
+    	String titleString = titleMutableText.getString().toLowerCase();
+    	{
+    		if(!modInit.mainThreadMap.containsKey("stonecutter_result_slot") && titleString.contains("stonecutter")) stonecutterScreen();
+			if(titleString.contains("armorer")||titleString.contains("butcher")||titleString.contains("cartographer")||titleString.contains("cleric")||titleString.contains("farmer")||titleString.contains("fisherman")||titleString.contains("fletcher")||titleString.contains("leatherworker")||titleString.contains("librarian")||titleString.contains("mason")||titleString.contains("shepherd")||titleString.contains("toolsmith")||titleString.contains("weaponsmith")){
+				try {
+					isTradeScreenOpen = true;
+					System.out.println("XX:"+client.getWindow().getScaledWidth()+"\tYY:"+client.getWindow().getScaledHeight());
+					System.out.println("X:"+client.mouse.getX()+"\tY:"+client.mouse.getY());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+    	}
+    }
+
+	private void stonecutterScreen() {
+		try {
+			minColumn = 635;
+			maxColumn = 785;
+			minRow = 270;
+			maxRow = 390;
+			differenceColumn = 50;
+			differenceRow = 60;
+			System.out.println("XX:"+client.getWindow().getScaledWidth()+"\tYY:"+client.getWindow().getScaledHeight());
+			Robot robot;
+			robot = new Robot();
+			
+			if(isDPressed) {
+				if(currentColumn==0 && currentRow==0) {
+					currentColumn = minColumn;
+					currentRow = minRow;
+				} else if(currentColumn == maxColumn) {
+					currentColumn += 0;
+				} else {
+					currentColumn += differenceColumn; 
+				}
+				robot.mouseMove(currentColumn, currentRow);
+				modInit.mainThreadMap.put("stonecutter_result_slot", 200);
+			} else if(isAPressed) {
+				if(currentColumn==0 && currentRow==0) {
+					currentColumn = minColumn;
+					currentRow = minRow;
+				} else if(currentColumn == minColumn) {
+					currentColumn -= 0;
+				} else {
+					currentColumn -= differenceColumn; 
+				}
+				robot.mouseMove(currentColumn, currentRow);
+				modInit.mainThreadMap.put("stonecutter_result_slot", 200);
+			} else if(isSPressed) {
+				if(currentColumn==0 && currentRow==0) {
+					currentColumn = minColumn;
+					currentRow = minRow;
+				} else if(currentRow == maxRow) {
+					currentRow += 0;
+				} else {
+					currentRow += differenceRow; 
+				}
+				robot.mouseMove(currentColumn, currentRow);
+				modInit.mainThreadMap.put("stonecutter_result_slot", 200);
+			} else if(isWPressed) {
+				if(currentColumn==0 && currentRow==0) {
+					currentColumn = minColumn;
+					currentRow = minRow;
+				} else if(currentRow == minRow) {
+					currentRow -= 0;
+				} else {
+					currentRow -= differenceRow; 
+				}
+				robot.mouseMove(currentColumn, currentRow);
+				modInit.mainThreadMap.put("stonecutter_result_slot", 200);
+			}
+			
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+	}
     
     private String get_position_difference(BlockPos blockPos) {
     	String dir = client.player.getHorizontalFacing().asString();
@@ -216,10 +324,9 @@ public class HudRenderCallBackClass {
 					tempEntityPos = "";
 					tempEntity = "";
 					String side = blockHitResult.getSide().asString();
-					String name = block.getTranslationKey();
-					name = name.substring(name.lastIndexOf('.') + 1);
-					if (name.contains("_"))
-						name = name.replace("_", " ");
+					String name = "";
+					MutableText blockMutableText = new LiteralText("").append(block.getName());
+					name = blockMutableText.getString();
 					if (side.equalsIgnoreCase("up"))
 						side = "top";
 					if (side.equalsIgnoreCase("down"))
@@ -234,6 +341,8 @@ public class HudRenderCallBackClass {
 			if (Config.get(Config.getEntitynarratorkey())) {
 				try {
 					EntityHitResult entityHitResult = (EntityHitResult) hit;
+					
+					
 					if(((EntityHitResult) hit).getEntity()==lockedOnEntity) break;
 					if ((!(((EntityHitResult) hit).getEntity().getDisplayName() + "").equalsIgnoreCase(tempEntity)
 							|| !(((EntityHitResult) hit).hashCode() + "").equalsIgnoreCase(tempEntityPos))
@@ -243,44 +352,13 @@ public class HudRenderCallBackClass {
 						tempEntityPos = ((EntityHitResult) hit).hashCode() + "";
 						tempBlockPos = "";
 						tempBlock = "";
-						text = entityHitResult.getEntity().getType() + "";
-						text = text.substring(text.lastIndexOf('.') + 1);
-						if (text.contains("_"))
-							text = text.replace("_", " ");
-						String customNameString = "" + ((EntityHitResult) hit).getEntity().getCustomName();
-						if (!customNameString.equalsIgnoreCase("null")) {
-							int indexOfText = customNameString.indexOf("text='");
-							int index = customNameString.indexOf("'", indexOfText + 6);
-							System.out.println(indexOfText + "\t" + index + "\t" + customNameString.length());
-							customNameString = customNameString.substring(indexOfText + 6, index);
-							text = customNameString;
-						}
+						MutableText entityMutableText = new LiteralText("").append(entityHitResult.getEntity().getName());
+						text = entityMutableText.getString();
 						narrate(text);
 						modInit.mainThreadMap.put("entity_narrator_key", 5000);
 					}
 				} catch (Exception e) {
-					try {
-						BlockHitResult blockHitResult1 = (BlockHitResult) hit;
-						BlockState blockState1 = client.world.getBlockState(blockHitResult1.getBlockPos());
-						Block block1 = blockState1.getBlock();
-						if ((!tempBlock.equalsIgnoreCase(block1 + "")
-								|| !(tempBlockPos.equalsIgnoreCase(blockHitResult1.getBlockPos() + "")))
-								&& !(blockState1 + "").toLowerCase().contains("sign")) {
-							tempBlock = block1 + "";
-							tempBlockPos = blockHitResult1.getBlockPos() + "";
-							tempEntityPos = "";
-							tempEntity = "";
-							String side = blockHitResult1.getSide().asString();
-							String name = block1.getTranslationKey();
-							name = name.substring(name.lastIndexOf('.') + 1);
-							if (name.contains("_"))
-								name = name.replace("_", " ");
-							text = name + ", " + side + " face";
-							narrate(text);
-						}
-					} catch (Exception e1) {
-						System.out.println(e1);
-					}
+					e.printStackTrace();
 				} 
 			}
 			break;

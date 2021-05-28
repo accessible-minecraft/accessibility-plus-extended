@@ -1,40 +1,28 @@
 # Accessibility Plus Extended
 
-## Table Of Contents
-
- 1. [Description](#description)
- 1. [Requirements](#requirements)
- 1. [Installation](#installation)
- 1. [Mod Customization](#mod-customization)
- 1. [Mod Features](#mod-features)
-    - [Read Blocks](#read-blocks)
-    - [Read Entity](#read-entity)
-    - [Fall Detector](#fall-detector)
-    - [Ore Detector](#ore-detector)
-    - [Durability Checker](#durability-checker)
- 1. [Contact](#contact)
-
 ## Description
 
- A minecraft java mod that adds more accessibility options to improve performance.
+ A minecraft java mod that adds more accessibility options to improve performance. Join the discord server to get updates, request feature or report bugs. 
 
- | [Download](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended/files) | [Issues](https://github.com/shoaib11120/Accessibility-Plus-Extended/issues) | [CurseForge](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended/) |
+ | [Discord](https://discord.gg/yQjjsDqWQX) | [Download](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended/files) | [Issues](https://github.com/shoaib11120/Accessibility-Plus-Extended/issues) | [GitHub](https://github.com/shoaib11120/Accessibility-Plus-Extended) |
 
 ## Requirements
 
- 1. [Fabric](https://fabricmc.net/wiki/install)
- 1. [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus)
+- [Fabric](https://fabricmc.net/wiki/install)
+- [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus)
 
 ## Installation
 
- Download the easy-life-1.x.x.jar file and paste it in your mods folder located in :-
+ Download the jar file and paste it in your mods folder located in :-
 
     %AppData%\.minecraft\mods
  Your mod is now installed!
 
-## Mod Customization
+## New Keybindings
 
- The hotkey to open Customization menu is __'B'__. Now you can configure the mod in-game. The keybinding is re-configurable.
+- **B** = Open configuration menu.
+- **Y** = Lock onto nearby mob entity
+- **Alt + Y** = Disable locking
 
 ## Mod Features
 
@@ -46,6 +34,10 @@
 
  __Enabled__ by default. This feature reads the name of the entity the player is pointing at.
 
+### Mob Locking System
+
+This feature locks onto a closest mob within a 10 blocks radius. The keybinding for this feature is **'Y'** and **'Alt +Y'** to disable locking.
+
 ### Fall Detector
 
  __Disabled__ by default. This feature warns if the player heading towards a fall with depth greater than or equal to 5. It also warns the player if there is lava below the player's level.
@@ -56,9 +48,17 @@
 
 ### Durability Checker
 
- __Enabled__ by default. This feature adds the durability of the item in the item tooltip similar to optifine but it adds the durability right after the item's name.
+ __Enabled__ by default. This feature adds the durability of the item in the item tooltip similar to advanced tootltips option (F3 + H) but it adds the durability right after the item's name. And I will also add warnings when item is low on durability.
 
 ## Contact
 
-- Discord - shoaib#9319 
+- Discord Server - https://discord.gg/yQjjsDqWQX
+- Discord - Shoaib#9319 
 - Email - mdshoaibkhan.1999@gmail.com
+
+## Mod Recommendation
+
+- [MAmbience](https://www.curseforge.com/minecraft/mc-mods/mambience) - This mod adds sound effects to vanilla minecraft like walking on sand, stone, dirt, etc. and many more.
+- [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) - This mod adds accessibility options like crosshair block narrator, read tooltip, inventory keyboard navigation. This mod also allows user to use NVDA instead of default narrator.
+- [Easy Life](https://www.curseforge.com/minecraft/mc-mods/easy-life) - This mod adds keybindings/hotkeys to narrate the player's health and hunger, position and direction. And more features include player warnings, hotbar item narrator, etc.
+- [Numpad/Keypad Camera Controls](https://www.curseforge.com/minecraft/mc-mods/numpad-keypad-camera-controls) - This mod enables numpad to control mouse movements. 

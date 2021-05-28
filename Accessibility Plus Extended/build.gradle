@@ -21,6 +21,10 @@ repositories {
 		name = "CottonMC"
 		url = "https://server.bbkr.space/artifactory/libs-release"
 	}
+    maven {
+        name = 'CottonMC'
+        url = 'https://server.bbkr.space/artifactory/libs-release'
+    }
 }
 
 dependencies {
@@ -31,7 +35,7 @@ dependencies {
     //Fabric api
     modImplementation "net.fabricmc.fabric-api:fabric-api:0.34.1+1.16"
 	modImplementation include("io.github.cottonmc:LibGui:3.2.1+1.16.3")
-
+	modImplementation include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
 }
