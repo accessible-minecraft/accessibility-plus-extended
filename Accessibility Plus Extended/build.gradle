@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.6-SNAPSHOT'
+	id 'fabric-loom' version '0.8-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -11,33 +11,36 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
-
 	maven {
 		name = "CottonMC"
 		url = "https://server.bbkr.space/artifactory/libs-release"
 	}
-    maven {
-        name = 'CottonMC'
-        url = 'https://server.bbkr.space/artifactory/libs-release'
-    }
 }
 
+// 1.16
+
+//dependencies {
+//    minecraft "com.mojang:minecraft:1.16.5"
+//    mappings "net.fabricmc:yarn:1.16.5+build.8:v2"
+//    modImplementation "net.fabricmc:fabric-loader:0.11.3"
+            
+//    //Fabric api
+//    modImplementation "net.fabricmc.fabric-api:fabric-api:0.34.1+1.16"
+//  	modImplementation include("io.github.cottonmc:LibGui:3.2.1+1.16.3")
+//	  modImplementation include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
+//}
+
+// 1.17
+
 dependencies {
-    minecraft "com.mojang:minecraft:1.16.5"
-    mappings "net.fabricmc:yarn:1.16.5+build.8:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.11.3"
+    minecraft "com.mojang:minecraft:1.17"
+    mappings "net.fabricmc:yarn:1.17+build.13:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.11.6"
             
     //Fabric api
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.34.1+1.16"
-	modImplementation include("io.github.cottonmc:LibGui:3.2.1+1.16.3")
-	modImplementation include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
-	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
-	// You may need to force-disable transitiveness on them.
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.36.0+1.17"
+   	modImplementation include("io.github.cottonmc:LibGui:4.0.0+1.17")
+	  modImplementation include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
 }
 
 processResources {

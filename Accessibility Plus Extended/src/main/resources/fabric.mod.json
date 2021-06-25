@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "apebyshoaibkhan",
   "version": "${version}",
-
   "name": "Accessibility Plus Extended",
   "description": "A minecraft mod that adds more accessibility to improve performance.",
   "authors": [
@@ -12,27 +11,21 @@
     "homepage": "https://github.com/shoaib11120/Accessibility-Plus-Extended",
     "sources": "https://github.com/shoaib11120/Accessibility-Plus-Extended"
   },
-
   "license": "MIT",
   "icon": "assets/apebyshoaibkhan/A.P.E..png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
-      	"net.shoaibkhan.accessibiltyplusextended.modInit"
-    ],
-    "cotton-client-commands": [
-    	"net.shoaibkhan.accessibiltyplusextended.customCommands"
+      "net.shoaibkhan.accessibiltyplusextended.modInit"
     ]
   },
   "mixins": [
-	"apebyshoaibkhan.mixins.json"  
+    "apebyshoaibkhan.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.16.x",
+    "minecraft": "1.17.x",
     "cotton-client-commands": "^1.0.0"
   },
   "suggests": {
