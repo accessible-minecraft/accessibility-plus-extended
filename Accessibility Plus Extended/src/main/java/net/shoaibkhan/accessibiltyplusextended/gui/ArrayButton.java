@@ -28,6 +28,6 @@ public class ArrayButton extends WButton {
       TranslatableText newButtonText = new TranslatableText(this.translateKey + " :" + array[Config.getInt(jsonKey)]);
       this.setLabel(newButtonText);
     }
-    return InputResult.PROCESSED;
+    return InputResult.PROCESSED;
   }
 }

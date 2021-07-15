@@ -17,6 +17,9 @@
   "entrypoints": {
     "main": [
       "net.shoaibkhan.accessibiltyplusextended.modInit"
+    ],
+    "cotton-client-commands": [
+      "net.shoaibkhan.accessibiltyplusextended.customCommands"
     ]
   },
   "mixins": [

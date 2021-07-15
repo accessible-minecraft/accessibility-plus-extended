@@ -103,8 +103,8 @@ public class HudRenderCallBackClass {
             }
           }
 
-          // Ore Detector
-          if (Config.get(Config.getOredetectorkey())) {
+          // Detectors
+          if (Config.get(Config.getOredetectorkey()) || Config.get(Config.getLavadetectorkey()) || Config.get(Config.getWaterdetectorkey())) {
             for (int i = 0; i < oreDetectorThreads.length; i++) {
               if (!oreDetectorThreads[i].alive) {
                 oreDetectorThreads[i].start();

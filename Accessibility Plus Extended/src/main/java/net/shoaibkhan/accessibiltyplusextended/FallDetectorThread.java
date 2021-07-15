@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 public class FallDetectorThread extends Thread {
+
 	public boolean alive = false,finished = false;
 	private MinecraftClient client;
 	
@@ -24,49 +25,49 @@ public class FallDetectorThread extends Thread {
     		checkBlock(new BlockPos(new Vec3d(posX,posY,posZ-1)), dir, 10);
     		checkBlock(new BlockPos(new Vec3d(posX+1,posY,posZ-1)), dir, 10);
     		
-    		checkFluid(new BlockPos(new Vec3d(posX-1,posY+1,posZ-1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX,posY+1,posZ-1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX+1,posY+1,posZ-1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX-1,posY+1,posZ-1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX,posY+1,posZ-1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX+1,posY+1,posZ-1)), dir, 10);
     		
-    		checkFluid(new BlockPos(new Vec3d(posX-1,posY+2,posZ-1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX,posY+2,posZ-1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX+1,posY+2,posZ-1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX-1,posY+2,posZ-1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX,posY+2,posZ-1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX+1,posY+2,posZ-1)), dir, 10);
     	} else if(dir.equalsIgnoreCase("south")) {
     		checkBlock(new BlockPos(new Vec3d(posX-1,posY,posZ+1)), dir, 10);
     		checkBlock(new BlockPos(new Vec3d(posX,posY,posZ+1)), dir, 10);
     		checkBlock(new BlockPos(new Vec3d(posX+1,posY,posZ+1)), dir, 10);
 
-    		checkFluid(new BlockPos(new Vec3d(posX-1,posY+1,posZ+1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX,posY+1,posZ+1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX+1,posY+1,posZ+1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX-1,posY+1,posZ+1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX,posY+1,posZ+1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX+1,posY+1,posZ+1)), dir, 10);
 
-    		checkFluid(new BlockPos(new Vec3d(posX-1,posY+2,posZ+1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX,posY+2,posZ+1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX+1,posY+2,posZ+1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX-1,posY+2,posZ+1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX,posY+2,posZ+1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX+1,posY+2,posZ+1)), dir, 10);
     	} else if(dir.equalsIgnoreCase("east")) {
     		checkBlock(new BlockPos(new Vec3d(posX+1,posY,posZ-1)), dir, 10);
     		checkBlock(new BlockPos(new Vec3d(posX+1,posY,posZ)), dir, 10);
     		checkBlock(new BlockPos(new Vec3d(posX+1,posY,posZ+1)), dir, 10);
     		
-    		checkFluid(new BlockPos(new Vec3d(posX+1,posY+1,posZ-1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX+1,posY+1,posZ)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX+1,posY+1,posZ+1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX+1,posY+1,posZ-1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX+1,posY+1,posZ)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX+1,posY+1,posZ+1)), dir, 10);
 
-    		checkFluid(new BlockPos(new Vec3d(posX+1,posY+2,posZ-1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX+1,posY+2,posZ)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX+1,posY+2,posZ+1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX+1,posY+2,posZ-1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX+1,posY+2,posZ)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX+1,posY+2,posZ+1)), dir, 10);
     	} else if(dir.equalsIgnoreCase("west")) {
     		checkBlock(new BlockPos(new Vec3d(posX-1,posY,posZ-1)), dir, 10);
     		checkBlock(new BlockPos(new Vec3d(posX-1,posY,posZ)), dir, 10);
     		checkBlock(new BlockPos(new Vec3d(posX-1,posY,posZ+1)), dir, 10);
 
-    		checkFluid(new BlockPos(new Vec3d(posX-1,posY+1,posZ-1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX-1,posY+1,posZ)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX-1,posY+1,posZ+1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX-1,posY+1,posZ-1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX-1,posY+1,posZ)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX-1,posY+1,posZ+1)), dir, 10);
 
-    		checkFluid(new BlockPos(new Vec3d(posX-1,posY+2,posZ-1)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX-1,posY+2,posZ)), dir, 10);
-    		checkFluid(new BlockPos(new Vec3d(posX-1,posY+2,posZ+1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX-1,posY+2,posZ-1)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX-1,posY+2,posZ)), dir, 10);
+    		// checkFluid(new BlockPos(new Vec3d(posX-1,posY+2,posZ+1)), dir, 10);
     	}
     	finished = true;
     }
@@ -81,27 +82,35 @@ public class FallDetectorThread extends Thread {
 	    	int posY = blockPos.getY();
 	    	int posZ = blockPos.getZ();
 	    	
-	    	if(blockName.contains("lava") && !modInit.mainThreadMap.containsKey("lava_detector_key")) {
-				if(!modInit.mainThreadMap.containsKey("lava_detector_key")) {
-					client.player.sendMessage(new LiteralText("Warning Lava"), true);
-					modInit.mainThreadMap.put("lava_detector_key", 5000);
-				}
-			}
+	    	// if(blockName.contains("lava") && !modInit.mainThreadMap.containsKey("lava_detector_key")) {
+	    	// 	if(!modInit.mainThreadMap.containsKey("lava_detector_key")) {
+	    	// 		client.player.sendMessage(new LiteralText("Warning Lava Below"), true);
+	    	// 		modInit.mainThreadMap.put("lava_detector_key", 5000);
+	    	// 	}
+	    	// }
+
+	    	// if(blockName.contains("water") && !modInit.mainThreadMap.containsKey("water_detector_key")) {
+	    	// 	if(!modInit.mainThreadMap.containsKey("water_detector_key")) {
+	    	// 		client.player.sendMessage(new LiteralText("Warning Water Below"), true);
+	    	// 		modInit.mainThreadMap.put("water_detector_key", 5000);
+	    	// 	}
+	    	// }
 	    	
 	    	if(blockName.contains("air") && !modInit.mainThreadMap.containsKey("lava_detector_key") && !modInit.mainThreadMap.containsKey("fall_detector_key")) {
-				Block topBlock = client.world.getBlockState(new BlockPos(new Vec3d(posX,posY+1,posZ))).getBlock();
-				MutableText topBlocklockNameMutable = (new LiteralText("")).append(topBlock.getName());
-				String topBlocklockName = topBlocklockNameMutable.getString().toLowerCase();
-				if(topBlocklockName.equalsIgnoreCase("void air")) return;
-				if(!topBlocklockName.contains("air")) return;
-				
-				int depth = getDepth((new BlockPos(new Vec3d(posX,posY,posZ))),15);
-				if(depth>=5 && !modInit.mainThreadMap.containsKey("fall_detector_key")) {
-					modInit.mainThreadMap.put("fall_detector_key", 5000);
-					client.player.sendMessage(new LiteralText("warning Fall Detected"), true);
-				}
-			}
-			if(direction.equalsIgnoreCase("north") && limit>0) {
+		    	Block topBlock = client.world.getBlockState(new BlockPos(new Vec3d(posX,posY+1,posZ))).getBlock();
+		    	MutableText topBlocklockNameMutable = (new LiteralText("")).append(topBlock.getName());
+		    	String topBlocklockName = topBlocklockNameMutable.getString().toLowerCase();
+		    	if(topBlocklockName.equalsIgnoreCase("void air")) return;
+		    	if(!topBlocklockName.contains("air")) return;
+		    	
+		    	int depth = getDepth((new BlockPos(new Vec3d(posX,posY,posZ))),15);
+		    	if(depth>=5 && !modInit.mainThreadMap.containsKey("fall_detector_key")) {
+		    		modInit.mainThreadMap.put("fall_detector_key", 5000);
+		    		client.player.sendMessage(new LiteralText("warning Fall Detected"), true);
+		    	}
+		    }
+
+		  	if(direction.equalsIgnoreCase("north") && limit>0) {
 	    		checkBlock(new BlockPos(new Vec3d(posX,posY,posZ-1)), direction, limit-1);
 	    	} else if(direction.equalsIgnoreCase("south") && limit>0) {
 	    		checkBlock(new BlockPos(new Vec3d(posX,posY,posZ+1)), direction, limit-1);
