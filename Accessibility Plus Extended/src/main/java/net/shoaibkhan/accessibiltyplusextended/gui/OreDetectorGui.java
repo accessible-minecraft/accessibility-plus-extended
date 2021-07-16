@@ -9,7 +9,7 @@ import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.accessibiltyplusextended.OreDetectorThread;
+import net.shoaibkhan.accessibiltyplusextended.DetectorThread;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
@@ -26,13 +26,13 @@ public class OreDetectorGui extends LightweightGuiDescription {
     ConfigButton odcsStatus = new ConfigButton("Custom Ore Sound", Config.getOredetectorcustomsoundkey());
     root.add(odcsStatus, 7, 3, 10, 1);
 
-    ArrayButton odvButton = new ArrayButton("Volume", Config.getOredetectorvolume(), OreDetectorThread.volume);
+    ArrayButton odvButton = new ArrayButton("Volume", Config.getOredetectorvolume(), DetectorThread.volume);
     root.add(odvButton, 1, 5, 10, 1);
 
-    ArrayButton odpButton = new ArrayButton("Pitch", Config.getOredetectorpitch(), OreDetectorThread.pitch);
+    ArrayButton odpButton = new ArrayButton("Pitch", Config.getOredetectorpitch(), DetectorThread.pitch);
     root.add(odpButton, 12, 5, 10, 1);
 
-    ArrayButton odrButton = new ArrayButton("Range", Config.getOredetectorrange(), OreDetectorThread.range);
+    ArrayButton odrButton = new ArrayButton("Range", Config.getOredetectorrange(), DetectorThread.range);
     root.add(odrButton, 12, 7, 10, 1);
 
     WButton backButton = new WButton(new LiteralText("Back"));

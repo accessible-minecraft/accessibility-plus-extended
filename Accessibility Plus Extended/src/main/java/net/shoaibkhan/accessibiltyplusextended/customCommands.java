@@ -24,6 +24,27 @@ public class customCommands implements ClientCommandPlugin {
       client.player.sendMessage(new LiteralText("" + client.options.fullscreen), true);
       return 1;
     }));
+    
+    dispatcher.register(ArgumentBuilders.literal("findlava").executes(source -> {
+      try {
+        FluidDetectorThread fluidDetectorThread = new FluidDetectorThread(true, false);
+        fluidDetectorThread.run();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      return 1;
+    }));
+
+    dispatcher.register(ArgumentBuilders.literal("findwater").executes(source -> {
+      try {
+        FluidDetectorThread fluidDetectorThread = new FluidDetectorThread(false, true);
+        fluidDetectorThread.run();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      return 1;
+    }));
+
   }
 
 }
