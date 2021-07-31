@@ -1,9 +1,6 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.fluid.FluidState;
@@ -20,6 +17,7 @@ public class DetectorThread extends Thread {
   public static String[] volume = { "0", "0.05", "0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9", "0.95", "1" };
   public static String[] pitch = { "0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "-0.5", "-1", "-1.5", "-2", "-2.5", "-3", "-3.5", "-4", "-4.5", "-5" };
   public static String[] range = {"3", "4", "5", "6", "7", "8", "9", "10"};
+  public static String[] delay = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
 
   public void run() {
     alive = true;
@@ -72,6 +70,7 @@ public class DetectorThread extends Thread {
       if (name.contains("ore") && !modInit.mainThreadMap.containsKey(name + "" + blockPos) && ore) {
         try {
           Float vol, pit;
+          int del;
           try {
             vol = Float.parseFloat(volume[Config.getInt(Config.getOredetectorvolume())] + "");
           } catch (Exception e) {
@@ -87,9 +86,14 @@ public class DetectorThread extends Thread {
           } else {
             client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, vol, pit, true);
           }
+          try {
+            del = Integer.parseInt(delay[Config.getInt(Config.getOredetectordelay())] + "");
+          } catch (Exception e) {
+            del = 10;
+          }
+          modInit.mainThreadMap.put(name + "" + blockPos, del*1000);
         } catch (Exception e) {
         }
-        modInit.mainThreadMap.put(name + "" + blockPos, 10000);
       } else if (name.contains("air") && val - 1 >= 0) {
         int posX = blockPos.getX();
         int posY = blockPos.getY();

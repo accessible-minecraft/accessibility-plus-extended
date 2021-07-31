@@ -9,34 +9,31 @@ import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.accessibiltyplusextended.DetectorThread;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.FluidDetectorThread;
 
-public class OreDetectorGui extends LightweightGuiDescription {
+public class FindFluidGui extends LightweightGuiDescription {
   private ClientPlayerEntity player;
   private MinecraftClient client;
 
-  public OreDetectorGui(ClientPlayerEntity player, MinecraftClient client) {
+  public FindFluidGui(ClientPlayerEntity player, MinecraftClient client) {
     this.player = player;
     this.client = client;
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ConfigButton odcsStatus = new ConfigButton("Custom Ore Sound", Config.getOredetectorcustomsoundkey());
-    root.add(odcsStatus, 7, 3, 10, 1);
+    ConfigButton fftStatus = new ConfigButton("Text", Config.getFindfluidtextkey());
+    root.add(fftStatus, 1, 3, 10, 1);
 
-    ArrayButton odvButton = new ArrayButton("Volume", Config.getOredetectorvolume(), DetectorThread.volume);
-    root.add(odvButton, 1, 5, 10, 1);
+    ArrayButton ffrButton = new ArrayButton("Range", Config.getFindfluidrange(), FluidDetectorThread.range);
+    root.add(ffrButton, 12, 3, 10, 1);
 
-    ArrayButton odpButton = new ArrayButton("Pitch", Config.getOredetectorpitch(), DetectorThread.pitch);
-    root.add(odpButton, 12, 5, 10, 1);
+    ArrayButton ffvButton = new ArrayButton("Volume", Config.getFindfluidvolume(), FluidDetectorThread.volume);
+    root.add(ffvButton, 1, 5, 10, 1);
 
-    ArrayButton odrButton = new ArrayButton("Range", Config.getOredetectorrange(), DetectorThread.range);
-    root.add(odrButton, 12, 7, 10, 1);
-
-    ArrayButton odcButton = new ArrayButton("Delay", Config.getOredetectordelay(), DetectorThread.delay);
-    root.add(odcButton, 1, 7, 10, 1);
+    ArrayButton ffpButton = new ArrayButton("Pitch", Config.getFindfluidpitch(), FluidDetectorThread.pitch);
+    root.add(ffpButton, 12, 5, 10, 1);
 
     WButton backButton = new WButton(new LiteralText("Back"));
     backButton.setOnClick(this::onBackClick);
@@ -46,7 +43,7 @@ public class OreDetectorGui extends LightweightGuiDescription {
     doneButton.setOnClick(this::onDoneClick);
     root.add(doneButton, 12, 9, 7, 1);
 
-    WLabel label = new WLabel(new LiteralText("Ore Detector Settings"), modInit.colors("red", 100));
+    WLabel label = new WLabel(new LiteralText("Find Fluid Settings"), modInit.colors("red", 100));
     label.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(label, 0, 1, 21, 1);
     WLabel fakeLabel = new WLabel(new LiteralText(""), modInit.colors("red", 100));

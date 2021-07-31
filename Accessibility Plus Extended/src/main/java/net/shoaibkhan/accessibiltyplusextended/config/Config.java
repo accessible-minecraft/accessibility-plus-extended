@@ -13,7 +13,10 @@ import com.google.gson.JsonPrimitive;
 public class Config {
   private static JsonObject data;
   private static String CONFIG_PATH = Paths.get("config", "apextended", "config.json").toString();
+
   public static final String FallDetectorKey = "fall_detector_key";
+  public static final String FallDetectorRange = "fall_detector_range";
+  public static final String FallDetectorDepth = "fall_detector_depth";
   public static final String OreDetectorKey = "ore_detector_key";
   public static final String LavaDetectorKey = "lava_detector_key";
   public static final String WaterDetectorKey = "water_detector_key";
@@ -24,7 +27,39 @@ public class Config {
   public static final String OreDetectorVolume = "ore_detector_volume";
   public static final String OreDetectorPitch = "ore_detector_pitch";
   public static final String OreDetectorRange = "ore_detector_range";
+  public static final String OreDetectorDelay = "ore_detector_delay";
+  public static final String FindFluidTextKey = "find_fluid_text_key";
+  public static final String FindFluidVolume  = "find_fluid_volume";
+  public static final String FindFluidPitch   = "find_fluid_pitch";
+  public static final String FindFluidRange   = "find_fluid_range";
+  
+  public static String getFalldetectordepth() {
+    return FallDetectorDepth;
+}
 
+  public static String getFalldetectorrange() {
+    return FallDetectorRange;
+}
+
+  public static String getOredetectordelay() {
+    return OreDetectorDelay;
+}
+
+public static String getFindfluidtextkey() {
+    return FindFluidTextKey;
+}
+
+public static String getFindfluidvolume() {
+    return FindFluidVolume;
+}
+
+public static String getFindfluidpitch() {
+    return FindFluidPitch;
+}
+
+public static String getFindfluidrange() {
+    return FindFluidRange;
+}
 
   public static String getOredetectorrange() {
     return OreDetectorRange;
@@ -209,16 +244,28 @@ public class Config {
   private static JsonObject resetData(){
     data = new JsonObject();
     data.add(getFalldetectorkey(), new JsonPrimitive(false));
+    data.add(getFalldetectorrange(), new JsonPrimitive("5"));
+    data.add(getFalldetectordepth(), new JsonPrimitive("2"));
+
     data.add(getOredetectorkey(), new JsonPrimitive(false));
     data.add(getLavadetectorkey(), new JsonPrimitive(false));
     data.add(getWaterdetectorkey(), new JsonPrimitive(false));
+
     data.add(getReadblockskey(), new JsonPrimitive(false));
-    data.add(getOredetectorcustomsoundkey(), new JsonPrimitive(false));
+
     data.add(getDurabilitycheckerkey(), new JsonPrimitive(true));
     data.add(getEntitynarratorkey(), new JsonPrimitive(true));
+    
+    data.add(getOredetectorcustomsoundkey(), new JsonPrimitive(false));
     data.add(getOredetectorvolume(), new JsonPrimitive("5"));
     data.add(getOredetectorpitch(), new JsonPrimitive("20"));
     data.add(getOredetectorrange(), new JsonPrimitive("1"));
+    data.add(getOredetectordelay(), new JsonPrimitive("10"));
+
+    data.add(getFindfluidtextkey(), new JsonPrimitive(true));
+    data.add(getFindfluidvolume(), new JsonPrimitive("5"));
+    data.add(getFindfluidpitch(), new JsonPrimitive("20"));
+    data.add(getFindfluidrange(), new JsonPrimitive("7"));
     saveConfig(data);
     return data;
   }

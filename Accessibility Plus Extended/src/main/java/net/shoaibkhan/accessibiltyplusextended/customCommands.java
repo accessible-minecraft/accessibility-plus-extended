@@ -28,7 +28,7 @@ public class customCommands implements ClientCommandPlugin {
     dispatcher.register(ArgumentBuilders.literal("findlava").executes(source -> {
       try {
         FluidDetectorThread fluidDetectorThread = new FluidDetectorThread(true, false);
-        fluidDetectorThread.run();
+        fluidDetectorThread.start();
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -38,7 +38,7 @@ public class customCommands implements ClientCommandPlugin {
     dispatcher.register(ArgumentBuilders.literal("findwater").executes(source -> {
       try {
         FluidDetectorThread fluidDetectorThread = new FluidDetectorThread(false, true);
-        fluidDetectorThread.run();
+        fluidDetectorThread.start();
       } catch (Exception e) {
         e.printStackTrace();
       }

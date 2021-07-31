@@ -29,20 +29,24 @@ public class SettingsGui extends LightweightGuiDescription {
     fallDetectorButton.setOnClick(this::onFallDetectorClick);
     root.add(fallDetectorButton, 12, 3, 7, 1);
 
+    WButton findFluidButton = new WButton(new LiteralText("Find Fluid Settings"));
+    findFluidButton.setOnClick(this::onFindFluidClick);
+    root.add(findFluidButton, 1, 5, 7, 1);
+
     WButton backButton = new WButton(new LiteralText("Back"));
     backButton.setOnClick(this::onBackClick);
-    root.add(backButton, 2, 5, 7, 1);
+    root.add(backButton, 2, 7, 7, 1);
 
     WButton doneButton = new WButton(new LiteralText("Done"));
     doneButton.setOnClick(this::onDoneClick);
-    root.add(doneButton, 12, 5, 7, 1);
+    root.add(doneButton, 12, 7, 7, 1);
 
     WLabel label = new WLabel(new LiteralText("Settings"), modInit.colors("red", 100));
     label.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(label, 0, 1, 21, 1);
     WLabel fakeLabel = new WLabel(new LiteralText(""), modInit.colors("red", 100));
     fakeLabel.setHorizontalAlignment(HorizontalAlignment.CENTER);
-    root.add(fakeLabel, 0, 6, 21, 1);
+    root.add(fakeLabel, 0, 8, 21, 1);
 
     root.validate(this);
   }
@@ -58,12 +62,17 @@ public class SettingsGui extends LightweightGuiDescription {
 
   private void onOreDetectorClick() {
     this.player.closeScreen();
-    this.client.openScreen(new ConfigScreen(new OreDetectorGui(player, client), "AP Extended Configuration", player));
+    this.client.openScreen(new ConfigScreen(new OreDetectorGui(player, client), "Ore Detector Settings", player));
   }
 
   private void onFallDetectorClick() {
     this.player.closeScreen();
-    this.client.openScreen(new ConfigScreen(new ConfigGui(player, client), "AP Extended Configuration", player));
+    this.client.openScreen(new ConfigScreen(new FallDetectorGui(player, client), "Fall Detector Settings", player));
+  }
+
+  private void onFindFluidClick() {
+    this.player.closeScreen();
+    this.client.openScreen(new ConfigScreen(new FindFluidGui(player, client), "Fall Detector Settings", player));
   }
 
   @Override

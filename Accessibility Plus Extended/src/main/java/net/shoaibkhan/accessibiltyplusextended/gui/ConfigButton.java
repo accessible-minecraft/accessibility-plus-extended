@@ -16,6 +16,7 @@ public class ConfigButton extends WButton {
 
     }
 
+    //1.17
     @Override
     public InputResult onClick(int x, int y, int button) {
         super.onClick(x, y, button);
@@ -26,4 +27,15 @@ public class ConfigButton extends WButton {
         }
         return InputResult.PROCESSED;
     }
+
+    //1.16
+    // @Override
+    // public void onClick(int x, int y, int button) {
+    //     super.onClick(x, y, button);
+    //     if(this.isEnabled()){    
+    //         boolean enabled = Config.toggle(this.jsonKey);
+    //         TranslatableText newButtonText = new TranslatableText(this.translateKey + (enabled ? " : on" : " : off"));
+    //         this.setLabel(newButtonText);
+    //     }
+    // }
 }
