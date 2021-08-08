@@ -30,8 +30,10 @@ public class HudRenderCallBackClass {
   private String tempBlock = "", tempBlockPos = "";
   private String tempEntity = "", tempEntityPos = "";
   public static int fallDetectorFlag = 0, entityNarratorFlag = 0, oreDetectorFlag = 0;
-  private static FallDetectorThread[] fallDetectorThreads = { new FallDetectorThread(), new FallDetectorThread(), new FallDetectorThread() };
-  private static DetectorThread[] oreDetectorThreads = { new DetectorThread(), new DetectorThread(), new DetectorThread() };
+  private static FallDetectorThread[] fallDetectorThreads = { new FallDetectorThread(), new FallDetectorThread(),
+      new FallDetectorThread() };
+  private static DetectorThread[] oreDetectorThreads = { new DetectorThread(), new DetectorThread(),
+      new DetectorThread() };
   private static Entity lockedOnEntity = null;
   public static boolean isTradeScreenOpen = false;
 
@@ -75,9 +77,8 @@ public class HudRenderCallBackClass {
           Entity toBeLocked = entityLocking();
           if (toBeLocked != null) {
             MutableText mutableText = (new LiteralText("")).append(toBeLocked.getName());
-            player.sendMessage(
-                new LiteralText(mutableText.getString() + " " + HudRenderCallBackClass.get_position_difference(toBeLocked.getBlockPos(), client)),
-                true);
+            player.sendMessage(new LiteralText(mutableText.getString() + " "
+                + HudRenderCallBackClass.get_position_difference(toBeLocked.getBlockPos(), client)), true);
             lockedOnEntity = toBeLocked;
           }
         }
@@ -104,7 +105,8 @@ public class HudRenderCallBackClass {
           }
 
           // Detectors
-          if (Config.get(Config.getOredetectorkey()) || Config.get(Config.getLavadetectorkey()) || Config.get(Config.getWaterdetectorkey())) {
+          if (Config.get(Config.getOredetectorkey()) || Config.get(Config.getLavadetectorkey())
+              || Config.get(Config.getWaterdetectorkey())) {
             for (int i = 0; i < oreDetectorThreads.length; i++) {
               if (!oreDetectorThreads[i].alive) {
                 oreDetectorThreads[i].start();
@@ -137,12 +139,11 @@ public class HudRenderCallBackClass {
 
     if (!diffXBlockPos.equalsIgnoreCase("0")) {
       if (dir.contains("east") || dir.contains("west")) {
-        if (diffXBlockPos.contains("-") && dir.contains("east")){
+        if (diffXBlockPos.contains("-") && dir.contains("east")) {
           diffXBlockPos += " blocks away";
-        } else if(!diffXBlockPos.contains("-") && dir.contains("west")) {
+        } else if (!diffXBlockPos.contains("-") && dir.contains("west")) {
           diffXBlockPos += " blocks away";
-        }
-        else
+        } else
           diffXBlockPos += " blocks behind";
         diffXBlockPos = diffXBlockPos.replace("-", "");
       } else if (dir.contains("north")) {
@@ -179,8 +180,7 @@ public class HudRenderCallBackClass {
       if (dir.contains("north") || dir.contains("south")) {
         if (diffZBlockPos.contains("-") && dir.contains("south")) {
           diffZBlockPos += " blocks away";
-        }
-        else if(!diffZBlockPos.contains("-") && dir.contains("north")) {
+        } else if (!diffZBlockPos.contains("-") && dir.contains("north")) {
           diffZBlockPos += " blocks away";
         } else
           diffZBlockPos += " blocks behind";
