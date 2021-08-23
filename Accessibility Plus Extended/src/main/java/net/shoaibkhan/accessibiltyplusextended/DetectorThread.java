@@ -81,11 +81,9 @@ public class DetectorThread extends Thread {
           } catch (Exception e) {
             pit = 1f;
           }
-          if (Config.get(Config.getOredetectorcustomsoundkey())) {
-            client.world.playSound(blockPos, modInit.oreSoundEvent, SoundCategory.BLOCKS, vol, pit, true);
-          } else {
-            client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, vol, pit, true);
-          }
+          
+          client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, vol, pit, true);
+
           try {
             del = Integer.parseInt(delay[Config.getInt(Config.getOredetectordelay())] + "");
           } catch (Exception e) {
@@ -119,7 +117,7 @@ public class DetectorThread extends Thread {
     BlockPos fluidPos = findFluid(client, newBlockPos, rangeVal, false, true);
     if(fluidPos!=null){
       FluidState fluidState = client.world.getFluidState(fluidPos);
-      System.out.println("Fluid:" + client.world.getBlockState(fluidPos).getBlock().getName() + "\t Level:" + fluidState.getLevel());
+//      System.out.println("Fluid:" + client.world.getBlockState(fluidPos).getBlock().getName() + "\t Level:" + fluidState.getLevel());
     }
   }
 
@@ -132,7 +130,7 @@ public class DetectorThread extends Thread {
     if (name.contains("_"))
       name = name.replace("_", " ");
 
-    System.out.println(name);
+//    System.out.println(name);
 
     FluidState fluidState = client.world.getFluidState(blockPos);
     if ((name.contains("lava") && lava) || (name.contains("water") && water) && fluidState.getLevel()==8) {

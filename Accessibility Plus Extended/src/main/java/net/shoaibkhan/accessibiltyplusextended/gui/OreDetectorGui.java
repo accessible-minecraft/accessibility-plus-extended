@@ -23,9 +23,6 @@ public class OreDetectorGui extends LightweightGuiDescription {
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ConfigButton odcsStatus = new ConfigButton("Custom Ore Sound", Config.getOredetectorcustomsoundkey());
-    root.add(odcsStatus, 7, 3, 10, 1);
-
     ArrayButton odvButton = new ArrayButton("Volume", Config.getOredetectorvolume(), DetectorThread.volume);
     root.add(odvButton, 1, 5, 10, 1);
 

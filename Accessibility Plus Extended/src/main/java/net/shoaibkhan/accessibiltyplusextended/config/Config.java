@@ -23,7 +23,6 @@ public class Config {
   public static final String ReadBlocksKey = "read_blocks_key";
   public static final String DurabilityCheckKey = "durability_check_key";
   public static final String EntityNarratorKey = "entity_narrator_key";
-  public static final String OreDetectorCustomSoundKey = "ore_detector_custom_sound_key";
   public static final String OreDetectorVolume = "ore_detector_volume";
   public static final String OreDetectorPitch = "ore_detector_pitch";
   public static final String OreDetectorRange = "ore_detector_range";
@@ -83,10 +82,6 @@ public static String getFindfluidrange() {
 
   public static String getDurabilitycheckkey() {
     return DurabilityCheckKey;
-  }
-
-  public static String getOredetectorcustomsoundkey() {
-    return OreDetectorCustomSoundKey;
   }
 
   public static String getOredetectorkey() {
@@ -256,7 +251,6 @@ public static String getFindfluidrange() {
     data.add(getDurabilitycheckerkey(), new JsonPrimitive(true));
     data.add(getEntitynarratorkey(), new JsonPrimitive(true));
     
-    data.add(getOredetectorcustomsoundkey(), new JsonPrimitive(false));
     data.add(getOredetectorvolume(), new JsonPrimitive("5"));
     data.add(getOredetectorpitch(), new JsonPrimitive("20"));
     data.add(getOredetectorrange(), new JsonPrimitive("1"));

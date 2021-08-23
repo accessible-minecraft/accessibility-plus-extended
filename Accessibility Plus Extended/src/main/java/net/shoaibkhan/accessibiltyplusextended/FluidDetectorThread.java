@@ -52,11 +52,9 @@ public class FluidDetectorThread extends Thread{
           } catch (Exception e) {
             pit = 1f;
           }
-          if (Config.get(Config.getOredetectorcustomsoundkey())) {
-            client.world.playSound(fluidPos, modInit.oreSoundEvent, SoundCategory.BLOCKS, vol, pit, true);
-          } else {
-            client.world.playSound(fluidPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, vol, pit, true);
-          }
+
+          client.world.playSound(fluidPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, vol, pit, true);
+
         } catch (Exception e) {
         }
       }else{
