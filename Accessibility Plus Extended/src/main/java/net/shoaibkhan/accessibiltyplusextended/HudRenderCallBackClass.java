@@ -30,10 +30,8 @@ public class HudRenderCallBackClass {
   private String tempBlock = "", tempBlockPos = "";
   private String tempEntity = "", tempEntityPos = "";
   public static int fallDetectorFlag = 0, entityNarratorFlag = 0, oreDetectorFlag = 0;
-  private static FallDetectorThread[] fallDetectorThreads = { new FallDetectorThread(), new FallDetectorThread(),
-      new FallDetectorThread() };
-  private static DetectorThread[] oreDetectorThreads = { new DetectorThread(), new DetectorThread(),
-      new DetectorThread() };
+  private static FallDetectorThread[] fallDetectorThreads = { new FallDetectorThread(), new FallDetectorThread(), new FallDetectorThread() };
+  private static DetectorThread[] oreDetectorThreads = { new DetectorThread(), new DetectorThread(), new DetectorThread() };
   private static Entity lockedOnEntity = null;
   public static boolean isTradeScreenOpen = false;
 
@@ -41,30 +39,28 @@ public class HudRenderCallBackClass {
 
     HudRenderCallback.EVENT.register((__, ___) -> {
       this.client = MinecraftClient.getInstance();
-      if (client.player == null)
-        return;
+      if (client.player == null)  return;
       player = client.player;
-      boolean isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
-          InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())
-          || InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
-              InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
+      
+      boolean isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode()) || InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
+      boolean isControlPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left.control").getCode()) || InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right.control").getCode()));
 
       try {
 
         if (lockedOnEntity != null) {
           if (!lockedOnEntity.isAlive())
             lockedOnEntity = null;
-          Vec3d vec3d = new Vec3d(lockedOnEntity.getX(), lockedOnEntity.getY() + lockedOnEntity.getHeight() - 0.25,
-              lockedOnEntity.getZ());
-          client.player.lookAt(EntityAnchor.EYES, vec3d);
+          	Vec3d vec3d = new Vec3d(lockedOnEntity.getX(), lockedOnEntity.getY() + lockedOnEntity.getHeight() - 0.25, lockedOnEntity.getZ());
+          	client.player.lookAt(EntityAnchor.EYES, vec3d);
 
         }
 
         while (CONFIG_KEY.wasPressed()) {
-          Screen screen = new ConfigScreen(new ConfigGui(client.player, client), "AP Extended Configuration",
-              client.player);
-          client.openScreen(screen);
-          return;
+          if (!isControlPressed) {
+        	Screen screen = new ConfigScreen(new ConfigGui(client.player, client), "AP Extended Configuration", client.player);
+          	client.openScreen(screen);
+            return;
+          }
         }
 
         if (isAltPressed) {
@@ -77,8 +73,7 @@ public class HudRenderCallBackClass {
           Entity toBeLocked = entityLocking();
           if (toBeLocked != null) {
             MutableText mutableText = (new LiteralText("")).append(toBeLocked.getName());
-            player.sendMessage(new LiteralText(mutableText.getString() + " "
-                + HudRenderCallBackClass.get_position_difference(toBeLocked.getBlockPos(), client)), true);
+            player.sendMessage(new LiteralText(mutableText.getString() + " " + HudRenderCallBackClass.get_position_difference(toBeLocked.getBlockPos(), client)), true);
             lockedOnEntity = toBeLocked;
           }
         }
@@ -86,8 +81,7 @@ public class HudRenderCallBackClass {
         if (!client.isPaused() && (client.currentScreen == null)) {
 
           // Read Crosshair
-          if (10000 - fallDetectorFlag >= 3000
-              && (Config.get(Config.getReadblockskey()) || Config.get(Config.getEntitynarratorkey()))) {
+          if (10000 - fallDetectorFlag >= 3000 && (Config.get(Config.getReadblockskey()) || Config.get(Config.getEntitynarratorkey()))) {
             crosshairTarget();
           }
 
@@ -105,8 +99,7 @@ public class HudRenderCallBackClass {
           }
 
           // Detectors
-          if (Config.get(Config.getOredetectorkey()) || Config.get(Config.getLavadetectorkey())
-              || Config.get(Config.getWaterdetectorkey())) {
+          if (Config.get(Config.getOredetectorkey()) || Config.get(Config.getLavadetectorkey()) || Config.get(Config.getWaterdetectorkey())) {
             for (int i = 0; i < oreDetectorThreads.length; i++) {
               if (!oreDetectorThreads[i].alive) {
                 oreDetectorThreads[i].start();
@@ -223,8 +216,7 @@ public class HudRenderCallBackClass {
           BlockPos blockPos = i.getBlockPos();
 
           Vec3d entityVec3d = new Vec3d(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-          Vec3d playerVec3d = new Vec3d(client.player.getBlockPos().getX(), client.player.getBlockPos().getY(),
-              client.player.getBlockPos().getZ());
+          Vec3d playerVec3d = new Vec3d(client.player.getBlockPos().getX(), client.player.getBlockPos().getY(), client.player.getBlockPos().getZ());
           if (closestDouble == -99999 || closestDouble > entityVec3d.distanceTo(playerVec3d)) {
             closestDouble = entityVec3d.distanceTo(playerVec3d);
             closestEntity = i;
@@ -250,9 +242,7 @@ public class HudRenderCallBackClass {
           BlockHitResult blockHitResult = (BlockHitResult) hit;
           BlockState blockState = client.world.getBlockState(blockHitResult.getBlockPos());
           Block block = blockState.getBlock();
-          if ((!tempBlock.equalsIgnoreCase(block + "")
-              || !(tempBlockPos.equalsIgnoreCase(blockHitResult.getBlockPos() + "")))
-              && !(blockState + "").toLowerCase().contains("sign")) {
+          if ((!tempBlock.equalsIgnoreCase(block + "") || !(tempBlockPos.equalsIgnoreCase(blockHitResult.getBlockPos() + ""))) && !(blockState + "").toLowerCase().contains("sign")) {
             tempBlock = block + "";
             tempBlockPos = blockHitResult.getBlockPos() + "";
             tempEntityPos = "";
@@ -276,11 +266,9 @@ public class HudRenderCallBackClass {
           try {
             EntityHitResult entityHitResult = (EntityHitResult) hit;
 
-            if (((EntityHitResult) hit).getEntity() == lockedOnEntity)
-              break;
-            if ((!(((EntityHitResult) hit).getEntity().getDisplayName() + "").equalsIgnoreCase(tempEntity)
-                || !(((EntityHitResult) hit).hashCode() + "").equalsIgnoreCase(tempEntityPos))
-                && !modInit.mainThreadMap.containsKey("entity_narrator_key")) {
+            if (((EntityHitResult) hit).getEntity() == lockedOnEntity) break;
+
+            if ((!(((EntityHitResult) hit).getEntity().getDisplayName() + "").equalsIgnoreCase(tempEntity) || !(((EntityHitResult) hit).hashCode() + "").equalsIgnoreCase(tempEntityPos)) && !modInit.mainThreadMap.containsKey("entity_narrator_key")) {
 
               tempEntity = ((EntityHitResult) hit).getEntity().getType() + "";
               tempEntityPos = ((EntityHitResult) hit).hashCode() + "";
