@@ -42,7 +42,10 @@ public class ConfigGui extends LightweightGuiDescription {
     root.add(wdStatus, 12, 7, 10, 1);
 
     ConfigButton dcStatus = new ConfigButton("ToolTip Durability", Config.getDurabilitycheckerkey());
-    root.add(dcStatus, 7, 9, 10, 1);
+    root.add(dcStatus, 1, 9, 10, 1);
+
+    ConfigButton cnStatus = new ConfigButton("Chat Narration", Config.getChatnarration());
+    root.add(cnStatus, 12, 9, 10, 1);
 
     WButton settingsButton = new WButton(new LiteralText("Settings"));
     settingsButton.setOnClick(this::onSettingsClick);
