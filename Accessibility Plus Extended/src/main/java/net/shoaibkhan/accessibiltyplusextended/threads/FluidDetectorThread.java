@@ -1,4 +1,4 @@
-package net.shoaibkhan.accessibiltyplusextended;
+package net.shoaibkhan.accessibiltyplusextended.threads;
 
 
 import net.minecraft.block.Block;
@@ -10,6 +10,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.shoaibkhan.accessibiltyplusextended.HudRenderCallBackClass;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
 public class FluidDetectorThread extends Thread{

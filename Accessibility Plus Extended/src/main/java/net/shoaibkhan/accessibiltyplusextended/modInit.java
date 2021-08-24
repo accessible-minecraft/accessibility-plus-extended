@@ -1,6 +1,8 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.lwjgl.glfw.GLFW;
@@ -22,6 +24,7 @@ public class modInit implements ModInitializer {
   private static CustomWait mainThreadCustomWait;
   public static final Identifier oreSoundID = new Identifier("apebyshoaibkhan:ore");
   public static SoundEvent oreSoundEvent;
+  public static List<String> lowDurabilityItems = new ArrayList<String>();
 
   @Override
   public void onInitialize() {

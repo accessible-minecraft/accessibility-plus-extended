@@ -23,6 +23,9 @@ import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigScreen;
+import net.shoaibkhan.accessibiltyplusextended.threads.DetectorThread;
+import net.shoaibkhan.accessibiltyplusextended.threads.DurabilityThread;
+import net.shoaibkhan.accessibiltyplusextended.threads.FallDetectorThread;
 
 public class HudRenderCallBackClass {
   private MinecraftClient client;
@@ -32,6 +35,7 @@ public class HudRenderCallBackClass {
   public static int fallDetectorFlag = 0, entityNarratorFlag = 0, oreDetectorFlag = 0;
   private static FallDetectorThread[] fallDetectorThreads = { new FallDetectorThread(), new FallDetectorThread(), new FallDetectorThread() };
   private static DetectorThread[] oreDetectorThreads = { new DetectorThread(), new DetectorThread(), new DetectorThread() };
+  private static DurabilityThread durabilityThread = new DurabilityThread();
   private static Entity lockedOnEntity = null;
   public static boolean isTradeScreenOpen = false;
 
@@ -41,6 +45,13 @@ public class HudRenderCallBackClass {
       this.client = MinecraftClient.getInstance();
       if (client.player == null)  return;
       player = client.player;
+      
+      if(!modInit.mainThreadMap.containsKey("durablity_thread_key") && Config.get(Config.getDurabilitycheckerkey())) {
+    	  modInit.mainThreadMap.put("durablity_thread_key", 5000);
+    	  if(durabilityThread.isAlive() && durabilityThread!=null) durabilityThread.interrupt();
+    	  durabilityThread = new DurabilityThread();
+    	  durabilityThread.start();
+      }
       
       boolean isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode()) || InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
       boolean isControlPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.left.control").getCode()) || InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.right.control").getCode()));

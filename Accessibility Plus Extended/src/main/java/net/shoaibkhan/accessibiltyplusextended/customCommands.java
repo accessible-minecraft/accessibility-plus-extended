@@ -6,8 +6,8 @@ import io.github.cottonmc.clientcommands.ArgumentBuilders;
 import io.github.cottonmc.clientcommands.ClientCommandPlugin;
 import io.github.cottonmc.clientcommands.CottonClientCommandSource;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.NarratorManager;
 import net.minecraft.text.LiteralText;
+import net.shoaibkhan.accessibiltyplusextended.threads.FluidDetectorThread;
 
 public class customCommands implements ClientCommandPlugin {
   MinecraftClient client;

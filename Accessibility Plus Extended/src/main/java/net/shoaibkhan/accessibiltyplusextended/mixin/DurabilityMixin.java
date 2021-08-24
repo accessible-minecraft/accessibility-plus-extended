@@ -29,7 +29,7 @@ public class DurabilityMixin {
 //			list.set(0, new LiteralText(itemStack.getCount() + " " + mutableText.getString()) );
 //		}
 		
-		if (Config.get(Config.getDurabilitycheckerkey())) {
+		if (Config.get(Config.getDurabilitytooltipkey()) && Config.get(Config.getDurabilitycheckerkey())) {
 			if (itemStack.getItem().isDamageable()) {
 				int totalDurability = itemStack.getItem().getMaxDamage();
 				int currrRemainingDurability = totalDurability - (itemStack.getDamage());

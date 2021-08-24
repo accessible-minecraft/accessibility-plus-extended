@@ -1,4 +1,4 @@
-package net.shoaibkhan.accessibiltyplusextended;
+package net.shoaibkhan.accessibiltyplusextended.threads;
 
 
 import net.minecraft.block.Block;
@@ -9,6 +9,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
 public class DetectorThread extends Thread {

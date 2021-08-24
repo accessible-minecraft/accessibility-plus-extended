@@ -32,17 +32,17 @@ public class ArrayButton extends WButton {
     return InputResult.PROCESSED;
   }
 
-  //1.16
-  // @Override
-  // public void onClick(int x, int y, int button) {
-  //   super.onClick(x, y, button);
-  //   if (this.isEnabled()) {
-  //     int val = Config.getInt(jsonKey) + 1;
-  //     if (val == array.length)
-  //       val = 0;
-  //     Config.setString(jsonKey, val + "");
-  //     TranslatableText newButtonText = new TranslatableText(this.translateKey + " :" + array[Config.getInt(jsonKey)]);
-  //     this.setLabel(newButtonText);
-  //   }
-  // }
+//  //1.16
+//   @Override
+//   public void onClick(int x, int y, int button) {
+//     super.onClick(x, y, button);
+//     if (this.isEnabled()) {
+//       int val = Config.getInt(jsonKey) + 1;
+//       if (val == array.length)
+//         val = 0;
+//       Config.setString(jsonKey, val + "");
+//       TranslatableText newButtonText = new TranslatableText(this.translateKey + " :" + array[Config.getInt(jsonKey)]);
+//       this.setLabel(newButtonText);
+//     }
+//   }
 }

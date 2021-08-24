@@ -9,9 +9,9 @@ import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.accessibiltyplusextended.DetectorThread;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.threads.DetectorThread;
 
 public class OreDetectorGui extends LightweightGuiDescription {
   private ClientPlayerEntity player;
@@ -24,31 +24,31 @@ public class OreDetectorGui extends LightweightGuiDescription {
     setRootPanel(root);
 
     ArrayButton odvButton = new ArrayButton("Volume", Config.getOredetectorvolume(), DetectorThread.volume);
-    root.add(odvButton, 1, 5, 10, 1);
+    root.add(odvButton, 1, 3, 10, 1);
 
     ArrayButton odpButton = new ArrayButton("Pitch", Config.getOredetectorpitch(), DetectorThread.pitch);
-    root.add(odpButton, 12, 5, 10, 1);
+    root.add(odpButton, 12, 3, 10, 1);
 
     ArrayButton odrButton = new ArrayButton("Range", Config.getOredetectorrange(), DetectorThread.range);
-    root.add(odrButton, 12, 7, 10, 1);
+    root.add(odrButton, 12, 5, 10, 1);
 
     ArrayButton odcButton = new ArrayButton("Delay", Config.getOredetectordelay(), DetectorThread.delay);
-    root.add(odcButton, 1, 7, 10, 1);
+    root.add(odcButton, 1, 5, 10, 1);
 
     WButton backButton = new WButton(new LiteralText("Back"));
     backButton.setOnClick(this::onBackClick);
-    root.add(backButton, 2, 9, 7, 1);
+    root.add(backButton, 2, 7, 7, 1);
 
     WButton doneButton = new WButton(new LiteralText("Done"));
     doneButton.setOnClick(this::onDoneClick);
-    root.add(doneButton, 12, 9, 7, 1);
+    root.add(doneButton, 12, 7, 7, 1);
 
     WLabel label = new WLabel(new LiteralText("Ore Detector Settings"), modInit.colors("red", 100));
     label.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(label, 0, 1, 21, 1);
     WLabel fakeLabel = new WLabel(new LiteralText(""), modInit.colors("red", 100));
     fakeLabel.setHorizontalAlignment(HorizontalAlignment.CENTER);
-    root.add(fakeLabel, 0, 10, 21, 1);
+    root.add(fakeLabel, 0, 8, 21, 1);
 
     root.validate(this);
   }

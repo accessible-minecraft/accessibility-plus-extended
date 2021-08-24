@@ -11,23 +11,23 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
-import net.shoaibkhan.accessibiltyplusextended.threads.FallDetectorThread;
+import net.shoaibkhan.accessibiltyplusextended.threads.DurabilityThread;
 
-public class FallDetectorGui extends LightweightGuiDescription {
+public class DurabilityCheckerGui extends LightweightGuiDescription {
   private ClientPlayerEntity player;
   private MinecraftClient client;
 
-  public FallDetectorGui(ClientPlayerEntity player, MinecraftClient client) {
+  public DurabilityCheckerGui(ClientPlayerEntity player, MinecraftClient client) {
     this.player = player;
     this.client = client;
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ArrayButton fdrButton = new ArrayButton("Range", Config.getFalldetectorrange(), FallDetectorThread.range);
-    root.add(fdrButton, 1, 3, 10, 1);
+    ArrayButton dctButton = new ArrayButton("Threshold", Config.getDurabilitythresholdkey(), DurabilityThread.thresholdArray);
+    root.add(dctButton, 1, 3, 10, 1);
 
-    ArrayButton fdcButton = new ArrayButton("Depth", Config.getFalldetectordepth(), FallDetectorThread.depthArray);
-    root.add(fdcButton, 12, 3, 10, 1);
+    ConfigButton dctooltipButton = new ConfigButton("Change ToolTip", Config.getDurabilitytooltipkey());
+    root.add(dctooltipButton, 12, 3, 10, 1);
 
     WButton backButton = new WButton(new LiteralText("Back"));
     backButton.setOnClick(this::onBackClick);
@@ -37,7 +37,7 @@ public class FallDetectorGui extends LightweightGuiDescription {
     doneButton.setOnClick(this::onDoneClick);
     root.add(doneButton, 12, 5, 7, 1);
 
-    WLabel label = new WLabel(new LiteralText("Fall Detector Settings"), modInit.colors("red", 100));
+    WLabel label = new WLabel(new LiteralText("Durability Checker Settings"), modInit.colors("red", 100));
     label.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(label, 0, 1, 21, 1);
     WLabel fakeLabel = new WLabel(new LiteralText(""), modInit.colors("red", 100));

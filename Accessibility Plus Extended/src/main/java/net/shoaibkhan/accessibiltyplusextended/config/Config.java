@@ -22,6 +22,8 @@ public class Config {
 	public static final String WaterDetectorKey = "water_detector_key";
 	public static final String ReadBlocksKey = "read_blocks_key";
 	public static final String DurabilityCheckKey = "durability_check_key";
+	public static final String DurabilityToolTipKey = "durability_tool_tip_key";
+	public static final String DurabilityThresholdKey = "durability_threshold_key";
 	public static final String EntityNarratorKey = "entity_narrator_key";
 	public static final String OreDetectorVolume = "ore_detector_volume";
 	public static final String OreDetectorPitch = "ore_detector_pitch";
@@ -32,6 +34,14 @@ public class Config {
 	public static final String FindFluidPitch = "find_fluid_pitch";
 	public static final String FindFluidRange = "find_fluid_range";
 	public static final String ChatNarration = "chat_narration";
+
+	public static String getDurabilitythresholdkey() {
+		return DurabilityThresholdKey;
+	}
+
+	public static String getDurabilitytooltipkey() {
+		return DurabilityToolTipKey;
+	}
 
 	public static String getChatnarration() {
 		return ChatNarration;
@@ -83,10 +93,6 @@ public class Config {
 
 	public static String getWaterdetectorkey() {
 		return WaterDetectorKey;
-	}
-
-	public static String getDurabilitycheckkey() {
-		return DurabilityCheckKey;
 	}
 
 	public static String getOredetectorkey() {
@@ -249,6 +255,9 @@ public class Config {
 		data.add(getReadblockskey(), new JsonPrimitive(false));
 
 		data.add(getDurabilitycheckerkey(), new JsonPrimitive(true));
+		data.add(getDurabilitytooltipkey(), new JsonPrimitive(true));
+		data.add(getDurabilitythresholdkey(), new JsonPrimitive("4"));
+
 		data.add(getEntitynarratorkey(), new JsonPrimitive(true));
 
 		data.add(getOredetectorvolume(), new JsonPrimitive("5"));

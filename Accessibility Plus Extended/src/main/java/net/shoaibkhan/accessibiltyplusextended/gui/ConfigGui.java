@@ -41,7 +41,7 @@ public class ConfigGui extends LightweightGuiDescription {
     ConfigButton wdStatus = new ConfigButton("Water Detector", Config.getWaterdetectorkey());
     root.add(wdStatus, 12, 7, 10, 1);
 
-    ConfigButton dcStatus = new ConfigButton("ToolTip Durability", Config.getDurabilitycheckerkey());
+    ConfigButton dcStatus = new ConfigButton("Durability Checker", Config.getDurabilitycheckerkey());
     root.add(dcStatus, 1, 9, 10, 1);
 
     ConfigButton cnStatus = new ConfigButton("Chat Narration", Config.getChatnarration());
