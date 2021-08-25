@@ -1,4 +1,4 @@
-package net.shoaibkhan.accessibiltyplusextended.basemod.keyboard;
+package net.shoaibkhan.accessibiltyplusextended.keyboard;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -18,10 +18,10 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.shoaibkhan.accessibiltyplusextended.basemod.HudScreenHandler;
-import net.shoaibkhan.accessibiltyplusextended.basemod.NarratorPlus;
-import net.shoaibkhan.accessibiltyplusextended.basemod.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.HudScreenHandler;
+import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.basemod.mixin.AccessorHandledScreen;
+import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
 public class KeyboardController {
   private static KeyBinding LEFT_KEY;
@@ -101,7 +101,7 @@ public class KeyboardController {
 
   private static ActionResult onKeyPress(MinecraftClient mc, Screen currentScreen, int keyCode, int scanCode,
       int modifiers) {
-    if (screen != null && Config.inventoryKeyboardControlEnabled() && !HudScreenHandler.isSearchingRecipies) {
+    if (screen != null && Config.get(Config.getInvKeyboardControlKey()) && !HudScreenHandler.isSearchingRecipies) {
       if (LEFT_KEY.matchesKey(keyCode, scanCode)) {
         focusSlotAt(FocusDirection.LEFT);
       } else if (RIGHT_KEY.matchesKey(keyCode, scanCode)) {

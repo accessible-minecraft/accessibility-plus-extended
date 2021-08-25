@@ -35,85 +35,12 @@ public class Config {
 	public static final String FindFluidRange = "find_fluid_range";
 	public static final String ChatNarration = "chat_narration";
 
-	public static String getDurabilitythresholdkey() {
-		return DurabilityThresholdKey;
-	}
-
-	public static String getDurabilitytooltipkey() {
-		return DurabilityToolTipKey;
-	}
-
-	public static String getChatnarration() {
-		return ChatNarration;
-	}
-
-	public static String getFalldetectordepth() {
-		return FallDetectorDepth;
-	}
-
-	public static String getFalldetectorrange() {
-		return FallDetectorRange;
-	}
-
-	public static String getOredetectordelay() {
-		return OreDetectorDelay;
-	}
-
-	public static String getFindfluidtextkey() {
-		return FindFluidTextKey;
-	}
-
-	public static String getFindfluidvolume() {
-		return FindFluidVolume;
-	}
-
-	public static String getFindfluidpitch() {
-		return FindFluidPitch;
-	}
-
-	public static String getFindfluidrange() {
-		return FindFluidRange;
-	}
-
-	public static String getOredetectorrange() {
-		return OreDetectorRange;
-	}
-
-	public static String getOredetectorvolume() {
-		return OreDetectorVolume;
-	}
-
-	public static String getOredetectorpitch() {
-		return OreDetectorPitch;
-	}
-
-	public static String getLavadetectorkey() {
-		return LavaDetectorKey;
-	}
-
-	public static String getWaterdetectorkey() {
-		return WaterDetectorKey;
-	}
-
-	public static String getOredetectorkey() {
-		return OreDetectorKey;
-	}
-
-	public static String getEntitynarratorkey() {
-		return EntityNarratorKey;
-	}
-
-	public static String getDurabilitycheckerkey() {
-		return DurabilityCheckKey;
-	}
-
-	public static String getFalldetectorkey() {
-		return FallDetectorKey;
-	}
-
-	public static String getReadblockskey() {
-		return ReadBlocksKey;
-	}
+	// Accessibility Plus Keys
+	public static final String READ_BLOCKS_KEY = "ap_read_blocks";
+	public static final String READ_TOOLTIPS_KEY = "ap_read_tooltip";
+	public static final String READ_SIGNS_CONTENTS = "ap_read_signs_contents";
+	public static final String INV_KEYBOARD_CONTROL_KEY = "ap_inventory_keyboard_control";
+	public static final String ATION_BAR_KEY = "ap_action_bar_key";
 
 	public Config() {
 	}
@@ -271,6 +198,14 @@ public class Config {
 		data.add(getFindfluidrange(), new JsonPrimitive("7"));
 
 		data.add(getChatnarration(), new JsonPrimitive(true));
+
+		// Accessibility Plus
+		data.add(getAPReadblocksKey(), new JsonPrimitive(true));
+		data.add(getReadTooltipsKey(), new JsonPrimitive(true));
+		data.add(getReadSignsContents(), new JsonPrimitive(true));
+		data.add(getInvKeyboardControlKey(), new JsonPrimitive(true));
+		data.add(getAtionBarKey(), new JsonPrimitive(true));
+
 		saveConfig(data);
 		return data;
 	}
@@ -290,6 +225,106 @@ public class Config {
 			e.printStackTrace();
 		}
 		data = newConfig;
+	}
+
+	public static String getAPReadblocksKey() {
+		return READ_BLOCKS_KEY;
+	}
+
+	public static String getReadTooltipsKey() {
+		return READ_TOOLTIPS_KEY;
+	}
+
+	public static String getReadSignsContents() {
+		return READ_SIGNS_CONTENTS;
+	}
+
+	public static String getInvKeyboardControlKey() {
+		return INV_KEYBOARD_CONTROL_KEY;
+	}
+
+	public static String getAtionBarKey() {
+		return ATION_BAR_KEY;
+	}
+
+	public static String getDurabilitythresholdkey() {
+		return DurabilityThresholdKey;
+	}
+
+	public static String getDurabilitytooltipkey() {
+		return DurabilityToolTipKey;
+	}
+
+	public static String getChatnarration() {
+		return ChatNarration;
+	}
+
+	public static String getFalldetectordepth() {
+		return FallDetectorDepth;
+	}
+
+	public static String getFalldetectorrange() {
+		return FallDetectorRange;
+	}
+
+	public static String getOredetectordelay() {
+		return OreDetectorDelay;
+	}
+
+	public static String getFindfluidtextkey() {
+		return FindFluidTextKey;
+	}
+
+	public static String getFindfluidvolume() {
+		return FindFluidVolume;
+	}
+
+	public static String getFindfluidpitch() {
+		return FindFluidPitch;
+	}
+
+	public static String getFindfluidrange() {
+		return FindFluidRange;
+	}
+
+	public static String getOredetectorrange() {
+		return OreDetectorRange;
+	}
+
+	public static String getOredetectorvolume() {
+		return OreDetectorVolume;
+	}
+
+	public static String getOredetectorpitch() {
+		return OreDetectorPitch;
+	}
+
+	public static String getLavadetectorkey() {
+		return LavaDetectorKey;
+	}
+
+	public static String getWaterdetectorkey() {
+		return WaterDetectorKey;
+	}
+
+	public static String getOredetectorkey() {
+		return OreDetectorKey;
+	}
+
+	public static String getEntitynarratorkey() {
+		return EntityNarratorKey;
+	}
+
+	public static String getDurabilitycheckerkey() {
+		return DurabilityCheckKey;
+	}
+
+	public static String getFalldetectorkey() {
+		return FallDetectorKey;
+	}
+
+	public static String getReadblockskey() {
+		return ReadBlocksKey;
 	}
 
 }

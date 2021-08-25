@@ -1,11 +1,7 @@
-package net.shoaibkhan.accessibiltyplusextended.basemod;
-
-import java.util.HashMap;
-import java.util.Map;
+package net.shoaibkhan.accessibiltyplusextended;
 
 import org.lwjgl.glfw.GLFW;
 
-import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.block.Block;
@@ -17,15 +13,14 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.shoaibkhan.accessibiltyplusextended.basemod.config.Config;
-import net.shoaibkhan.accessibiltyplusextended.basemod.gui.ConfigGui;
-import net.shoaibkhan.accessibiltyplusextended.basemod.gui.ConfigScreen;
-import net.shoaibkhan.accessibiltyplusextended.basemod.keyboard.KeyboardController;
-import net.shoaibkhan.accessibiltyplusextended.basemod.mixin.AccessorHandledScreen;
+import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.gui.AccessibilityPlusConfigGui;
+import net.shoaibkhan.accessibiltyplusextended.gui.ConfigScreen;
+import net.shoaibkhan.accessibiltyplusextended.keyboard.KeyboardController;
+import net.shoaibkhan.accessibiltyplusextended.mixin.AccessorHandledScreen;
 
-public class AccessibilityPlus implements ModInitializer {
-	public static KeyBinding CONFIG_KEY;
-	public static AccessibilityPlus instance;
+public class AccessibilityPlus {
+	public static KeyBinding AP_CONFIG_KEY;
 	public static NarratorPlus narrator;
 	public static KeyboardController keyboardController;
 
@@ -33,29 +28,21 @@ public class AccessibilityPlus implements ModInitializer {
 	public static int currentRow = 0;
 	public static boolean isDPressed, isAPressed, isWPressed, isSPressed, isRPressed, isFPressed, isCPressed,
 			isVPressed, isTPressed, isEnterPressed;
-	public static Map<String, Integer> delayThreadMap;
-	private static CustomWait delayThread;
 	private HudScreenHandler hudScreenHandler;
 
-	@Override
 	public void onInitialize() {
-		instance = this;
-		CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.config",
+		AP_CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.config",
 				InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_N, "key.categories.accessibilityplus.general"));
 
 		narrator = new NarratorPlus();
 		keyboardController = new KeyboardController();
 		System.setProperty("java.awt.headless", "false");
 
-		delayThreadMap = new HashMap<String, Integer>();
-		delayThread = new CustomWait();
-		delayThread.startThread();
-
 		hudScreenHandler = new HudScreenHandler();
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 
-			if (Config.inventoryKeyboardControlEnabled()) {
+			if (Config.get(Config.getInvKeyboardControlKey())) {
 
 				isDPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
 						InputUtil.fromTranslationKey("key.keyboard.d").getCode()));
@@ -92,8 +79,9 @@ public class AccessibilityPlus implements ModInitializer {
 			if (client.player == null)
 				return;
 
-			while (CONFIG_KEY.wasPressed()) {
-				client.openScreen(new ConfigScreen(new ConfigGui(client.player)));
+			while (AP_CONFIG_KEY.wasPressed()) {
+				client.openScreen(new ConfigScreen(new AccessibilityPlusConfigGui(client.player),
+						"Accessibility Plus Configuration", client.player));
 				return;
 			}
 
@@ -115,10 +103,10 @@ public class AccessibilityPlus implements ModInitializer {
 							narrator.lastBlock = block;
 							narrator.lastBlockPos = blockPos;
 							String output = "";
-							if (Config.readBlocksEnabled()) {
+							if (Config.get(Config.getAPReadblocksKey())) {
 								output += block.getName().getString();
 							}
-							if (blockState.toString().contains("sign") && Config.readSignsContentsEnabled()) {
+							if (blockState.toString().contains("sign") && Config.get(Config.getReadSignsContents())) {
 								try {
 									SignBlockEntity signentity = (SignBlockEntity) client.world
 											.getBlockEntity(blockPos);
@@ -145,8 +133,6 @@ public class AccessibilityPlus implements ModInitializer {
 				}
 			}
 		});
-
-		System.out.println("Hello Fabric world!");
 	}
 
 }

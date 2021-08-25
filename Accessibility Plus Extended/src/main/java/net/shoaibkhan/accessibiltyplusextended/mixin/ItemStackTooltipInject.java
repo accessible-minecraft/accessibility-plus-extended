@@ -1,4 +1,4 @@
-package net.shoaibkhan.accessibiltyplusextended.basemod.mixin;
+package net.shoaibkhan.accessibiltyplusextended.mixin;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.shoaibkhan.accessibiltyplusextended.basemod.NarratorPlus;
-import net.shoaibkhan.accessibiltyplusextended.basemod.keyboard.KeyboardController;
+import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
+import net.shoaibkhan.accessibiltyplusextended.keyboard.KeyboardController;
 
 @Mixin(value = ItemStack.class, priority = 0)
 public class ItemStackTooltipInject {

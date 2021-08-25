@@ -1,4 +1,4 @@
-package net.shoaibkhan.accessibiltyplusextended.basemod;
+package net.shoaibkhan.accessibiltyplusextended;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;

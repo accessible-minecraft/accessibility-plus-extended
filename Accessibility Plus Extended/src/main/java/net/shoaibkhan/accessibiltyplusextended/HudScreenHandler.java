@@ -1,4 +1,4 @@
-package net.shoaibkhan.accessibiltyplusextended.basemod;
+package net.shoaibkhan.accessibiltyplusextended;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -6,14 +6,12 @@ import java.awt.event.InputEvent;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ingame.BookScreen;
 import net.minecraft.client.gui.screen.ingame.CraftingScreen;
 import net.minecraft.client.gui.screen.ingame.EnchantmentScreen;
-import net.minecraft.client.gui.screen.ingame.LecternScreen;
 import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.screen.LecternScreenHandler;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
+import net.shoaibkhan.accessibiltyplusextended.modInit;
 
 public class HudScreenHandler {
   private int minColumn;
@@ -50,7 +48,7 @@ public class HudScreenHandler {
     MutableText titleMutableText = new LiteralText("").append(screen.getTitle());
     String titleString = titleMutableText.getString().toLowerCase();
     {
-      if (!AccessibilityPlus.delayThreadMap.containsKey("stonecutter_result_slot")
+      if (!modInit.mainThreadMap.containsKey("stonecutter_result_slot")
           && titleString.contains("stonecutter")) {
         try {
           stonecutterScreen(screen);
@@ -106,7 +104,7 @@ public class HudScreenHandler {
       currentRow = AccessibilityPlus.currentRow;
 
       // D Pressed :- Next Column
-      if (AccessibilityPlus.isDPressed && !AccessibilityPlus.delayThreadMap.containsKey("stonecutter_result_slot")) {
+      if (AccessibilityPlus.isDPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -116,11 +114,11 @@ public class HudScreenHandler {
           currentColumn += differenceColumn;
         }
         robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-        AccessibilityPlus.delayThreadMap.put("stonecutter_result_slot", 200);
+        modInit.mainThreadMap.put("stonecutter_result_slot", 200);
       }
 
       // A Pressed :- Previous Column
-      if (AccessibilityPlus.isAPressed && !AccessibilityPlus.delayThreadMap.containsKey("stonecutter_result_slot")) {
+      if (AccessibilityPlus.isAPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -130,11 +128,11 @@ public class HudScreenHandler {
           currentColumn -= differenceColumn;
         }
         robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-        AccessibilityPlus.delayThreadMap.put("stonecutter_result_slot", 200);
+        modInit.mainThreadMap.put("stonecutter_result_slot", 200);
       }
 
       // S Pressed :- Down Row
-      if (AccessibilityPlus.isSPressed && !AccessibilityPlus.delayThreadMap.containsKey("stonecutter_result_slot")) {
+      if (AccessibilityPlus.isSPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -144,11 +142,11 @@ public class HudScreenHandler {
           currentRow += differenceRow;
         }
         robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-        AccessibilityPlus.delayThreadMap.put("stonecutter_result_slot", 200);
+        modInit.mainThreadMap.put("stonecutter_result_slot", 200);
       }
 
       // W Pressed :- Up Row
-      if (AccessibilityPlus.isWPressed && !AccessibilityPlus.delayThreadMap.containsKey("stonecutter_result_slot")) {
+      if (AccessibilityPlus.isWPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -158,7 +156,7 @@ public class HudScreenHandler {
           currentRow -= differenceRow;
         }
         robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-        AccessibilityPlus.delayThreadMap.put("stonecutter_result_slot", 200);
+        modInit.mainThreadMap.put("stonecutter_result_slot", 200);
       }
 
       AccessibilityPlus.currentColumn = currentColumn;
@@ -192,7 +190,7 @@ public class HudScreenHandler {
       currentRow = AccessibilityPlus.currentRow;
 
       // D Pressed :- Next Column
-      if (!AccessibilityPlus.delayThreadMap.containsKey("trading_screen") && AccessibilityPlus.isDPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_screen") && AccessibilityPlus.isDPressed) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -202,11 +200,11 @@ public class HudScreenHandler {
           currentColumn += differenceColumn;
         }
         robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-        AccessibilityPlus.delayThreadMap.put("trading_screen", 200);
+        modInit.mainThreadMap.put("trading_screen", 200);
       }
 
       // A Pressed :- Previous Column
-      if (!AccessibilityPlus.delayThreadMap.containsKey("trading_screen") && AccessibilityPlus.isAPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_screen") && AccessibilityPlus.isAPressed) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -216,11 +214,11 @@ public class HudScreenHandler {
           currentColumn -= differenceColumn;
         }
         robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-        AccessibilityPlus.delayThreadMap.put("trading_screen", 200);
+        modInit.mainThreadMap.put("trading_screen", 200);
       }
 
       // S Pressed :- Down Row
-      if (!AccessibilityPlus.delayThreadMap.containsKey("trading_screen") && AccessibilityPlus.isSPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_screen") && AccessibilityPlus.isSPressed) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -230,11 +228,11 @@ public class HudScreenHandler {
           currentRow += differenceRow;
         }
         robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-        AccessibilityPlus.delayThreadMap.put("trading_screen", 200);
+        modInit.mainThreadMap.put("trading_screen", 200);
       }
 
       // W Pressed :- Up Row
-      if (!AccessibilityPlus.delayThreadMap.containsKey("trading_screen") && AccessibilityPlus.isWPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_screen") && AccessibilityPlus.isWPressed) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -244,19 +242,19 @@ public class HudScreenHandler {
           currentRow -= differenceRow;
         }
         robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-        AccessibilityPlus.delayThreadMap.put("trading_screen", 200);
+        modInit.mainThreadMap.put("trading_screen", 200);
       }
 
       // R Pressed :- Scroll Up by 1
-      if (!AccessibilityPlus.delayThreadMap.containsKey("trading_scrolled_screen") && AccessibilityPlus.isRPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_scrolled_screen") && AccessibilityPlus.isRPressed) {
         robot.mouseWheel(-1);
-        AccessibilityPlus.delayThreadMap.put("trading_scrolled_screen", 200);
+        modInit.mainThreadMap.put("trading_scrolled_screen", 200);
       }
 
       // F Pressed :- Scrol Down by 1
-      if (!AccessibilityPlus.delayThreadMap.containsKey("trading_scrolled_screen") && AccessibilityPlus.isFPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_scrolled_screen") && AccessibilityPlus.isFPressed) {
         robot.mouseWheel(+1);
-        AccessibilityPlus.delayThreadMap.put("trading_scrolled_screen", 200);
+        modInit.mainThreadMap.put("trading_scrolled_screen", 200);
       }
 
       AccessibilityPlus.currentColumn = currentColumn;
@@ -339,7 +337,7 @@ public class HudScreenHandler {
         currentRow = AccessibilityPlus.currentRow;
 
         // D Pressed :- Next Column
-        if (!AccessibilityPlus.delayThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isDPressed) {
+        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isDPressed) {
           if (currentColumn == 0 && currentRow == 0) {
             currentColumn = minColumn;
             currentRow = minRow;
@@ -349,11 +347,11 @@ public class HudScreenHandler {
             currentColumn += differenceColumn;
           }
           robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-          AccessibilityPlus.delayThreadMap.put("crafting_table_screen", 200);
+          modInit.mainThreadMap.put("crafting_table_screen", 200);
         }
 
         // A Pressed :- Prev Column
-        if (!AccessibilityPlus.delayThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isAPressed) {
+        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isAPressed) {
           if (currentColumn == 0 && currentRow == 0) {
             currentColumn = minColumn;
             currentRow = minRow;
@@ -363,11 +361,11 @@ public class HudScreenHandler {
             currentColumn -= differenceColumn;
           }
           robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-          AccessibilityPlus.delayThreadMap.put("crafting_table_screen", 200);
+          modInit.mainThreadMap.put("crafting_table_screen", 200);
         }
 
         // S Pressed :- Down Row
-        if (!AccessibilityPlus.delayThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isSPressed) {
+        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isSPressed) {
           if (currentColumn == 0 && currentRow == 0) {
             currentColumn = minColumn;
             currentRow = minRow;
@@ -377,11 +375,11 @@ public class HudScreenHandler {
             currentRow += differenceRow;
           }
           robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-          AccessibilityPlus.delayThreadMap.put("crafting_table_screen", 200);
+          modInit.mainThreadMap.put("crafting_table_screen", 200);
         }
 
         // W Pressed :- Up Row
-        if (!AccessibilityPlus.delayThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isWPressed) {
+        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isWPressed) {
           if (currentColumn == 0 && currentRow == 0) {
             currentColumn = minColumn;
             currentRow = minRow;
@@ -391,30 +389,30 @@ public class HudScreenHandler {
             currentRow -= differenceRow;
           }
           robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-          AccessibilityPlus.delayThreadMap.put("crafting_table_screen", 200);
+          modInit.mainThreadMap.put("crafting_table_screen", 200);
         }
 
         // R Pressed :- Next Page
-        if (!AccessibilityPlus.delayThreadMap.containsKey("crafting_table_scrolled_screen")
+        if (!modInit.mainThreadMap.containsKey("crafting_table_scrolled_screen")
             && AccessibilityPlus.isRPressed && client.player.getRecipeBook().isGuiOpen(RecipeBookCategory.CRAFTING)) {
           robot.mouseMove(nextX + windowPosX - hudScreenOffsetX + (hudScreenOffsetX / 2),
               nextY + windowPosY + hudScreenOffsetY);
           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
           robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-          AccessibilityPlus.delayThreadMap.put("crafting_table_scrolled_screen", 200);
+          modInit.mainThreadMap.put("crafting_table_scrolled_screen", 200);
         }
 
         // F Pressed :- Prev Page
-        if (!AccessibilityPlus.delayThreadMap.containsKey("crafting_table_scrolled_screen")
+        if (!modInit.mainThreadMap.containsKey("crafting_table_scrolled_screen")
             && AccessibilityPlus.isFPressed && client.player.getRecipeBook().isGuiOpen(RecipeBookCategory.CRAFTING)) {
           robot.mouseMove(prevX + windowPosX - hudScreenOffsetX, prevY + windowPosY + hudScreenOffsetY);
           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
           robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-          AccessibilityPlus.delayThreadMap.put("crafting_table_scrolled_screen", 200);
+          modInit.mainThreadMap.put("crafting_table_scrolled_screen", 200);
         }
 
         // C Pressed :- Open/Close Recipe Book
-        if (!AccessibilityPlus.delayThreadMap.containsKey("space_pressed") && AccessibilityPlus.isCPressed) {
+        if (!modInit.mainThreadMap.containsKey("space_pressed") && AccessibilityPlus.isCPressed) {
           robot.mouseMove(recipeBookX + windowPosX - hudScreenOffsetX, recipeBookY + windowPosY - hudScreenOffsetY);
           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
           robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
@@ -440,18 +438,18 @@ public class HudScreenHandler {
 
           robot.mouseMove(recipeBookX + windowPosX - hudScreenOffsetX, recipeBookY + windowPosY - hudScreenOffsetY);
 
-          AccessibilityPlus.delayThreadMap.put("space_pressed", 200);
+          modInit.mainThreadMap.put("space_pressed", 200);
           NarratorPlus.narrate("Recipe Book "
               + (!(client.player.getRecipeBook().isGuiOpen(RecipeBookCategory.CRAFTING)) ? "on" : "off"));
         }
 
         // v Pressed :- Enable/Disable Show All
-        if (!AccessibilityPlus.delayThreadMap.containsKey("filtering_pressed") && AccessibilityPlus.isVPressed
+        if (!modInit.mainThreadMap.containsKey("filtering_pressed") && AccessibilityPlus.isVPressed
             && client.player.getRecipeBook().isGuiOpen(RecipeBookCategory.CRAFTING)) {
           robot.mouseMove(filteringX + windowPosX - hudScreenOffsetX, filteringY + windowPosY - hudScreenOffsetY);
           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
           robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-          AccessibilityPlus.delayThreadMap.put("filtering_pressed", 200);
+          modInit.mainThreadMap.put("filtering_pressed", 200);
         }
 
         AccessibilityPlus.currentColumn = currentColumn;
@@ -512,7 +510,7 @@ public class HudScreenHandler {
       currentRow = AccessibilityPlus.currentRow;
 
       // S Pressed :- Down Row
-      if (AccessibilityPlus.isSPressed && !AccessibilityPlus.delayThreadMap.containsKey("enchanting_table_slot")) {
+      if (AccessibilityPlus.isSPressed && !modInit.mainThreadMap.containsKey("enchanting_table_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -522,11 +520,11 @@ public class HudScreenHandler {
           currentRow += differenceRow;
         }
         robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-        AccessibilityPlus.delayThreadMap.put("enchanting_table_slot", 200);
+        modInit.mainThreadMap.put("enchanting_table_slot", 200);
       }
 
       // W Pressed :- Up Row
-      if (AccessibilityPlus.isWPressed && !AccessibilityPlus.delayThreadMap.containsKey("enchanting_table_slot")) {
+      if (AccessibilityPlus.isWPressed && !modInit.mainThreadMap.containsKey("enchanting_table_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -536,7 +534,7 @@ public class HudScreenHandler {
           currentRow -= differenceRow;
         }
         robot.mouseMove(currentColumn + windowPosX - hudScreenOffsetX, currentRow + windowPosY - hudScreenOffsetY);
-        AccessibilityPlus.delayThreadMap.put("enchanting_table_slot", 200);
+        modInit.mainThreadMap.put("enchanting_table_slot", 200);
       }
 
       AccessibilityPlus.currentColumn = currentColumn;

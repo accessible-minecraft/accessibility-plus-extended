@@ -1,4 +1,4 @@
-package net.shoaibkhan.accessibiltyplusextended.basemod.keyboard;
+package net.shoaibkhan.accessibiltyplusextended.keyboard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.screen.slot.FurnaceFuelSlot;
 import net.minecraft.screen.slot.FurnaceOutputSlot;
 import net.minecraft.screen.slot.Slot;
-import net.shoaibkhan.accessibiltyplusextended.basemod.mixin.AccessorSlot;
+import net.shoaibkhan.accessibiltyplusextended.mixin.AccessorSlot;
 
 public class SlotsGroup {
     public String name;
