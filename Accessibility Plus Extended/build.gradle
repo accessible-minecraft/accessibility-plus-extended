@@ -1,14 +1,14 @@
 // 1.17
-//plugins {
-//	id 'fabric-loom' version '0.8-SNAPSHOT'
-//	id 'maven-publish'
-//}
-
-// 1.16
 plugins {
-	id 'fabric-loom' version '0.6-SNAPSHOT'
+	id 'fabric-loom' version '0.8-SNAPSHOT'
 	id 'maven-publish'
 }
+
+// 1.16
+//plugins {
+//	id 'fabric-loom' version '0.6-SNAPSHOT'
+//	id 'maven-publish'
+//}
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -25,29 +25,29 @@ repositories {
 }
 
 // 1.16
-dependencies {
-    minecraft "com.mojang:minecraft:1.16.5"
-    mappings "net.fabricmc:yarn:1.16.5+build.8:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.11.3"
+//dependencies {
+//	minecraft "com.mojang:minecraft:1.16.5"
+//	mappings "net.fabricmc:yarn:1.16.5+build.8:v2"
+//	modImplementation "net.fabricmc:fabric-loader:0.11.3"
            
-    //Fabric api
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.34.1+1.16"
-  	modImplementation include("io.github.cottonmc:LibGui:3.2.1+1.16.3")
-	modImplementation include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
-}
+	//Fabric api
+//	modImplementation "net.fabricmc.fabric-api:fabric-api:0.34.1+1.16"
+//	modImplementation include("io.github.cottonmc:LibGui:3.2.1+1.16.3")
+//	modImplementation include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
+//}
 
 
 // 1.17
-//dependencies {
-//    minecraft "com.mojang:minecraft:1.17.1"
-//    mappings "net.fabricmc:yarn:1.17.1+build.1:v2"
-//    modImplementation "net.fabricmc:fabric-loader:0.11.6"
+dependencies {
+	minecraft "com.mojang:minecraft:1.17.1"
+	mappings "net.fabricmc:yarn:1.17.1+build.1:v2"
+	modImplementation "net.fabricmc:fabric-loader:0.11.6"
             
-    //Fabric api
-//    modImplementation "net.fabricmc.fabric-api:fabric-api:0.36.1+1.17"
-//    modImplementation include("io.github.cottonmc:LibGui:4.0.0+1.17")
-//    modImplementation include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
-//}
+	//Fabric api
+	modImplementation "net.fabricmc.fabric-api:fabric-api:0.36.1+1.17"
+	modImplementation include("io.github.cottonmc:LibGui:4.0.0+1.17")
+	modImplementation include("io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1")
+}
 
 processResources {
 	inputs.property "version", project.version
