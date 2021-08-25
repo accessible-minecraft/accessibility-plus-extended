@@ -1,154 +1,68 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 // import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.command.argument.EntityAnchorArgumentType.EntityAnchor;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.features.EntityLocking;
+import net.shoaibkhan.accessibiltyplusextended.features.FeaturesWithThreadHandler;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigScreen;
-import net.shoaibkhan.accessibiltyplusextended.threads.DetectorThread;
-import net.shoaibkhan.accessibiltyplusextended.threads.DurabilityThread;
-import net.shoaibkhan.accessibiltyplusextended.threads.FallDetectorThread;
 
 public class HudRenderCallBackClass {
 	private MinecraftClient client;
-	private PlayerEntity player;
-	private String tempBlock = "", tempBlockPos = "";
-	private String tempEntity = "", tempEntityPos = "";
-	public static int fallDetectorFlag = 0, entityNarratorFlag = 0, oreDetectorFlag = 0;
-	private static FallDetectorThread[] fallDetectorThreads = { new FallDetectorThread(), new FallDetectorThread(),
-			new FallDetectorThread() };
-	private static DetectorThread[] oreDetectorThreads = { new DetectorThread(), new DetectorThread(),
-			new DetectorThread() };
-	private static DurabilityThread durabilityThread = new DurabilityThread();
-	private static Entity lockedOnEntity = null;
+	public static int entityNarratorFlag = 0, oreDetectorFlag = 0;
 	public static boolean isTradeScreenOpen = false;
+	public static boolean isAltPressed, isControlPressed;
+	private KeyBinding CONFIG_KEY, LockEntityKey;
 
 	public HudRenderCallBackClass(KeyBinding CONFIG_KEY, KeyBinding LockEntityKey) {
-
-		HudRenderCallback.EVENT.register((__, ___) -> {
-			this.client = MinecraftClient.getInstance();
-			if (client.player == null)
-				return;
-			player = client.player;
-
-			durabilityThread();
-
-			boolean isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())
-					|| InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
-							InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
-			boolean isControlPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.left.control").getCode())
-					|| InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
-							InputUtil.fromTranslationKey("key.keyboard.right.control").getCode()));
-
-			try {
-
-				if (lockedOnEntity != null) {
-					if (!lockedOnEntity.isAlive())
-						lockedOnEntity = null;
-					Vec3d vec3d = new Vec3d(lockedOnEntity.getX(),
-							lockedOnEntity.getY() + lockedOnEntity.getHeight() - 0.25, lockedOnEntity.getZ());
-					client.player.lookAt(EntityAnchor.EYES, vec3d);
-
-				}
-
-				while (CONFIG_KEY.wasPressed()) {
-					if (!isControlPressed) {
-						Screen screen = new ConfigScreen(new ConfigGui(client.player, client),
-								"AP Extended Configuration", client.player);
-						client.openScreen(screen);
-						return;
-					}
-				}
-
-				if (isAltPressed) {
-					while (LockEntityKey.wasPressed()) {
-						lockedOnEntity = null;
-					}
-				}
-
-				while (LockEntityKey.wasPressed()) {
-					Entity toBeLocked = entityLocking();
-					if (toBeLocked != null) {
-						MutableText mutableText = (new LiteralText("")).append(toBeLocked.getName());
-						player.sendMessage(
-								new LiteralText(
-										mutableText.getString() + " "
-												+ HudRenderCallBackClass
-														.get_position_difference(toBeLocked.getBlockPos(), client)),
-								true);
-						lockedOnEntity = toBeLocked;
-					}
-				}
-
-				if (!client.isPaused() && (client.currentScreen == null)) {
-
-					// Read Crosshair
-					if (10000 - fallDetectorFlag >= 3000
-							&& (Config.get(Config.getReadblockskey()) || Config.get(Config.getEntitynarratorkey()))) {
-						crosshairTarget();
-					}
-
-					// Fall Detector
-					if (Config.get(Config.getFalldetectorkey())) {
-						for (int i = 0; i < fallDetectorThreads.length; i++) {
-							if (!fallDetectorThreads[i].alive) {
-								fallDetectorThreads[i].start();
-							} else if (fallDetectorThreads[i].alive && fallDetectorThreads[i].finished) {
-								fallDetectorThreads[i].interrupt();
-								fallDetectorThreads[i] = new FallDetectorThread();
-								fallDetectorThreads[i].start();
-							}
-						}
-					}
-
-					// Detectors
-					if (Config.get(Config.getOredetectorkey()) || Config.get(Config.getLavadetectorkey())
-							|| Config.get(Config.getWaterdetectorkey())) {
-						for (int i = 0; i < oreDetectorThreads.length; i++) {
-							if (!oreDetectorThreads[i].alive) {
-								oreDetectorThreads[i].start();
-							} else if (oreDetectorThreads[i].alive && oreDetectorThreads[i].finished) {
-								oreDetectorThreads[i].interrupt();
-								oreDetectorThreads[i] = new DetectorThread();
-								oreDetectorThreads[i].start();
-							}
-						}
-					}
-				}
-			} catch (Exception e) {
-			}
-
-		});
+		this.CONFIG_KEY = CONFIG_KEY;
+		this.LockEntityKey = LockEntityKey;
+		HudRenderCallback.EVENT.register(this::hudRenderCallbackEventMethod);
 	}
 
-	private void durabilityThread() {
-		if (!modInit.mainThreadMap.containsKey("durablity_thread_key")
-				&& Config.get(Config.getDurabilitycheckerkey())) {
-			modInit.mainThreadMap.put("durablity_thread_key", 5000);
-			if (durabilityThread.isAlive() && durabilityThread != null)
-				durabilityThread.interrupt();
-			durabilityThread = new DurabilityThread();
-			durabilityThread.start();
+	private void hudRenderCallbackEventMethod(MatrixStack matixStack, float f) {
+		this.client = MinecraftClient.getInstance();
+		if (client.player == null)
+			return;
+
+		try {
+
+			keyPresses(CONFIG_KEY);
+
+			new EntityLocking(client, LockEntityKey);
+
+			new FeaturesWithThreadHandler(client);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void keyPresses(KeyBinding CONFIG_KEY) {
+		isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
+				InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())
+				|| InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
+						InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
+		isControlPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
+				InputUtil.fromTranslationKey("key.keyboard.left.control").getCode())
+				|| InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
+						InputUtil.fromTranslationKey("key.keyboard.right.control").getCode()));
+
+		while (CONFIG_KEY.wasPressed()) {
+			if (!isControlPressed) {
+				Screen screen = new ConfigScreen(new ConfigGui(client.player, client), "AP Extended Configuration",
+						client.player);
+				client.openScreen(screen);
+				return;
+			}
 		}
 	}
 
@@ -239,98 +153,4 @@ public class HudRenderCallBackClass {
 			text = String.format("%s  %s  %s", diffXBlockPos, diffYBlockPos, diffZBlockPos);
 		return text;
 	}
-
-	private Entity entityLocking() {
-		{
-			double closestDouble = -99999;
-			Entity closestEntity = null;
-			try {
-				for (Entity i : client.world.getEntities()) {
-					if (!(i instanceof MobEntity))
-						continue;
-					BlockPos blockPos = i.getBlockPos();
-
-					Vec3d entityVec3d = new Vec3d(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-					Vec3d playerVec3d = new Vec3d(client.player.getBlockPos().getX(),
-							client.player.getBlockPos().getY(), client.player.getBlockPos().getZ());
-					if (closestDouble == -99999 || closestDouble > entityVec3d.distanceTo(playerVec3d)) {
-						closestDouble = entityVec3d.distanceTo(playerVec3d);
-						closestEntity = i;
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			if (closestDouble > 10.0)
-				closestEntity = null;
-			return closestEntity;
-		}
-	}
-
-	private void crosshairTarget() {
-		HitResult hit = client.crosshairTarget;
-		String text = "";
-		switch (hit.getType()) {
-		case MISS:
-			break;
-		case BLOCK:
-			if (Config.get(Config.getReadblockskey())) {
-				BlockHitResult blockHitResult = (BlockHitResult) hit;
-				BlockState blockState = client.world.getBlockState(blockHitResult.getBlockPos());
-				Block block = blockState.getBlock();
-				if ((!tempBlock.equalsIgnoreCase(block + "")
-						|| !(tempBlockPos.equalsIgnoreCase(blockHitResult.getBlockPos() + "")))
-						&& !(blockState + "").toLowerCase().contains("sign")) {
-					tempBlock = block + "";
-					tempBlockPos = blockHitResult.getBlockPos() + "";
-					tempEntityPos = "";
-					tempEntity = "";
-					String side = blockHitResult.getSide().asString();
-					String name = "";
-					MutableText blockMutableText = new LiteralText("").append(block.getName());
-					name = blockMutableText.getString();
-					if (side.equalsIgnoreCase("up"))
-						side = "top";
-					if (side.equalsIgnoreCase("down"))
-						side = "bottom";
-					text = name + " " + side;
-					narrate(text);
-				}
-			}
-			break;
-		case ENTITY:
-
-			if (Config.get(Config.getEntitynarratorkey())) {
-				try {
-					EntityHitResult entityHitResult = (EntityHitResult) hit;
-
-					if (((EntityHitResult) hit).getEntity() == lockedOnEntity)
-						break;
-
-					if ((!(((EntityHitResult) hit).getEntity().getDisplayName() + "").equalsIgnoreCase(tempEntity)
-							|| !(((EntityHitResult) hit).hashCode() + "").equalsIgnoreCase(tempEntityPos))
-							&& !modInit.mainThreadMap.containsKey("entity_narrator_key")) {
-
-						tempEntity = ((EntityHitResult) hit).getEntity().getType() + "";
-						tempEntityPos = ((EntityHitResult) hit).hashCode() + "";
-						tempBlockPos = "";
-						tempBlock = "";
-						MutableText entityMutableText = new LiteralText("")
-								.append(entityHitResult.getEntity().getName());
-						text = entityMutableText.getString();
-						narrate(text);
-						modInit.mainThreadMap.put("entity_narrator_key", 5000);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			break;
-		}
-	}
-
-	private void narrate(String st) {
-		client.player.sendMessage(new LiteralText(st), true);
-	}
-
 }

@@ -11,7 +11,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
-import net.shoaibkhan.accessibiltyplusextended.threads.FallDetectorThread;
+import net.shoaibkhan.accessibiltyplusextended.features.withThreads.FallDetectorThread;
 
 public class FallDetectorGui extends LightweightGuiDescription {
   private ClientPlayerEntity player;

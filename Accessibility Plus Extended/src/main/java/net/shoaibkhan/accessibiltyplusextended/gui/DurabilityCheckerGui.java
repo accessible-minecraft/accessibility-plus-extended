@@ -11,7 +11,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
-import net.shoaibkhan.accessibiltyplusextended.threads.DurabilityThread;
+import net.shoaibkhan.accessibiltyplusextended.features.withThreads.DurabilityThread;
 
 public class DurabilityCheckerGui extends LightweightGuiDescription {
   private ClientPlayerEntity player;

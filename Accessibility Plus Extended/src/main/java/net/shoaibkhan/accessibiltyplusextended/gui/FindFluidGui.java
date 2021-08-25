@@ -11,7 +11,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
-import net.shoaibkhan.accessibiltyplusextended.threads.FluidDetectorThread;
+import net.shoaibkhan.accessibiltyplusextended.features.withThreads.FluidDetectorThread;
 
 public class FindFluidGui extends LightweightGuiDescription {
   private ClientPlayerEntity player;

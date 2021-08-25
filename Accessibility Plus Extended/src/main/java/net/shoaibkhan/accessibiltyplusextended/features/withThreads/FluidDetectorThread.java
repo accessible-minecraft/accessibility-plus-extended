@@ -1,4 +1,4 @@
-package net.shoaibkhan.accessibiltyplusextended.threads;
+package net.shoaibkhan.accessibiltyplusextended.features.withThreads;
 
 
 import net.minecraft.block.Block;

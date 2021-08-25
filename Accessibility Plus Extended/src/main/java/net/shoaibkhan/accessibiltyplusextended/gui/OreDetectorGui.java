@@ -11,7 +11,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
-import net.shoaibkhan.accessibiltyplusextended.threads.DetectorThread;
+import net.shoaibkhan.accessibiltyplusextended.features.withThreads.OreDetectorThread;
 
 public class OreDetectorGui extends LightweightGuiDescription {
   private ClientPlayerEntity player;
@@ -23,16 +23,16 @@ public class OreDetectorGui extends LightweightGuiDescription {
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ArrayButton odvButton = new ArrayButton("Volume", Config.getOredetectorvolume(), DetectorThread.volume);
+    ArrayButton odvButton = new ArrayButton("Volume", Config.getOredetectorvolume(), OreDetectorThread.volume);
     root.add(odvButton, 1, 3, 10, 1);
 
-    ArrayButton odpButton = new ArrayButton("Pitch", Config.getOredetectorpitch(), DetectorThread.pitch);
+    ArrayButton odpButton = new ArrayButton("Pitch", Config.getOredetectorpitch(), OreDetectorThread.pitch);
     root.add(odpButton, 12, 3, 10, 1);
 
-    ArrayButton odrButton = new ArrayButton("Range", Config.getOredetectorrange(), DetectorThread.range);
+    ArrayButton odrButton = new ArrayButton("Range", Config.getOredetectorrange(), OreDetectorThread.range);
     root.add(odrButton, 12, 5, 10, 1);
 
-    ArrayButton odcButton = new ArrayButton("Delay", Config.getOredetectordelay(), DetectorThread.delay);
+    ArrayButton odcButton = new ArrayButton("Delay", Config.getOredetectordelay(), OreDetectorThread.delay);
     root.add(odcButton, 1, 5, 10, 1);
 
     WButton backButton = new WButton(new LiteralText("Back"));

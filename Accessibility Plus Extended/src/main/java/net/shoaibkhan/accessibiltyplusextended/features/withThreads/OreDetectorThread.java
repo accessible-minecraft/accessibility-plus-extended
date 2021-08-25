@@ -1,9 +1,8 @@
-package net.shoaibkhan.accessibiltyplusextended.threads;
+package net.shoaibkhan.accessibiltyplusextended.features.withThreads;
 
 
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.fluid.FluidState;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
@@ -12,7 +11,7 @@ import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
-public class DetectorThread extends Thread {
+public class OreDetectorThread extends Thread {
   public boolean finished = false, alive = false;
   private MinecraftClient client;
   public static String[] volume = { "0", "0.05", "0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9", "0.95", "1" };
@@ -40,7 +39,8 @@ public class DetectorThread extends Thread {
     finished = true;
   }
 
-  private void checkBlock(BlockPos blockPos, int val, boolean lava, boolean water, boolean ore) {
+  @SuppressWarnings("unused")
+private void checkBlock(BlockPos blockPos, int val, boolean lava, boolean water, boolean ore) {
     Block block = client.world.getBlockState(blockPos).getBlock();
     String name = block.getTranslationKey();
     if (name.contains("void_air"))
@@ -105,57 +105,5 @@ public class DetectorThread extends Thread {
         checkBlock(new BlockPos(new Vec3d(posX, posY - 1, posZ)), val - 1, lava, water, ore); // Bottom Block
       }
     }
-  }
-
-  public static void checkFluid() {
-    MinecraftClient client = MinecraftClient.getInstance();
-    BlockPos pos = client.player.getBlockPos();
-    int posX = pos.getX();
-    int posY = pos.getY() - 1;
-    int posZ = pos.getZ();
-    int rangeVal = 4;
-    BlockPos newBlockPos = new BlockPos(new Vec3d(posX, posY, posZ));
-    BlockPos fluidPos = findFluid(client, newBlockPos, rangeVal, false, true);
-    if(fluidPos!=null){
-      FluidState fluidState = client.world.getFluidState(fluidPos);
-//      System.out.println("Fluid:" + client.world.getBlockState(fluidPos).getBlock().getName() + "\t Level:" + fluidState.getLevel());
-    }
-  }
-
-  private static BlockPos findFluid(MinecraftClient client, BlockPos blockPos, int range, boolean lava, boolean water){
-    Block block = client.world.getBlockState(blockPos).getBlock();
-    String name = block.getTranslationKey();
-    if (name.contains("void_air"))
-      return null;
-    name = name.substring(name.lastIndexOf(".") + 1);
-    if (name.contains("_"))
-      name = name.replace("_", " ");
-
-//    System.out.println(name);
-
-    FluidState fluidState = client.world.getFluidState(blockPos);
-    if ((name.contains("lava") && lava) || (name.contains("water") && water) && fluidState.getLevel()==8) {
-      return blockPos;
-    } else if(range-1 >= 0){
-      int posX = blockPos.getX();
-      int posY = blockPos.getY();
-      int posZ = blockPos.getZ();
-      int rangeVal = 10;
-      BlockPos bp1 = findFluid(client, new BlockPos(new Vec3d(posX, posY, posZ - 1)), rangeVal, lava, water);
-      BlockPos bp2 = findFluid(client, new BlockPos(new Vec3d(posX, posY, posZ + 1)), rangeVal, lava, water);
-      BlockPos bp3 = findFluid(client, new BlockPos(new Vec3d(posX - 1, posY, posZ)), rangeVal, lava, water);
-      BlockPos bp4 = findFluid(client, new BlockPos(new Vec3d(posX + 1, posY, posZ)), rangeVal, lava, water);
-      BlockPos bp5 = findFluid(client, new BlockPos(new Vec3d(posX, posY - 1, posZ)), rangeVal, lava, water);
-      BlockPos bp6 = findFluid(client, new BlockPos(new Vec3d(posX, posY + 1, posZ)), rangeVal, lava, water);
-
-      if(bp1 != null ) return bp1;
-      if(bp2 != null ) return bp2;
-      if(bp3 != null ) return bp3;
-      if(bp4 != null ) return bp4;
-      if(bp5 != null ) return bp5;
-      if(bp6 != null ) return bp6;
-    }
-
-    return null;
   }
 }

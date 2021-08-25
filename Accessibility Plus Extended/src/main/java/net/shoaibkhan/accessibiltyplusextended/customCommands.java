@@ -7,7 +7,7 @@ import io.github.cottonmc.clientcommands.ClientCommandPlugin;
 import io.github.cottonmc.clientcommands.CottonClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.LiteralText;
-import net.shoaibkhan.accessibiltyplusextended.threads.FluidDetectorThread;
+import net.shoaibkhan.accessibiltyplusextended.features.withThreads.FluidDetectorThread;
 
 public class customCommands implements ClientCommandPlugin {
   MinecraftClient client;
