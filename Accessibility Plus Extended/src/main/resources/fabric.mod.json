@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "accessibiltyplusextended",
+  "id": "apextended",
   "version": "${version}",
   "name": "Accessibility Plus Extended",
-  "description": "A minecraft mod that adds more accessibility to improve performance.",
+  "description": "A minecraft mod that adds more accessibility to improve experience.",
   "authors": [
     "Shoaib Khan"
   ],
@@ -12,7 +12,7 @@
     "sources": "https://github.com/shoaib11120/Accessibility-Plus-Extended"
   },
   "license": "MIT",
-  "icon": "assets/apebyshoaibkhan/A.P.E..png",
+  "icon": "assets/A.P.E..png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -23,7 +23,7 @@
     ]
   },
   "mixins": [
-    "apebyshoaibkhan.mixins.json"
+    "apextended.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.7.4",

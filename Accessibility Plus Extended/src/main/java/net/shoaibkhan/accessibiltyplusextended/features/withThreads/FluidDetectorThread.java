@@ -11,6 +11,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.HudRenderCallBackClass;
+import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
 public class FluidDetectorThread extends Thread{
@@ -63,7 +64,8 @@ public class FluidDetectorThread extends Thread{
         MutableText blockMutableText = new LiteralText("").append(client.world.getBlockState(fluidPos).getBlock().getName());
         String name = blockMutableText.getString();
     
-        client.player.sendMessage(new LiteralText(""+name+", "+posDifference), true);
+//        client.player.sendMessage(new LiteralText(""+name+", "+posDifference), true);
+        NarratorPlus.narrate(""+name+", "+posDifference);
       }
     }
   }

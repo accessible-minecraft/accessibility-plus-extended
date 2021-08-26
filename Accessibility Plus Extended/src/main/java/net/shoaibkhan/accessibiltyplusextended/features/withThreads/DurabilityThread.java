@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
+import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
@@ -42,7 +43,8 @@ public class DurabilityThread extends Thread {
 					double damage = itemStack.getDamage();
 					double healthLeft = 100.00 - ((damage*100)/maxDamage);
 					if (healthLeft <= threshold) {
-						this.client.player.sendMessage(new LiteralText(name + " durability is low"), true);
+//						this.client.player.sendMessage(new LiteralText(name + " durability is low"), true);
+						NarratorPlus.narrate(name + " durability is low");
 						modInit.lowDurabilityItems.add(searchQuery);
 					}
 				}

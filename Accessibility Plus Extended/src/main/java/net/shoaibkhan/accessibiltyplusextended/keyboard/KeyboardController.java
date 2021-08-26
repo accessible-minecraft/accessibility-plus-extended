@@ -20,8 +20,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.shoaibkhan.accessibiltyplusextended.HudScreenHandler;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
-import net.shoaibkhan.accessibiltyplusextended.basemod.mixin.AccessorHandledScreen;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.mixin.AccessorHandledScreen;
 
 public class KeyboardController {
   private static KeyBinding LEFT_KEY;

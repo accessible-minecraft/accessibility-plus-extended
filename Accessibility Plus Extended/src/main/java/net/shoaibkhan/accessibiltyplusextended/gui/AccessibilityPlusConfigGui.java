@@ -20,24 +20,19 @@ public class AccessibilityPlusConfigGui extends LightweightGuiDescription {
         setRootPanel(root);
         root.setSize(240, 240);
 
-        ConfigButton readBlocksButton = new ConfigButton("gui.accessibilityplus.config.buttons.readblocks",
-                Config.getAPReadblocksKey());
+        ConfigButton readBlocksButton = new ConfigButton("gui.accessibilityplus.config.buttons.readblocks", Config.getReadblocksKey());
         root.add(readBlocksButton, 0, 1, 10, 1);
 
-        ConfigButton readTooltipsButton = new ConfigButton("gui.accessibilityplus.config.buttons.readtooltips",
-                Config.getReadTooltipsKey());
+        ConfigButton readTooltipsButton = new ConfigButton("gui.accessibilityplus.config.buttons.readtooltips", Config.getReadTooltipsKey());
         root.add(readTooltipsButton, 11, 1, 10, 1);
 
-        ConfigButton readSignsButton = new ConfigButton("gui.accessibilityplus.config.buttons.readsignscontents",
-                Config.getReadSignsContents());
+        ConfigButton readSignsButton = new ConfigButton("gui.accessibilityplus.config.buttons.readsignscontents", Config.getReadSignsContents());
         root.add(readSignsButton, 0, 2, 10, 1);
 
-        ConfigButton inventoryKeyboardControllButton = new ConfigButton(
-                "gui.accessibilityplus.config.buttons.inventorykeyboardcontrol", Config.INV_KEYBOARD_CONTROL_KEY);
+        ConfigButton inventoryKeyboardControllButton = new ConfigButton("gui.accessibilityplus.config.buttons.inventorykeyboardcontrol", Config.INV_KEYBOARD_CONTROL_KEY);
         root.add(inventoryKeyboardControllButton, 11, 2, 10, 1);
 
-        ConfigButton actionBarButton = new ConfigButton("gui.accessibilityplus.config.buttons.actionbar",
-                Config.getAtionBarKey());
+        ConfigButton actionBarButton = new ConfigButton("gui.accessibilityplus.config.buttons.actionbar", Config.getAtionBarKey());
         root.add(actionBarButton, 0, 3, 10, 1);
 
         WButton doneButton = new WButton(new TranslatableText("gui.accessibilityplus.config.buttons.done"));

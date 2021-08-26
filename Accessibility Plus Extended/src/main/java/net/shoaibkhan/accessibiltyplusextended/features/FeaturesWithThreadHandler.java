@@ -25,8 +25,7 @@ public class FeaturesWithThreadHandler {
 		if (!client.isPaused() && (client.currentScreen == null)) {
 
 			// Read Crosshair
-			if (10000 - fallDetectorFlag >= 3000
-					&& (Config.get(Config.getReadblockskey()) || Config.get(Config.getEntitynarratorkey()))) {
+			if (10000 - fallDetectorFlag >= 3000 && (Config.get(Config.getReadblocksKey()) || Config.get(Config.getEntitynarratorkey()))) {
 				new CrosshairTarget(client);
 			}
 

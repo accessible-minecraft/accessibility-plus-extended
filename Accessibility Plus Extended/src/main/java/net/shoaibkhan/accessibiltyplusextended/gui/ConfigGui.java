@@ -23,8 +23,8 @@ public class ConfigGui extends LightweightGuiDescription {
 
     setRootPanel(root);
 
-    ConfigButton rcStatus = new ConfigButton("Read Blocks", Config.getReadblockskey());
-    root.add(rcStatus, 1, 3, 10, 1);
+    ConfigButton nbsStatus = new ConfigButton("Narrate Block Sides", Config.getNarrateblocksidekey());
+    root.add(nbsStatus, 1, 3, 10, 1);
 
     ConfigButton enStatus = new ConfigButton("Read Entity", Config.getEntitynarratorkey());
     root.add(enStatus, 12, 3, 10, 1);

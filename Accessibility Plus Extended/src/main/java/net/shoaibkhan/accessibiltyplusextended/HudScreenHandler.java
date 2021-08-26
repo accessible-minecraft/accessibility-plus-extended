@@ -100,11 +100,11 @@ public class HudScreenHandler {
       hudScreenOffsetY = (int) ((double) (300 - screen.height) / 3);
       Robot robot;
       robot = new Robot();
-      currentColumn = AccessibilityPlus.currentColumn;
-      currentRow = AccessibilityPlus.currentRow;
+      currentColumn = HudRenderCallBackClass.currentColumn;
+      currentRow = HudRenderCallBackClass.currentRow;
 
       // D Pressed :- Next Column
-      if (AccessibilityPlus.isDPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
+      if (HudRenderCallBackClass.isDPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -118,7 +118,7 @@ public class HudScreenHandler {
       }
 
       // A Pressed :- Previous Column
-      if (AccessibilityPlus.isAPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
+      if (HudRenderCallBackClass.isAPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -132,7 +132,7 @@ public class HudScreenHandler {
       }
 
       // S Pressed :- Down Row
-      if (AccessibilityPlus.isSPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
+      if (HudRenderCallBackClass.isSPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -146,7 +146,7 @@ public class HudScreenHandler {
       }
 
       // W Pressed :- Up Row
-      if (AccessibilityPlus.isWPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
+      if (HudRenderCallBackClass.isWPressed && !modInit.mainThreadMap.containsKey("stonecutter_result_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -159,8 +159,8 @@ public class HudScreenHandler {
         modInit.mainThreadMap.put("stonecutter_result_slot", 200);
       }
 
-      AccessibilityPlus.currentColumn = currentColumn;
-      AccessibilityPlus.currentRow = currentRow;
+      HudRenderCallBackClass.currentColumn = currentColumn;
+      HudRenderCallBackClass.currentRow = currentRow;
 
     } catch (AWTException e) {
       e.printStackTrace();
@@ -186,11 +186,11 @@ public class HudScreenHandler {
 
       Robot robot;
       robot = new Robot();
-      currentColumn = AccessibilityPlus.currentColumn;
-      currentRow = AccessibilityPlus.currentRow;
+      currentColumn = HudRenderCallBackClass.currentColumn;
+      currentRow = HudRenderCallBackClass.currentRow;
 
       // D Pressed :- Next Column
-      if (!modInit.mainThreadMap.containsKey("trading_screen") && AccessibilityPlus.isDPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_screen") && HudRenderCallBackClass.isDPressed) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -204,7 +204,7 @@ public class HudScreenHandler {
       }
 
       // A Pressed :- Previous Column
-      if (!modInit.mainThreadMap.containsKey("trading_screen") && AccessibilityPlus.isAPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_screen") && HudRenderCallBackClass.isAPressed) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -218,7 +218,7 @@ public class HudScreenHandler {
       }
 
       // S Pressed :- Down Row
-      if (!modInit.mainThreadMap.containsKey("trading_screen") && AccessibilityPlus.isSPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_screen") && HudRenderCallBackClass.isSPressed) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -232,7 +232,7 @@ public class HudScreenHandler {
       }
 
       // W Pressed :- Up Row
-      if (!modInit.mainThreadMap.containsKey("trading_screen") && AccessibilityPlus.isWPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_screen") && HudRenderCallBackClass.isWPressed) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -246,19 +246,19 @@ public class HudScreenHandler {
       }
 
       // R Pressed :- Scroll Up by 1
-      if (!modInit.mainThreadMap.containsKey("trading_scrolled_screen") && AccessibilityPlus.isRPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_scrolled_screen") && HudRenderCallBackClass.isRPressed) {
         robot.mouseWheel(-1);
         modInit.mainThreadMap.put("trading_scrolled_screen", 200);
       }
 
       // F Pressed :- Scrol Down by 1
-      if (!modInit.mainThreadMap.containsKey("trading_scrolled_screen") && AccessibilityPlus.isFPressed) {
+      if (!modInit.mainThreadMap.containsKey("trading_scrolled_screen") && HudRenderCallBackClass.isFPressed) {
         robot.mouseWheel(+1);
         modInit.mainThreadMap.put("trading_scrolled_screen", 200);
       }
 
-      AccessibilityPlus.currentColumn = currentColumn;
-      AccessibilityPlus.currentRow = currentRow;
+      HudRenderCallBackClass.currentColumn = currentColumn;
+      HudRenderCallBackClass.currentRow = currentRow;
 
     } catch (AWTException e) {
       e.printStackTrace();
@@ -283,7 +283,7 @@ public class HudScreenHandler {
     client.player.getRecipeBook().isGuiOpen(RecipeBookCategory.CRAFTING);
     client.player.getRecipeBook().isFilteringCraftable(RecipeBookCategory.CRAFTING);
 
-    if (AccessibilityPlus.isTPressed && !isSearchingRecipies
+    if (HudRenderCallBackClass.isTPressed && !isSearchingRecipies
         && client.player.getRecipeBook().isGuiOpen(RecipeBookCategory.CRAFTING))
       isSearchingRecipies = true;
 
@@ -333,11 +333,11 @@ public class HudScreenHandler {
 
         Robot robot;
         robot = new Robot();
-        currentColumn = AccessibilityPlus.currentColumn;
-        currentRow = AccessibilityPlus.currentRow;
+        currentColumn = HudRenderCallBackClass.currentColumn;
+        currentRow = HudRenderCallBackClass.currentRow;
 
         // D Pressed :- Next Column
-        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isDPressed) {
+        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && HudRenderCallBackClass.isDPressed) {
           if (currentColumn == 0 && currentRow == 0) {
             currentColumn = minColumn;
             currentRow = minRow;
@@ -351,7 +351,7 @@ public class HudScreenHandler {
         }
 
         // A Pressed :- Prev Column
-        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isAPressed) {
+        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && HudRenderCallBackClass.isAPressed) {
           if (currentColumn == 0 && currentRow == 0) {
             currentColumn = minColumn;
             currentRow = minRow;
@@ -365,7 +365,7 @@ public class HudScreenHandler {
         }
 
         // S Pressed :- Down Row
-        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isSPressed) {
+        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && HudRenderCallBackClass.isSPressed) {
           if (currentColumn == 0 && currentRow == 0) {
             currentColumn = minColumn;
             currentRow = minRow;
@@ -379,7 +379,7 @@ public class HudScreenHandler {
         }
 
         // W Pressed :- Up Row
-        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && AccessibilityPlus.isWPressed) {
+        if (!modInit.mainThreadMap.containsKey("crafting_table_screen") && HudRenderCallBackClass.isWPressed) {
           if (currentColumn == 0 && currentRow == 0) {
             currentColumn = minColumn;
             currentRow = minRow;
@@ -394,7 +394,7 @@ public class HudScreenHandler {
 
         // R Pressed :- Next Page
         if (!modInit.mainThreadMap.containsKey("crafting_table_scrolled_screen")
-            && AccessibilityPlus.isRPressed && client.player.getRecipeBook().isGuiOpen(RecipeBookCategory.CRAFTING)) {
+            && HudRenderCallBackClass.isRPressed && client.player.getRecipeBook().isGuiOpen(RecipeBookCategory.CRAFTING)) {
           robot.mouseMove(nextX + windowPosX - hudScreenOffsetX + (hudScreenOffsetX / 2),
               nextY + windowPosY + hudScreenOffsetY);
           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
@@ -404,7 +404,7 @@ public class HudScreenHandler {
 
         // F Pressed :- Prev Page
         if (!modInit.mainThreadMap.containsKey("crafting_table_scrolled_screen")
-            && AccessibilityPlus.isFPressed && client.player.getRecipeBook().isGuiOpen(RecipeBookCategory.CRAFTING)) {
+            && HudRenderCallBackClass.isFPressed && client.player.getRecipeBook().isGuiOpen(RecipeBookCategory.CRAFTING)) {
           robot.mouseMove(prevX + windowPosX - hudScreenOffsetX, prevY + windowPosY + hudScreenOffsetY);
           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
           robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
@@ -412,7 +412,7 @@ public class HudScreenHandler {
         }
 
         // C Pressed :- Open/Close Recipe Book
-        if (!modInit.mainThreadMap.containsKey("space_pressed") && AccessibilityPlus.isCPressed) {
+        if (!modInit.mainThreadMap.containsKey("space_pressed") && HudRenderCallBackClass.isCPressed) {
           robot.mouseMove(recipeBookX + windowPosX - hudScreenOffsetX, recipeBookY + windowPosY - hudScreenOffsetY);
           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
           robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
@@ -444,7 +444,7 @@ public class HudScreenHandler {
         }
 
         // v Pressed :- Enable/Disable Show All
-        if (!modInit.mainThreadMap.containsKey("filtering_pressed") && AccessibilityPlus.isVPressed
+        if (!modInit.mainThreadMap.containsKey("filtering_pressed") && HudRenderCallBackClass.isVPressed
             && client.player.getRecipeBook().isGuiOpen(RecipeBookCategory.CRAFTING)) {
           robot.mouseMove(filteringX + windowPosX - hudScreenOffsetX, filteringY + windowPosY - hudScreenOffsetY);
           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
@@ -452,8 +452,8 @@ public class HudScreenHandler {
           modInit.mainThreadMap.put("filtering_pressed", 200);
         }
 
-        AccessibilityPlus.currentColumn = currentColumn;
-        AccessibilityPlus.currentRow = currentRow;
+        HudRenderCallBackClass.currentColumn = currentColumn;
+        HudRenderCallBackClass.currentRow = currentRow;
 
       } catch (AWTException e) {
         e.printStackTrace();
@@ -463,7 +463,7 @@ public class HudScreenHandler {
       try {
 
         // Disable Search Recipe
-        if (AccessibilityPlus.isEnterPressed) {
+        if (HudRenderCallBackClass.isEnterPressed) {
 
           Robot robot;
           robot = new Robot();
@@ -506,11 +506,11 @@ public class HudScreenHandler {
       hudScreenOffsetY = (int) ((double) (300 - screen.height) / 3);
       Robot robot;
       robot = new Robot();
-      currentColumn = AccessibilityPlus.currentColumn;
-      currentRow = AccessibilityPlus.currentRow;
+      currentColumn = HudRenderCallBackClass.currentColumn;
+      currentRow = HudRenderCallBackClass.currentRow;
 
       // S Pressed :- Down Row
-      if (AccessibilityPlus.isSPressed && !modInit.mainThreadMap.containsKey("enchanting_table_slot")) {
+      if (HudRenderCallBackClass.isSPressed && !modInit.mainThreadMap.containsKey("enchanting_table_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -524,7 +524,7 @@ public class HudScreenHandler {
       }
 
       // W Pressed :- Up Row
-      if (AccessibilityPlus.isWPressed && !modInit.mainThreadMap.containsKey("enchanting_table_slot")) {
+      if (HudRenderCallBackClass.isWPressed && !modInit.mainThreadMap.containsKey("enchanting_table_slot")) {
         if (currentColumn == 0 && currentRow == 0) {
           currentColumn = minColumn;
           currentRow = minRow;
@@ -537,8 +537,8 @@ public class HudScreenHandler {
         modInit.mainThreadMap.put("enchanting_table_slot", 200);
       }
 
-      AccessibilityPlus.currentColumn = currentColumn;
-      AccessibilityPlus.currentRow = currentRow;
+      HudRenderCallBackClass.currentColumn = currentColumn;
+      HudRenderCallBackClass.currentRow = currentRow;
 
     } catch (AWTException e) {
       e.printStackTrace();

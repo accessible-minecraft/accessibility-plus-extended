@@ -10,6 +10,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.HudRenderCallBackClass;
+import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 
 public class EntityLocking {
 	private MinecraftClient client;
@@ -36,13 +37,8 @@ public class EntityLocking {
 			Entity toBeLocked = entityLocking();
 			if (toBeLocked != null) {
 				MutableText mutableText = (new LiteralText("")).append(toBeLocked.getName());
-				client.player
-						.sendMessage(
-								new LiteralText(
-										mutableText.getString() + " "
-												+ HudRenderCallBackClass
-														.get_position_difference(toBeLocked.getBlockPos(), client)),
-								true);
+//				client.player .sendMessage( new LiteralText( mutableText.getString() + " " + HudRenderCallBackClass .get_position_difference(toBeLocked.getBlockPos(), client)), true);
+				NarratorPlus.narrate( mutableText.getString() + " " + HudRenderCallBackClass .get_position_difference(toBeLocked.getBlockPos(), client));
 				lockedOnEntity = toBeLocked;
 			}
 		}

@@ -1,0 +1,21 @@
+{
+  "gui.apextended.config.title": "Accessibility Plus Configuration",
+  "gui.apextended.config.buttons.done": "Done",
+  "gui.apextended.config.buttons.cancel": "Cancel",
+  "gui.apextended.config.buttons.readblocks": "Read Blocks: %s",
+  "gui.apextended.config.buttons.readtooltips": "Read Tooltips: %s",
+  "gui.apextended.config.buttons.readsignscontents": "Read Sign Contents: %s",
+  "gui.apextended.config.buttons.inventorykeyboardcontrol": "Inventory Keyboard Control: %s",
+  "key.apextended.inventorycontrol": "Accessibility Plus (Inventory)",
+  "key.apextended.left": "Move Left",
+  "key.apextended.right": "Move Right",
+  "key.apextended.up": "Move Up",
+  "key.apextended.down": "Move Down",
+  "key.apextended.group": "Switch Group",
+  "key.apextended.home": "Go To First Slot / Group",
+  "key.apextended.end": "Go To Last Slot / Group",
+  "key.apextended.mouseclick": "Mouse Click",
+  "key.apextended.mouserightclick": "Mouse Right Click",
+  "key.apextended.config": "Config Menu Key",
+  "key.categories.apextended.general": "Accessibility Plus (General)"
+}

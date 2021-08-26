@@ -16,13 +16,15 @@ public class customCommands implements ClientCommandPlugin {
   public void registerCommands(CommandDispatcher<CottonClientCommandSource> dispatcher) {
     dispatcher.register(ArgumentBuilders.literal("getxp").executes(source -> {
       client = MinecraftClient.getInstance();
-      client.player.sendMessage(new LiteralText("" + client.player.experienceLevel), true);
+//      client.player.sendMessage(new LiteralText("" + client.player.experienceLevel), true);
+      NarratorPlus.narrate(""+client.player.experienceLevel);
       return 1;
     }));
 
     dispatcher.register(ArgumentBuilders.literal("isfullscreen").executes(source -> {
       client = MinecraftClient.getInstance();
-      client.player.sendMessage(new LiteralText("" + client.options.fullscreen), true);
+//      client.player.sendMessage(new LiteralText("" + client.options.fullscreen), true);
+      NarratorPlus.narrate(""+client.options.fullscreen);
       return 1;
     }));
     

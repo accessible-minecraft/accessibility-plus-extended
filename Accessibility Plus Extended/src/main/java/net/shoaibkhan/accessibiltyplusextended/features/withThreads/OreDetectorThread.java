@@ -8,6 +8,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
@@ -52,7 +53,8 @@ private void checkBlock(BlockPos blockPos, int val, boolean lava, boolean water,
     lavaDetector: {
       if (name.contains("lava") && !modInit.mainThreadMap.containsKey("lava_detector_key") && lava) {
         if (!modInit.mainThreadMap.containsKey("lava_detector_key")) {
-          client.player.sendMessage(new LiteralText("Warning Lava"), true);
+//          client.player.sendMessage(new LiteralText("Warning Lava"), true);
+          NarratorPlus.narrate("Warning Lava");
           modInit.mainThreadMap.put("lava_detector_key", 5000);
         }
       }
@@ -61,7 +63,8 @@ private void checkBlock(BlockPos blockPos, int val, boolean lava, boolean water,
     waterDetector: {
       if (name.contains("water") && !modInit.mainThreadMap.containsKey("water_detector_key") && water) {
         if (!modInit.mainThreadMap.containsKey("water_detector_key")) {
-          client.player.sendMessage(new LiteralText("Warning Water"), true);
+//          client.player.sendMessage(new LiteralText("Warning Water"), true);
+          NarratorPlus.narrate("Warning Water");
           modInit.mainThreadMap.put("water_detector_key", 5000);
         }
       }

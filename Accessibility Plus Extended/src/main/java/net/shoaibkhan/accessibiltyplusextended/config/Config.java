@@ -20,7 +20,7 @@ public class Config {
 	public static final String OreDetectorKey = "ore_detector_key";
 	public static final String LavaDetectorKey = "lava_detector_key";
 	public static final String WaterDetectorKey = "water_detector_key";
-	public static final String ReadBlocksKey = "read_blocks_key";
+	public static final String NarrateBlockSideKey = "narrate_blocks_side_key";
 	public static final String DurabilityCheckKey = "durability_check_key";
 	public static final String DurabilityToolTipKey = "durability_tool_tip_key";
 	public static final String DurabilityThresholdKey = "durability_threshold_key";
@@ -179,7 +179,7 @@ public class Config {
 		data.add(getLavadetectorkey(), new JsonPrimitive(false));
 		data.add(getWaterdetectorkey(), new JsonPrimitive(false));
 
-		data.add(getReadblockskey(), new JsonPrimitive(false));
+		data.add(getNarrateblocksidekey(), new JsonPrimitive(false));
 
 		data.add(getDurabilitycheckerkey(), new JsonPrimitive(true));
 		data.add(getDurabilitytooltipkey(), new JsonPrimitive(true));
@@ -200,7 +200,7 @@ public class Config {
 		data.add(getChatnarration(), new JsonPrimitive(true));
 
 		// Accessibility Plus
-		data.add(getAPReadblocksKey(), new JsonPrimitive(true));
+		data.add(getReadblocksKey(), new JsonPrimitive(true));
 		data.add(getReadTooltipsKey(), new JsonPrimitive(true));
 		data.add(getReadSignsContents(), new JsonPrimitive(true));
 		data.add(getInvKeyboardControlKey(), new JsonPrimitive(true));
@@ -227,7 +227,7 @@ public class Config {
 		data = newConfig;
 	}
 
-	public static String getAPReadblocksKey() {
+	public static String getReadblocksKey() {
 		return READ_BLOCKS_KEY;
 	}
 
@@ -323,8 +323,8 @@ public class Config {
 		return FallDetectorKey;
 	}
 
-	public static String getReadblockskey() {
-		return ReadBlocksKey;
+	public static String getNarrateblocksidekey() {
+		return NarrateBlockSideKey;
 	}
 
 }

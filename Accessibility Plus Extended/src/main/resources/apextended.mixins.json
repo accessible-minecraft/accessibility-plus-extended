@@ -8,7 +8,12 @@
   "client": [
     "DurabilityMixin",
     "AccessorHandledScreen",
-    "ChatNarrationMixin"
+    "ChatNarrationMixin",
+    "AccessorSlot",
+    "ActionbarInject",
+    "ItemStackTooltipInject",
+    "NarratorManagerInject",
+    "RenderTooltipInject"
   ],
   "injectors": {
     "defaultRequire": 1

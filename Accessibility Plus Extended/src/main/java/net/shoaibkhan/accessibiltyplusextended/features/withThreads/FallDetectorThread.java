@@ -6,6 +6,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
@@ -85,7 +86,8 @@ public class FallDetectorThread extends Thread {
 
 				if (depth >= depthVal && !modInit.mainThreadMap.containsKey("fall_detector_key")) {
 					modInit.mainThreadMap.put("fall_detector_key", 5000);
-					client.player.sendMessage(new LiteralText("warning Fall Detected"), true);
+//					client.player.sendMessage(new LiteralText("warning Fall Detected"), true);
+					NarratorPlus.narrate("warning Fall Detected");
 				}
 			}
 
