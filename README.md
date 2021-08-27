@@ -8,6 +8,11 @@
 
 ## Requirements
 
+**For v1.5.0 and above:-**
+- [Fabric](https://fabricmc.net/wiki/install)
+- [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) has been added to this mod itself. So no need to install it for 1.5.0 and above versions.
+
+**For v1.4.0:-**
 - [Fabric](https://fabricmc.net/wiki/install)
 - [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus)
 
@@ -69,7 +74,6 @@ Settings for specific features:-
 
 ### **Ore Detector** 
 
-- **Custom ore sound** = Choose between the default sound of the ore detector and a custom sound. Note:- Custom sound plays at the players position rather than to play it at the ore's position.
 - **Volume** = Change the volume of the sound played.
 - **Pitch** = Change the pitch of the sound played.
 - **Delay** = Change the delay between ore detection.
@@ -90,7 +94,7 @@ Settings for specific features:-
 
 ## Mod Recommendation
 
-- [MAmbience](https://www.curseforge.com/minecraft/mc-mods/mambience) - This mod adds sound effects to vanilla minecraft like walking on sand, stone, dirt, etc. and many more.
 - [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) - This mod adds accessibility options like crosshair block narrator, read tooltip, inventory keyboard navigation. This mod also allows user to use NVDA instead of default narrator.
+- [MAmbience](https://www.curseforge.com/minecraft/mc-mods/mambience) - This mod adds sound effects to vanilla minecraft like walking on sand, stone, dirt, etc. and many more.
 - [Easy Life](https://www.curseforge.com/minecraft/mc-mods/easy-life) - This mod adds keybindings/hotkeys to narrate the player's health and hunger, position and direction. And more features include player warnings, hotbar item narrator, etc.
 - [Numpad/Keypad Camera Controls](https://www.curseforge.com/minecraft/mc-mods/numpad-keypad-camera-controls) - This mod enables numpad to control mouse movements. 
