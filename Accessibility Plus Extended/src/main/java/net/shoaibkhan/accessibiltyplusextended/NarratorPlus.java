@@ -11,6 +11,8 @@ import net.minecraft.util.math.BlockPos;
 
 @Environment(EnvType.CLIENT)
 public class NarratorPlus {
+  public static String chatOptions[] = {"on","off","default"};
+
   private interface NVDA extends Library {
     public int nvdaController_speakText(char[] text);
 

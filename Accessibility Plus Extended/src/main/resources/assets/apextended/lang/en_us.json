@@ -1,12 +1,19 @@
 {
   "gui.apextended.config.title": "Accessibility Plus Configuration",
   "gui.apextended.config.buttons.done": "Done",
+  "gui.apextended.config.buttons.back": "Back",
   "gui.apextended.config.buttons.cancel": "Cancel",
   "gui.apextended.config.buttons.readblocks": "Read Blocks: %s",
   "gui.apextended.config.buttons.readtooltips": "Read Tooltips: %s",
   "gui.apextended.config.buttons.readsignscontents": "Read Sign Contents: %s",
   "gui.apextended.config.buttons.inventorykeyboardcontrol": "Inventory Keyboard Control: %s",
-  "key.apextended.inventorycontrol": "Accessibility Plus (Inventory)",
+  "gui.apextended.config.buttons.actionbar": "Action Bar: %s",
+  "gui.apextended.config.buttons.narrateblocksides": "Narrate Block Sides: %s",
+  "gui.apextended.config.buttons.readentity": "Read Entity: %s",
+  "gui.apextended.config.buttons.falldetector": "Fall Detector: %s",
+  "gui.apextended.config.buttons.oredetector": "Ore Detector: %s",
+  "gui.apextended.config.buttons.lavadetector": "Lava Detector: %s",
+  "gui.apextended.config.buttons.waterdetector": "Water Detector: %s",
   "key.apextended.left": "Move Left",
   "key.apextended.right": "Move Right",
   "key.apextended.up": "Move Up",
@@ -17,5 +24,6 @@
   "key.apextended.mouseclick": "Mouse Click",
   "key.apextended.mouserightclick": "Mouse Right Click",
   "key.apextended.config": "Config Menu Key",
+  "key.categories.apextended.inventorycontrol": "Accessibility Plus (Inventory)",
   "key.categories.apextended.general": "Accessibility Plus (General)"
 }

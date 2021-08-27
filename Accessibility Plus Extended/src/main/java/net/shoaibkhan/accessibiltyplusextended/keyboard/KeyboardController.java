@@ -53,24 +53,24 @@ public class KeyboardController {
   }
 
   public KeyboardController() {
-    LEFT_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.left", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_LEFT, "key.categories.accessibilityplus.inventorycontrol"));
-    RIGHT_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.right", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_RIGHT, "key.categories.accessibilityplus.inventorycontrol"));
-    UP_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.up", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_UP, "key.categories.accessibilityplus.inventorycontrol"));
-    DOWN_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.down", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_DOWN, "key.categories.accessibilityplus.inventorycontrol"));
-    GROUP_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.group", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_TAB, "key.categories.accessibilityplus.inventorycontrol"));
-    HOME_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.home", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_HOME, "key.categories.accessibilityplus.inventorycontrol"));
-    END_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.end", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_END, "key.categories.accessibilityplus.inventorycontrol"));
-    CLICK_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.mouseclick",
-        InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Z, "key.categories.accessibilityplus.inventorycontrol"));
-    RIGHT_CLICK_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.mouserightclick",
-        InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_X, "key.categories.accessibilityplus.inventorycontrol"));
+    LEFT_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.left", InputUtil.Type.KEYSYM,
+        GLFW.GLFW_KEY_LEFT, "key.categories.apextended.inventorycontrol"));
+    RIGHT_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.right", InputUtil.Type.KEYSYM,
+        GLFW.GLFW_KEY_RIGHT, "key.categories.apextended.inventorycontrol"));
+    UP_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.up", InputUtil.Type.KEYSYM,
+        GLFW.GLFW_KEY_UP, "key.categories.apextended.inventorycontrol"));
+    DOWN_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.down", InputUtil.Type.KEYSYM,
+        GLFW.GLFW_KEY_DOWN, "key.categories.apextended.inventorycontrol"));
+    GROUP_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.group", InputUtil.Type.KEYSYM,
+        GLFW.GLFW_KEY_TAB, "key.categories.apextended.inventorycontrol"));
+    HOME_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.home", InputUtil.Type.KEYSYM,
+        GLFW.GLFW_KEY_HOME, "key.categories.apextended.inventorycontrol"));
+    END_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.end", InputUtil.Type.KEYSYM,
+        GLFW.GLFW_KEY_END, "key.categories.apextended.inventorycontrol"));
+    CLICK_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.mouseclick",
+        InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Z, "key.categories.apextended.inventorycontrol"));
+    RIGHT_CLICK_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.mouserightclick",
+        InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_X, "key.categories.apextended.inventorycontrol"));
 
     ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
     ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);

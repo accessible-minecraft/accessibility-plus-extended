@@ -10,7 +10,7 @@ public class ConfigButton extends WButton {
   private String jsonKey;
 
   public ConfigButton(String translationKey, String jsonKey) {
-    super(new TranslatableText(translationKey + (Config.get(jsonKey) ? " : on" : " : off")));
+    super(new TranslatableText(translationKey, Config.get(jsonKey) ? "on" : "off"));
     this.translateKey = translationKey;
     this.jsonKey = jsonKey;
 
@@ -22,7 +22,7 @@ public class ConfigButton extends WButton {
     super.onClick(x, y, button);
     if (this.isEnabled()) {
       boolean enabled = Config.toggle(this.jsonKey);
-      TranslatableText newButtonText = new TranslatableText(this.translateKey + (enabled ? " : on" : " : off"));
+      TranslatableText newButtonText = new TranslatableText(this.translateKey , (enabled ? " : on" : " : off"));
       this.setLabel(newButtonText);
     }
     return InputResult.PROCESSED;
@@ -34,7 +34,7 @@ public class ConfigButton extends WButton {
 //		super.onClick(x, y, button);
 //		if (this.isEnabled()) {
 //			boolean enabled = Config.toggle(this.jsonKey);
-//			TranslatableText newButtonText = new TranslatableText(this.translateKey + (enabled ? " : on" : " : off"));
+//			TranslatableText newButtonText = new TranslatableText(this.translateKey , (enabled ? " : on" : " : off"));
 //			this.setLabel(newButtonText);
 //		}
 //	}

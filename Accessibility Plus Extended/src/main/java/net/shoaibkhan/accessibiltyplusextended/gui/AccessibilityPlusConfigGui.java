@@ -20,26 +20,26 @@ public class AccessibilityPlusConfigGui extends LightweightGuiDescription {
         setRootPanel(root);
         root.setSize(240, 240);
 
-        ConfigButton readBlocksButton = new ConfigButton("gui.accessibilityplus.config.buttons.readblocks", Config.getReadblocksKey());
+        ConfigButton readBlocksButton = new ConfigButton("gui.apextended.config.buttons.readblocks", Config.getReadblocksKey());
         root.add(readBlocksButton, 0, 1, 10, 1);
 
-        ConfigButton readTooltipsButton = new ConfigButton("gui.accessibilityplus.config.buttons.readtooltips", Config.getReadTooltipsKey());
+        ConfigButton readTooltipsButton = new ConfigButton("gui.apextended.config.buttons.readtooltips", Config.getReadTooltipsKey());
         root.add(readTooltipsButton, 11, 1, 10, 1);
 
-        ConfigButton readSignsButton = new ConfigButton("gui.accessibilityplus.config.buttons.readsignscontents", Config.getReadSignsContents());
+        ConfigButton readSignsButton = new ConfigButton("gui.apextended.config.buttons.readsignscontents", Config.getReadSignsContents());
         root.add(readSignsButton, 0, 2, 10, 1);
 
-        ConfigButton inventoryKeyboardControllButton = new ConfigButton("gui.accessibilityplus.config.buttons.inventorykeyboardcontrol", Config.INV_KEYBOARD_CONTROL_KEY);
+        ConfigButton inventoryKeyboardControllButton = new ConfigButton("gui.apextended.config.buttons.inventorykeyboardcontrol", Config.INV_KEYBOARD_CONTROL_KEY);
         root.add(inventoryKeyboardControllButton, 11, 2, 10, 1);
 
-        ConfigButton actionBarButton = new ConfigButton("gui.accessibilityplus.config.buttons.actionbar", Config.getAtionBarKey());
+        ConfigButton actionBarButton = new ConfigButton("gui.apextended.config.buttons.actionbar", Config.getAtionBarKey());
         root.add(actionBarButton, 0, 3, 10, 1);
 
-        WButton doneButton = new WButton(new TranslatableText("gui.accessibilityplus.config.buttons.done"));
+        WButton doneButton = new WButton(new TranslatableText("gui.apextended.config.buttons.done"));
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 7, 8, 7, 1);
 
-        WLabel label = new WLabel(new TranslatableText("gui.accessibilityplus.config.title"), 0xFFFFFF);
+        WLabel label = new WLabel(new TranslatableText("gui.apextended.config.title"), 0xFFFFFF);
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
 

@@ -45,8 +45,8 @@ public class modInit implements ModInitializer {
 
 
 		// Accessibility Plus
-		AP_CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.accessibilityplus.config",
-				InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_N, "key.categories.accessibilityplus.general"));
+		AP_CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.config",
+				InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_N, "key.categories.apextended.general"));
 
 		narrator = new NarratorPlus();
 		keyboardController = new KeyboardController();

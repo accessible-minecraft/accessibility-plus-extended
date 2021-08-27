@@ -197,7 +197,7 @@ public class Config {
 		data.add(getFindfluidpitch(), new JsonPrimitive("20"));
 		data.add(getFindfluidrange(), new JsonPrimitive("7"));
 
-		data.add(getChatnarration(), new JsonPrimitive(true));
+		data.add(getChatnarration(), new JsonPrimitive("0"));
 
 		// Accessibility Plus
 		data.add(getReadblocksKey(), new JsonPrimitive(true));

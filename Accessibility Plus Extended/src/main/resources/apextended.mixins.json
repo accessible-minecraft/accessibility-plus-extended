@@ -8,7 +8,6 @@
   "client": [
     "DurabilityMixin",
     "AccessorHandledScreen",
-    "ChatNarrationMixin",
     "AccessorSlot",
     "ActionbarInject",
     "ItemStackTooltipInject",

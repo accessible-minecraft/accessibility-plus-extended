@@ -9,6 +9,7 @@ import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
@@ -44,7 +45,7 @@ public class ConfigGui extends LightweightGuiDescription {
     ConfigButton dcStatus = new ConfigButton("Durability Checker", Config.getDurabilitycheckerkey());
     root.add(dcStatus, 1, 9, 10, 1);
 
-    ConfigButton cnStatus = new ConfigButton("Chat Narration", Config.getChatnarration());
+    ArrayButton cnStatus = new ArrayButton("Chat Narration", Config.getChatnarration(), NarratorPlus.chatOptions);
     root.add(cnStatus, 12, 9, 10, 1);
 
     WButton settingsButton = new WButton(new LiteralText("Settings"));
