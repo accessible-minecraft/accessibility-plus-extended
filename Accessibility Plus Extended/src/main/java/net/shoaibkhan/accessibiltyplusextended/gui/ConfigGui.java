@@ -9,6 +9,7 @@ import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
@@ -24,35 +25,35 @@ public class ConfigGui extends LightweightGuiDescription {
 
     setRootPanel(root);
 
-    ConfigButton nbsStatus = new ConfigButton("Narrate Block Sides", Config.getNarrateblocksidekey());
+    ConfigButton nbsStatus = new ConfigButton("gui.apextended.config.buttons.narrateblocksides", Config.getNarrateblocksidekey());
     root.add(nbsStatus, 1, 3, 10, 1);
 
-    ConfigButton enStatus = new ConfigButton("Read Entity", Config.getEntitynarratorkey());
+    ConfigButton enStatus = new ConfigButton("gui.apextended.config.buttons.readentity", Config.getEntitynarratorkey());
     root.add(enStatus, 12, 3, 10, 1);
 
-    ConfigButton fdStatus = new ConfigButton("Fall Detector", Config.getFalldetectorkey());
+    ConfigButton fdStatus = new ConfigButton("gui.apextended.config.buttons.falldetector", Config.getFalldetectorkey());
     root.add(fdStatus, 1, 5, 10, 1);
 
-    ConfigButton odStatus = new ConfigButton("Ore Detector", Config.getOredetectorkey());
+    ConfigButton odStatus = new ConfigButton("gui.apextended.config.buttons.oredetector", Config.getOredetectorkey());
     root.add(odStatus, 12, 5, 10, 1);
 
-    ConfigButton ldStatus = new ConfigButton("Lava Detector", Config.getLavadetectorkey());
+    ConfigButton ldStatus = new ConfigButton("gui.apextended.config.buttons.lavadetector", Config.getLavadetectorkey());
     root.add(ldStatus, 1, 7, 10, 1);
 
-    ConfigButton wdStatus = new ConfigButton("Water Detector", Config.getWaterdetectorkey());
+    ConfigButton wdStatus = new ConfigButton("gui.apextended.config.buttons.waterdetector", Config.getWaterdetectorkey());
     root.add(wdStatus, 12, 7, 10, 1);
 
-    ConfigButton dcStatus = new ConfigButton("Durability Checker", Config.getDurabilitycheckerkey());
+    ConfigButton dcStatus = new ConfigButton("gui.apextended.config.buttons.durabilitychecker", Config.getDurabilitycheckerkey());
     root.add(dcStatus, 1, 9, 10, 1);
 
-    ArrayButton cnStatus = new ArrayButton("Chat Narration", Config.getChatnarration(), NarratorPlus.chatOptions);
+    ArrayButton cnStatus = new ArrayButton("gui.apextended.config.buttons.chatnarration", Config.getChatnarration(), NarratorPlus.chatOptions);
     root.add(cnStatus, 12, 9, 10, 1);
 
-    WButton settingsButton = new WButton(new LiteralText("Settings"));
+    WButton settingsButton = new WButton(new TranslatableText("gui.apextended.config.buttons.settings"));
     settingsButton.setOnClick(this::onSettingsClick);
     root.add(settingsButton, 2, 11, 7, 1);
 
-    WButton doneButton = new WButton(new LiteralText("Done"));
+    WButton doneButton = new WButton(new TranslatableText("gui.apextended.config.buttons.done"));
     doneButton.setOnClick(this::onDoneClick);
     root.add(doneButton, 12, 11, 7, 1);
 

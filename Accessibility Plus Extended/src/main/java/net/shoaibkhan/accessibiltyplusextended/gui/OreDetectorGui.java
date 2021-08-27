@@ -9,6 +9,7 @@ import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.OreDetectorThread;
@@ -23,23 +24,23 @@ public class OreDetectorGui extends LightweightGuiDescription {
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ArrayButton odvButton = new ArrayButton("Volume", Config.getOredetectorvolume(), OreDetectorThread.volume);
+    ArrayButton odvButton = new ArrayButton("gui.apextended.config.buttons.volume", Config.getOredetectorvolume(), OreDetectorThread.volume);
     root.add(odvButton, 1, 3, 10, 1);
 
-    ArrayButton odpButton = new ArrayButton("Pitch", Config.getOredetectorpitch(), OreDetectorThread.pitch);
+    ArrayButton odpButton = new ArrayButton("gui.apextended.config.buttons.pitch", Config.getOredetectorpitch(), OreDetectorThread.pitch);
     root.add(odpButton, 12, 3, 10, 1);
 
-    ArrayButton odrButton = new ArrayButton("Range", Config.getOredetectorrange(), OreDetectorThread.range);
+    ArrayButton odrButton = new ArrayButton("gui.apextended.config.buttons.range", Config.getOredetectorrange(), OreDetectorThread.range);
     root.add(odrButton, 12, 5, 10, 1);
 
-    ArrayButton odcButton = new ArrayButton("Delay", Config.getOredetectordelay(), OreDetectorThread.delay);
+    ArrayButton odcButton = new ArrayButton("gui.apextended.config.buttons.delay", Config.getOredetectordelay(), OreDetectorThread.delay);
     root.add(odcButton, 1, 5, 10, 1);
 
-    WButton backButton = new WButton(new LiteralText("Back"));
+    WButton backButton = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));
     backButton.setOnClick(this::onBackClick);
     root.add(backButton, 2, 7, 7, 1);
 
-    WButton doneButton = new WButton(new LiteralText("Done"));
+    WButton doneButton = new WButton(new TranslatableText("gui.apextended.config.buttons.done"));
     doneButton.setOnClick(this::onDoneClick);
     root.add(doneButton, 12, 7, 7, 1);
 

@@ -64,10 +64,17 @@ public class CrosshairTarget {
 								SignBlockEntity signentity = (SignBlockEntity) client.world
 										.getBlockEntity(blockHitResult.getBlockPos());
 								output += " says: ";
-								output += "1: " + signentity.getTextOnRow(0, false).getString() + ", ";
-								output += "2: " + signentity.getTextOnRow(1, false).getString() + ", ";
-								output += "3: " + signentity.getTextOnRow(2, false).getString() + ", ";
-								output += "4: " + signentity.getTextOnRow(3, false).getString();
+								// 1.17
+//								output += "1: " + signentity.getTextOnRow(0, false).getString() + ", ";
+//								output += "2: " + signentity.getTextOnRow(1, false).getString() + ", ";
+//								output += "3: " + signentity.getTextOnRow(2, false).getString() + ", ";
+//								output += "4: " + signentity.getTextOnRow(3, false).getString();
+
+								// 1.16
+								output += "1: " + signentity.getTextOnRow(0).getString() + ", ";
+								output += "2: " + signentity.getTextOnRow(1).getString() + ", ";
+								output += "3: " + signentity.getTextOnRow(2).getString() + ", ";
+								output += "4: " + signentity.getTextOnRow(3).getString();
 							} catch (Exception e) {
 								e.printStackTrace();
 							} finally {

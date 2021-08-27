@@ -9,6 +9,7 @@ import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.FallDetectorThread;
@@ -23,17 +24,17 @@ public class FallDetectorGui extends LightweightGuiDescription {
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ArrayButton fdrButton = new ArrayButton("Range", Config.getFalldetectorrange(), FallDetectorThread.range);
+    ArrayButton fdrButton = new ArrayButton("gui.apextended.config.buttons.range", Config.getFalldetectorrange(), FallDetectorThread.range);
     root.add(fdrButton, 1, 3, 10, 1);
 
-    ArrayButton fdcButton = new ArrayButton("Depth", Config.getFalldetectordepth(), FallDetectorThread.depthArray);
+    ArrayButton fdcButton = new ArrayButton("gui.apextended.config.buttons.depth", Config.getFalldetectordepth(), FallDetectorThread.depthArray);
     root.add(fdcButton, 12, 3, 10, 1);
 
-    WButton backButton = new WButton(new LiteralText("Back"));
+    WButton backButton = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));
     backButton.setOnClick(this::onBackClick);
     root.add(backButton, 2, 5, 7, 1);
 
-    WButton doneButton = new WButton(new LiteralText("Done"));
+    WButton doneButton = new WButton(new TranslatableText("gui.apextended.config.buttons.done"));
     doneButton.setOnClick(this::onDoneClick);
     root.add(doneButton, 12, 5, 7, 1);
 

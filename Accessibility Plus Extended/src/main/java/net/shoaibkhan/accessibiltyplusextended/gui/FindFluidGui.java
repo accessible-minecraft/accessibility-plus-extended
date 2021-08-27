@@ -9,6 +9,7 @@ import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.FluidDetectorThread;
@@ -23,23 +24,23 @@ public class FindFluidGui extends LightweightGuiDescription {
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ConfigButton fftStatus = new ConfigButton("Text", Config.getFindfluidtextkey());
+    ConfigButton fftStatus = new ConfigButton("gui.apextended.config.buttons.text", Config.getFindfluidtextkey());
     root.add(fftStatus, 1, 3, 10, 1);
 
-    ArrayButton ffrButton = new ArrayButton("Range", Config.getFindfluidrange(), FluidDetectorThread.range);
+    ArrayButton ffrButton = new ArrayButton("gui.apextended.config.buttons.range", Config.getFindfluidrange(), FluidDetectorThread.range);
     root.add(ffrButton, 12, 3, 10, 1);
 
-    ArrayButton ffvButton = new ArrayButton("Volume", Config.getFindfluidvolume(), FluidDetectorThread.volume);
+    ArrayButton ffvButton = new ArrayButton("gui.apextended.config.buttons.volume", Config.getFindfluidvolume(), FluidDetectorThread.volume);
     root.add(ffvButton, 1, 5, 10, 1);
 
-    ArrayButton ffpButton = new ArrayButton("Pitch", Config.getFindfluidpitch(), FluidDetectorThread.pitch);
+    ArrayButton ffpButton = new ArrayButton("gui.apextended.config.buttons.pitch", Config.getFindfluidpitch(), FluidDetectorThread.pitch);
     root.add(ffpButton, 12, 5, 10, 1);
 
-    WButton backButton = new WButton(new LiteralText("Back"));
+    WButton backButton = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));
     backButton.setOnClick(this::onBackClick);
     root.add(backButton, 2, 9, 7, 1);
 
-    WButton doneButton = new WButton(new LiteralText("Done"));
+    WButton doneButton = new WButton(new TranslatableText("gui.apextended.config.buttons.done"));
     doneButton.setOnClick(this::onDoneClick);
     root.add(doneButton, 12, 9, 7, 1);
 
