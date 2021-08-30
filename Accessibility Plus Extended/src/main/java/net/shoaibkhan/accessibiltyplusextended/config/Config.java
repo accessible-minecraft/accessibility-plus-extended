@@ -14,25 +14,39 @@ public class Config {
 	private static JsonObject data;
 	private static String CONFIG_PATH = Paths.get("config", "apextended", "config.json").toString();
 
+	// Fall Detector Key
 	public static final String FallDetectorKey = "fall_detector_key";
 	public static final String FallDetectorRange = "fall_detector_range";
 	public static final String FallDetectorDepth = "fall_detector_depth";
-	public static final String OreDetectorKey = "ore_detector_key";
+
+	// Misc
 	public static final String LavaDetectorKey = "lava_detector_key";
 	public static final String WaterDetectorKey = "water_detector_key";
 	public static final String NarrateBlockSideKey = "narrate_blocks_side_key";
+
+	// Durability Checker Key
 	public static final String DurabilityCheckKey = "durability_check_key";
 	public static final String DurabilityToolTipKey = "durability_tool_tip_key";
 	public static final String DurabilityThresholdKey = "durability_threshold_key";
+
+	// Entity Narration key
 	public static final String EntityNarratorKey = "entity_narrator_key";
+	public static final String EntityNarratorNarrateDistanceKey = "entity_narrator_narrate_distance_key";
+
+	// Ore Detector Keys
+	public static final String OreDetectorKey = "ore_detector_key";
 	public static final String OreDetectorVolume = "ore_detector_volume";
 	public static final String OreDetectorPitch = "ore_detector_pitch";
 	public static final String OreDetectorRange = "ore_detector_range";
 	public static final String OreDetectorDelay = "ore_detector_delay";
+
+	// Find Fluid Keys
 	public static final String FindFluidTextKey = "find_fluid_text_key";
 	public static final String FindFluidVolume = "find_fluid_volume";
 	public static final String FindFluidPitch = "find_fluid_pitch";
 	public static final String FindFluidRange = "find_fluid_range";
+
+	// Chat Narration Key
 	public static final String ChatNarration = "chat_narration";
 
 	// Accessibility Plus Keys
@@ -186,6 +200,7 @@ public class Config {
 		data.add(getDurabilitythresholdkey(), new JsonPrimitive("4"));
 
 		data.add(getEntitynarratorkey(), new JsonPrimitive(true));
+		data.add(getEntitynarratornarratedistancekey(), new JsonPrimitive(false));
 
 		data.add(getOredetectorvolume(), new JsonPrimitive("5"));
 		data.add(getOredetectorpitch(), new JsonPrimitive("20"));
@@ -313,6 +328,10 @@ public class Config {
 
 	public static String getEntitynarratorkey() {
 		return EntityNarratorKey;
+	}
+
+	public static String getEntitynarratornarratedistancekey() {
+		return EntityNarratorNarrateDistanceKey;
 	}
 
 	public static String getDurabilitycheckerkey() {
