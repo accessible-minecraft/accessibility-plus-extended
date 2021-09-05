@@ -8,7 +8,7 @@
   "gui.apextended.config.buttons.falldetectorsettings": "Fall Detector Settings",
   "gui.apextended.config.buttons.finddluidsettings": "Find Fluid Settings",
   "gui.apextended.config.buttons.durabilitycheckersettings": "Durability Checker Settings",
-  "gui.apextended.config.buttons.entitynarratorsettings": "Entity Narrator Settings",
+  "gui.apextended.config.buttons.entitynarratorsettings": "Entity Locking Settings",
   "gui.apextended.config.buttons.readblocks": "Read Blocks: %s",
   "gui.apextended.config.buttons.readtooltips": "Read Tooltips: %s",
   "gui.apextended.config.buttons.readsignscontents": "Read Sign Contents: %s",
