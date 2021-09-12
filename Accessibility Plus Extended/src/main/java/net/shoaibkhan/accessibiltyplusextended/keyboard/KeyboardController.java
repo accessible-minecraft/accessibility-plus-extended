@@ -13,8 +13,8 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.options.KeyBinding;
-//import net.minecraft.client.option.KeyBinding;
+//import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
@@ -73,8 +73,10 @@ public class KeyboardController {
     RIGHT_CLICK_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.mouserightclick",
         InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_X, "key.categories.apextended.inventorycontrol"));
 
-    ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
-    ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
+    if(Config.get(Config.getInvKeyboardControlKey())) {
+      ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
+      ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
+    }
   }
 
   public static boolean hasControlOverMouse() {
