@@ -10,6 +10,7 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.features.EntityLocking;
 import net.shoaibkhan.accessibiltyplusextended.features.FeaturesWithThreadHandler;
 import net.shoaibkhan.accessibiltyplusextended.gui.AccessibilityPlusConfigGui;
@@ -52,7 +53,7 @@ public class HudRenderCallBackClass {
 			e.printStackTrace();
 		}
 
-		if (Config.get(Config.getInvKeyboardControlKey())) {
+		if (Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
 
 			isDPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
 					InputUtil.fromTranslationKey("key.keyboard.d").getCode()));

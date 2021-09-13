@@ -2,6 +2,7 @@ package net.shoaibkhan.accessibiltyplusextended.mixin;
 
 import java.util.UUID;
 
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +18,7 @@ public class ChatNarrationMixin {
 
 	@Inject(at = @At("HEAD"), method = "onChatMessage", cancellable = true)
 	public void onChatMessage(MessageType messageType, Text message, UUID sender, CallbackInfo info) {
-		if (!Config.get(Config.getChatnarration())) {
+		if (!Config.get(ConfigKeys.CHAT_NARRATION.getKey())) {
 			info.cancel();
 		}
 	}

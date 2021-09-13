@@ -10,6 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.DurabilityThread;
@@ -24,10 +25,10 @@ public class DurabilityCheckerGui extends LightweightGuiDescription {
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ArrayButton dctButton = new ArrayButton("gui.apextended.config.buttons.threshold", Config.getDurabilitythresholdkey(), DurabilityThread.thresholdArray);
+    ArrayButton dctButton = new ArrayButton("gui.apextended.config.buttons.threshold", ConfigKeys.DURABILITY_THRESHOLD_KEY.getKey(), DurabilityThread.thresholdArray);
     root.add(dctButton, 1, 3, 10, 1);
 
-    ConfigButton dctooltipButton = new ConfigButton("gui.apextended.config.buttons.changetooltip", Config.getDurabilitytooltipkey());
+    ConfigButton dctooltipButton = new ConfigButton("gui.apextended.config.buttons.changetooltip", ConfigKeys.DURABILITY_TOOL_TIP_KEY.getKey());
     root.add(dctooltipButton, 12, 3, 10, 1);
 
     WButton backButton = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));

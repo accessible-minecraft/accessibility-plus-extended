@@ -13,6 +13,7 @@ import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.HudRenderCallBackClass;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 
 public class FluidDetectorThread extends Thread{
   private boolean lava, water; 
@@ -33,7 +34,7 @@ public class FluidDetectorThread extends Thread{
 
     int rangeVal = 10;
     try {
-      rangeVal = Integer.parseInt(range[Config.getInt(Config.getFindfluidrange())] + "");
+      rangeVal = Integer.parseInt(range[Config.getInt(ConfigKeys.FIND_FLUID_RANGE.getKey())] + "");
     } catch (Exception e) {
       rangeVal = 10;
     }
@@ -41,16 +42,16 @@ public class FluidDetectorThread extends Thread{
     BlockPos newBlockPos = new BlockPos(new Vec3d(posX, posY, posZ));
     BlockPos fluidPos = findFluid(client, newBlockPos, rangeVal, this.lava, this.water);
     if(fluidPos!=null){
-      if(!Config.get(Config.getFindfluidtextkey())){
+      if(!Config.get(ConfigKeys.FIND_FLUID_TEXT_KEY.getKey())){
         try {
           Float vol, pit;
           try {
-            vol = Float.parseFloat(volume[Config.getInt(Config.getFindfluidvolume())] + "");
+            vol = Float.parseFloat(volume[Config.getInt(ConfigKeys.FIND_FLUID_VOLUME.getKey())] + "");
           } catch (Exception e) {
             vol = 0.2f;
           }
           try {
-            pit = Float.parseFloat(pitch[Config.getInt(Config.getFindfluidpitch())] + "");
+            pit = Float.parseFloat(pitch[Config.getInt(ConfigKeys.FIND_FLUID_PITCH.getKey())] + "");
           } catch (Exception e) {
             pit = 1f;
           }

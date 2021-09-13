@@ -10,6 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.FluidDetectorThread;
@@ -24,16 +25,16 @@ public class FindFluidGui extends LightweightGuiDescription {
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ConfigButton fftStatus = new ConfigButton("gui.apextended.config.buttons.text", Config.getFindfluidtextkey());
+    ConfigButton fftStatus = new ConfigButton("gui.apextended.config.buttons.text", ConfigKeys.FIND_FLUID_TEXT_KEY.getKey());
     root.add(fftStatus, 1, 3, 10, 1);
 
-    ArrayButton ffrButton = new ArrayButton("gui.apextended.config.buttons.range", Config.getFindfluidrange(), FluidDetectorThread.range);
+    ArrayButton ffrButton = new ArrayButton("gui.apextended.config.buttons.range", ConfigKeys.FIND_FLUID_RANGE.getKey(), FluidDetectorThread.range);
     root.add(ffrButton, 12, 3, 10, 1);
 
-    ArrayButton ffvButton = new ArrayButton("gui.apextended.config.buttons.volume", Config.getFindfluidvolume(), FluidDetectorThread.volume);
+    ArrayButton ffvButton = new ArrayButton("gui.apextended.config.buttons.volume", ConfigKeys.FIND_FLUID_VOLUME.getKey(), FluidDetectorThread.volume);
     root.add(ffvButton, 1, 5, 10, 1);
 
-    ArrayButton ffpButton = new ArrayButton("gui.apextended.config.buttons.pitch", Config.getFindfluidpitch(), FluidDetectorThread.pitch);
+    ArrayButton ffpButton = new ArrayButton("gui.apextended.config.buttons.pitch", ConfigKeys.FIND_FLUID_PITCH.getKey(), FluidDetectorThread.pitch);
     root.add(ffpButton, 12, 5, 10, 1);
 
     WButton backButton = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));

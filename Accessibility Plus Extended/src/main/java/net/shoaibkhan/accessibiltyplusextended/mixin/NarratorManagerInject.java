@@ -4,6 +4,7 @@ import net.minecraft.network.MessageType;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,7 +28,7 @@ public class NarratorManagerInject {
 
   @Inject(at = @At("HEAD"), method = "onChatMessage", cancellable = true)
   public void onChatMessage(MessageType messageType, Text message, UUID sender, CallbackInfo ci) {
-    String option = NarratorPlus.chatOptions[Config.getInt(Config.getChatnarration())];
+    String option = NarratorPlus.chatOptions[Config.getInt(ConfigKeys.CHAT_NARRATION.getKey())];
 
     switch (option){
       case "on": {

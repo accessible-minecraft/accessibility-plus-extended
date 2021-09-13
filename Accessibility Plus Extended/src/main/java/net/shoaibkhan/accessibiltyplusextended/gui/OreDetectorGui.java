@@ -10,6 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.OreDetectorThread;
@@ -24,16 +25,16 @@ public class OreDetectorGui extends LightweightGuiDescription {
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ArrayButton odvButton = new ArrayButton("gui.apextended.config.buttons.volume", Config.getOredetectorvolume(), OreDetectorThread.volume);
+    ArrayButton odvButton = new ArrayButton("gui.apextended.config.buttons.volume", ConfigKeys.ORE_DETECTOR_VOLUME.getKey(), OreDetectorThread.volume);
     root.add(odvButton, 1, 3, 10, 1);
 
-    ArrayButton odpButton = new ArrayButton("gui.apextended.config.buttons.pitch", Config.getOredetectorpitch(), OreDetectorThread.pitch);
+    ArrayButton odpButton = new ArrayButton("gui.apextended.config.buttons.pitch", ConfigKeys.ORE_DETECTOR_PITCH.getKey(), OreDetectorThread.pitch);
     root.add(odpButton, 12, 3, 10, 1);
 
-    ArrayButton odrButton = new ArrayButton("gui.apextended.config.buttons.range", Config.getOredetectorrange(), OreDetectorThread.range);
+    ArrayButton odrButton = new ArrayButton("gui.apextended.config.buttons.range", ConfigKeys.ORE_DETECTOR_RANGE.getKey(), OreDetectorThread.range);
     root.add(odrButton, 12, 5, 10, 1);
 
-    ArrayButton odcButton = new ArrayButton("gui.apextended.config.buttons.delay", Config.getOredetectordelay(), OreDetectorThread.delay);
+    ArrayButton odcButton = new ArrayButton("gui.apextended.config.buttons.delay", ConfigKeys.ORE_DETECTOR_DELAY.getKey(), OreDetectorThread.delay);
     root.add(odcButton, 1, 5, 10, 1);
 
     WButton backButton = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));

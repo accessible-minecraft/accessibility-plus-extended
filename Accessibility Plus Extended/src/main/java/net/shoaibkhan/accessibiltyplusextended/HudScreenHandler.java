@@ -1,9 +1,5 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.CraftingScreen;
@@ -11,7 +7,9 @@ import net.minecraft.client.gui.screen.ingame.EnchantmentScreen;
 import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
-import net.shoaibkhan.accessibiltyplusextended.modInit;
+
+import java.awt.*;
+import java.awt.event.InputEvent;
 
 public class HudScreenHandler {
   private int minColumn;

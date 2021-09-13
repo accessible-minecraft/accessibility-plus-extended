@@ -13,6 +13,7 @@ import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.HudRenderCallBackClass;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 
 public class EntityLocking {
 	private MinecraftClient client;
@@ -44,7 +45,7 @@ public class EntityLocking {
 					MutableText mutableText = (new LiteralText("")).append(toBeLocked.getName());
 					String name = mutableText.getString();
 					String text = "Locked on to " + name;
-					if(Config.get(Config.getEntitynarratornarratedistancekey())) text += " " + HudRenderCallBackClass.get_position_difference(toBeLocked.getBlockPos(), client);
+					if(Config.get(ConfigKeys.ENTITY_NARRATOR_NARRATE_DISTANCE_KEY.getKey())) text += " " + HudRenderCallBackClass.get_position_difference(toBeLocked.getBlockPos(), client);
 					NarratorPlus.narrate(text);
 					lockedOnEntity = toBeLocked;
 				}

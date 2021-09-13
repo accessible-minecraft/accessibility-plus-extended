@@ -1,6 +1,7 @@
 package net.shoaibkhan.accessibiltyplusextended.features;
 
 import net.minecraft.client.MinecraftClient;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.DurabilityThread;
@@ -14,7 +15,7 @@ public class FeaturesWithThreadHandler {
 			new OreDetectorThread() };
 	private static DurabilityThread durabilityThread = new DurabilityThread();
 	public static int fallDetectorFlag = 0;
-	private MinecraftClient client;
+	private final MinecraftClient client;
 
 	public FeaturesWithThreadHandler(MinecraftClient client) {
 		this.client = client;
@@ -25,12 +26,12 @@ public class FeaturesWithThreadHandler {
 		if (!client.isPaused() && (client.currentScreen == null)) {
 
 			// Read Crosshair
-			if (10000 - fallDetectorFlag >= 3000 && (Config.get(Config.getReadblocksKey()) || Config.get(Config.getEntitynarratorkey()))) {
+			if (10000 - fallDetectorFlag >= 3000 && (Config.get(ConfigKeys.READ_BLOCKS_KEY.getKey()) || Config.get(ConfigKeys.ENTITY_NARRATOR_KEY.getKey()))) {
 				new CrosshairTarget(client);
 			}
 
 			// Fall Detector
-			if (Config.get(Config.getFalldetectorkey())) {
+			if (Config.get(ConfigKeys.FALL_DETECTOR_KEY.getKey())) {
 				for (int i = 0; i < fallDetectorThreads.length; i++) {
 					if (!fallDetectorThreads[i].alive) {
 						fallDetectorThreads[i].start();
@@ -43,8 +44,8 @@ public class FeaturesWithThreadHandler {
 			}
 
 			// Ore Detector
-			if (Config.get(Config.getOredetectorkey()) || Config.get(Config.getLavadetectorkey())
-					|| Config.get(Config.getWaterdetectorkey())) {
+			if (Config.get(ConfigKeys.ORE_DETECTOR_KEY.getKey()) || Config.get(ConfigKeys.LAVA_DETECTOR_KEY.getKey())
+					|| Config.get(ConfigKeys.WATER_DETECTOR_KEY.getKey())) {
 				for (int i = 0; i < oreDetectorThreads.length; i++) {
 					if (!oreDetectorThreads[i].alive) {
 						oreDetectorThreads[i].start();
@@ -58,7 +59,7 @@ public class FeaturesWithThreadHandler {
 
 			// Durability Checker
 			if (!modInit.mainThreadMap.containsKey("durablity_thread_key")
-					&& Config.get(Config.getDurabilitycheckerkey())) {
+					&& Config.get(ConfigKeys.DURABILITY_CHECK_KEY.getKey())) {
 				modInit.mainThreadMap.put("durablity_thread_key", 5000);
 				if (durabilityThread.isAlive() && durabilityThread != null)
 					durabilityThread.interrupt();

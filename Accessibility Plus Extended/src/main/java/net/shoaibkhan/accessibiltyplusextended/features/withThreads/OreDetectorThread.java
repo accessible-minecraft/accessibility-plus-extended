@@ -9,6 +9,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
@@ -29,14 +30,14 @@ public class OreDetectorThread extends Thread {
     int posZ = pos.getZ();
     int rangeVal;
     try {
-      rangeVal = Integer.parseInt(range[Config.getInt(Config.getOredetectorrange())]);
+      rangeVal = Integer.parseInt(range[Config.getInt(ConfigKeys.ORE_DETECTOR_RANGE.getKey())]);
     } catch (Exception e) {
       rangeVal = 4;
     }
-    checkBlock(new BlockPos(new Vec3d(posX, posY, posZ)), 0, Config.get(Config.getLavadetectorkey()), Config.get(Config.getWaterdetectorkey()), Config.get(Config.getOredetectorkey()));
-    checkBlock(new BlockPos(new Vec3d(posX, posY + 3, posZ)), 0, Config.get(Config.getLavadetectorkey()), Config.get(Config.getWaterdetectorkey()), Config.get(Config.getOredetectorkey()));
-    checkBlock(new BlockPos(new Vec3d(posX, posY + 1, posZ)), rangeVal, Config.get(Config.getLavadetectorkey()), Config.get(Config.getWaterdetectorkey()), Config.get(Config.getOredetectorkey()));
-    checkBlock(new BlockPos(new Vec3d(posX, posY + 2, posZ)), rangeVal, Config.get(Config.getLavadetectorkey()), Config.get(Config.getWaterdetectorkey()), Config.get(Config.getOredetectorkey()));
+    checkBlock(new BlockPos(new Vec3d(posX, posY, posZ)), 0, Config.get(ConfigKeys.LAVA_DETECTOR_KEY.getKey()), Config.get(ConfigKeys.WATER_DETECTOR_KEY.getKey()), Config.get(ConfigKeys.ORE_DETECTOR_KEY.getKey()));
+    checkBlock(new BlockPos(new Vec3d(posX, posY + 3, posZ)), 0, Config.get(ConfigKeys.LAVA_DETECTOR_KEY.getKey()), Config.get(ConfigKeys.WATER_DETECTOR_KEY.getKey()), Config.get(ConfigKeys.ORE_DETECTOR_KEY.getKey()));
+    checkBlock(new BlockPos(new Vec3d(posX, posY + 1, posZ)), rangeVal, Config.get(ConfigKeys.LAVA_DETECTOR_KEY.getKey()), Config.get(ConfigKeys.WATER_DETECTOR_KEY.getKey()), Config.get(ConfigKeys.ORE_DETECTOR_KEY.getKey()));
+    checkBlock(new BlockPos(new Vec3d(posX, posY + 2, posZ)), rangeVal, Config.get(ConfigKeys.LAVA_DETECTOR_KEY.getKey()), Config.get(ConfigKeys.WATER_DETECTOR_KEY.getKey()), Config.get(ConfigKeys.ORE_DETECTOR_KEY.getKey()));
     finished = true;
   }
 
@@ -76,12 +77,12 @@ private void checkBlock(BlockPos blockPos, int val, boolean lava, boolean water,
           Float vol, pit;
           int del;
           try {
-            vol = Float.parseFloat(volume[Config.getInt(Config.getOredetectorvolume())] + "");
+            vol = Float.parseFloat(volume[Config.getInt(ConfigKeys.ORE_DETECTOR_VOLUME.getKey())] + "");
           } catch (Exception e) {
             vol = 0.2f;
           }
           try {
-            pit = Float.parseFloat(pitch[Config.getInt(Config.getOredetectorpitch())] + "");
+            pit = Float.parseFloat(pitch[Config.getInt(ConfigKeys.ORE_DETECTOR_PITCH.getKey())] + "");
           } catch (Exception e) {
             pit = 1f;
           }
@@ -89,12 +90,13 @@ private void checkBlock(BlockPos blockPos, int val, boolean lava, boolean water,
           client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, vol, pit, true);
 
           try {
-            del = Integer.parseInt(delay[Config.getInt(Config.getOredetectordelay())] + "");
+            del = Integer.parseInt(delay[Config.getInt(ConfigKeys.ORE_DETECTOR_DELAY.getKey())] + "");
           } catch (Exception e) {
             del = 10;
           }
           modInit.mainThreadMap.put(name + "" + blockPos, del*1000);
         } catch (Exception e) {
+          e.printStackTrace();
         }
       } else if (name.contains("air") && val - 1 >= 0) {
         int posX = blockPos.getX();

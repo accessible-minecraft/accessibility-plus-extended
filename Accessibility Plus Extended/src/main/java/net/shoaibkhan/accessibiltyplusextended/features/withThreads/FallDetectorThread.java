@@ -7,6 +7,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
@@ -27,7 +28,7 @@ public class FallDetectorThread extends Thread {
 
 		int rangeVal = 10;
 		try {
-			rangeVal = Integer.parseInt(range[Config.getInt(Config.getFalldetectorrange())] + "");
+			rangeVal = Integer.parseInt(range[Config.getInt(ConfigKeys.FALL_DETECTOR_RANGE_KEY.getKey())] + "");
 			rangeVal = rangeVal - 1;
 		} catch (Exception e) {
 			rangeVal = 10;
@@ -79,7 +80,7 @@ public class FallDetectorThread extends Thread {
 
 				int depthVal;
 				try {
-					depthVal = Integer.parseInt(depthArray[Config.getInt(Config.getFalldetectordepth())] + "");
+					depthVal = Integer.parseInt(depthArray[Config.getInt(ConfigKeys.FALL_DETECTOR_DEPTH.getKey())] + "");
 				} catch (Exception e) {
 					depthVal = 5;
 				}
@@ -104,8 +105,8 @@ public class FallDetectorThread extends Thread {
 	}
 
 	private int getDepth(BlockPos blockPos, int limit) {
-		if (limit <= 0)
-			return 0;
+		if (limit <= 0) return 0;
+
 		Block block = client.world.getBlockState(blockPos).getBlock();
 		MutableText blockNameMutable = (new LiteralText("")).append(block.getName());
 		String blockName = blockNameMutable.getString().toLowerCase();

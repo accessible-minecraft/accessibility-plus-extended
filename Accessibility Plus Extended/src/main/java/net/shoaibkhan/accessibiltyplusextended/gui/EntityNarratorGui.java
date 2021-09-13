@@ -11,6 +11,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.DurabilityThread;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 
@@ -24,7 +25,7 @@ public class EntityNarratorGui extends LightweightGuiDescription {
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ConfigButton nddButton = new ConfigButton("gui.apextended.config.buttons.narratedistancediff", Config.getEntitynarratornarratedistancekey());
+    ConfigButton nddButton = new ConfigButton("gui.apextended.config.buttons.narratedistancediff", ConfigKeys.ENTITY_NARRATOR_NARRATE_DISTANCE_KEY.getKey());
     root.add(nddButton, 1, 3, 10, 1);
 
     WButton backButton = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));

@@ -2,6 +2,7 @@ package net.shoaibkhan.accessibiltyplusextended.mixin;
 
 import java.util.List;
 
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,7 +30,7 @@ public class DurabilityMixin {
 //			list.set(0, new LiteralText(itemStack.getCount() + " " + mutableText.getString()) );
 //		}
 		
-		if (Config.get(Config.getDurabilitytooltipkey()) && Config.get(Config.getDurabilitycheckerkey())) {
+		if (Config.get(ConfigKeys.DURABILITY_TOOL_TIP_KEY.getKey()) && Config.get(ConfigKeys.DURABILITY_CHECK_KEY.getKey())) {
 			if (itemStack.getItem().isDamageable()) {
 				int totalDurability = itemStack.getItem().getMaxDamage();
 				int currrRemainingDurability = totalDurability - (itemStack.getDamage());
