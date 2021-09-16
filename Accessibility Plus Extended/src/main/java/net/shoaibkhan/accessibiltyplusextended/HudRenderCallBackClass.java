@@ -26,7 +26,7 @@ public class HudRenderCallBackClass {
 	private KeyBinding CONFIG_KEY, LockEntityKey, AP_CONFIG_KEY;
 	public static int currentColumn = 0;
 	public static int currentRow = 0;
-	private HudScreenHandler hudScreenHandler;
+	private final HudScreenHandler hudScreenHandler;
 
 	public HudRenderCallBackClass(KeyBinding CONFIG_KEY, KeyBinding LockEntityKey, KeyBinding AP_CONFIG_KEY) {
 		this.CONFIG_KEY = CONFIG_KEY;

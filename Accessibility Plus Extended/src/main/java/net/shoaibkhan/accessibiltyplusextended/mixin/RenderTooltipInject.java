@@ -2,6 +2,7 @@ package net.shoaibkhan.accessibiltyplusextended.mixin;
 
 import java.util.List;
 
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,7 +20,7 @@ public class RenderTooltipInject {
 
     @Inject(at = @At("HEAD"), method = "renderTooltip(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/text/Text;II)V")
     private void readOneLineTooltips(MatrixStack matrices, Text text, int x, int y, CallbackInfo callback) {
-        if (!Config.get(Config.getReadTooltipsKey()) || KeyboardController.hasControlOverMouse()) {
+        if (!Config.get(ConfigKeys.READ_TOOLTIPS_KEY.getKey()) || KeyboardController.hasControlOverMouse()) {
             return;
         }
         String nextText = text.getString();
@@ -31,7 +32,7 @@ public class RenderTooltipInject {
 
     @Inject(at = @At("HEAD"), method = "renderTooltip(Lnet/minecraft/client/util/math/MatrixStack;Ljava/util/List;II)V")
     private void renderTooltip(MatrixStack matrices, List<Text> lines, int x, int y, CallbackInfo callback) {
-        if (!Config.get(Config.getReadTooltipsKey()) || KeyboardController.hasControlOverMouse()) {
+        if (!Config.get(ConfigKeys.READ_TOOLTIPS_KEY.getKey()) || KeyboardController.hasControlOverMouse()) {
             return;
         }
         if (lines.size() > 0) {

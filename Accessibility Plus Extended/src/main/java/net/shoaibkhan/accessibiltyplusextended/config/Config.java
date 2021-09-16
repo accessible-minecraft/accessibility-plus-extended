@@ -173,7 +173,7 @@ public class Config {
 
 		data.add(ConfigKeys.CHAT_NARRATION.getKey(), new JsonPrimitive("0"));
 
-		data.add(ConfigKeys.POI_KEY.getKey(), new JsonPrimitive("0"));
+		data.add(ConfigKeys.POI_KEY.getKey(), new JsonPrimitive(true));
 
 		// Accessibility Plus
 		data.add(ConfigKeys.READ_BLOCKS_KEY.getKey(), new JsonPrimitive(true));

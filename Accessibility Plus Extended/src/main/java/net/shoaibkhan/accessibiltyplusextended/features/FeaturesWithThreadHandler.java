@@ -14,6 +14,7 @@ public class FeaturesWithThreadHandler {
 	private static OreDetectorThread[] oreDetectorThreads = { new OreDetectorThread(), new OreDetectorThread(),
 			new OreDetectorThread() };
 	private static DurabilityThread durabilityThread = new DurabilityThread();
+	private static PointsOfInterestsHandler pointsOfInterestsHandler = new PointsOfInterestsHandler();
 	public static int fallDetectorFlag = 0;
 	private final MinecraftClient client;
 
@@ -65,6 +66,12 @@ public class FeaturesWithThreadHandler {
 					durabilityThread.interrupt();
 				durabilityThread = new DurabilityThread();
 				durabilityThread.start();
+			}
+
+			// Point Of Interest
+			if(Config.get(ConfigKeys.POI_KEY.getKey())){
+				if(!pointsOfInterestsHandler.isAlive())
+					pointsOfInterestsHandler.start();
 			}
 		}
 	}

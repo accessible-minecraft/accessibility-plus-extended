@@ -1,30 +1,25 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
+import io.github.cottonmc.cotton.gui.widget.data.Color;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import net.shoaibkhan.accessibiltyplusextended.keyboard.KeyboardController;
+import org.lwjgl.glfw.GLFW;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.lwjgl.glfw.GLFW;
-
-import io.github.cottonmc.cotton.gui.widget.data.Color;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 // import net.minecraft.client.options.KeyBinding;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.shoaibkhan.accessibiltyplusextended.keyboard.KeyboardController;
 
 public class modInit implements ModInitializer {
 	HudRenderCallBackClass hudRenderCallBackClass;
 	public static KeyBinding CONFIG_KEY, LockEntityKey;
 	public static Map<String, Integer> mainThreadMap;
 	private static CustomWait mainThreadCustomWait;
-	public static final Identifier oreSoundID = new Identifier("apebyshoaibkhan:ore");
-	public static SoundEvent oreSoundEvent;
 	public static List<String> lowDurabilityItems = new ArrayList<String>();
 
 	// Accessibility Plus
@@ -39,10 +34,6 @@ public class modInit implements ModInitializer {
 				new KeyBinding("APE Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "AP Extended"));
 		LockEntityKey = KeyBindingHelper.registerKeyBinding(
 				new KeyBinding("Lock onto Entity", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Y, "AP Extended"));
-
-		oreSoundEvent = new SoundEvent(oreSoundID);
-		Registry.register(Registry.SOUND_EVENT, oreSoundID, oreSoundEvent);
-
 
 		// Accessibility Plus
 		AP_CONFIG_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.config",
