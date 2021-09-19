@@ -1,23 +1,21 @@
 package net.shoaibkhan.accessibiltyplusextended.features;
 
-import net.minecraft.block.DoorBlock;
-import net.minecraft.util.math.Vec3d;
-
 import java.util.Map;
+
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.math.BlockPos;
 
 public class PointsOfInterestsHandler extends Thread {
     public static Map<Double, String> oreBlocks;
-    public static Map<Double, Vec3d> doorBlocks;
-    public static Map<Double, Vec3d> buttonBlocks;
+    public static Map<Double, BlockPos> doorBlocks;
+    public static Map<Double, BlockPos> buttonBlocks;
+    public static Map<Double, BlockPos> blocks;
 
     public void run(){
         while(true){
+            assert MinecraftClient.getInstance().player != null;
             try {
                 new POIBlocks();
-
-                System.out.println(oreBlocks);
-                System.out.println(doorBlocks);
-                System.out.println(buttonBlocks);
 
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
