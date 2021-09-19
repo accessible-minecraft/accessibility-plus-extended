@@ -11,7 +11,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
-import net.shoaibkhan.accessibiltyplusextended.features.EntityLocking;
+import net.shoaibkhan.accessibiltyplusextended.features.POIEntities;
+import net.shoaibkhan.accessibiltyplusextended.features.PointsOfInterestsHandler;
 import net.shoaibkhan.accessibiltyplusextended.features.FeaturesWithThreadHandler;
 import net.shoaibkhan.accessibiltyplusextended.gui.AccessibilityPlusConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigGui;
@@ -45,7 +46,7 @@ public class HudRenderCallBackClass {
 
 			keyPresses(CONFIG_KEY);
 
-			new EntityLocking(client, LockEntityKey);
+			PointsOfInterestsHandler.lockingHandlerMethod();
 
 			new FeaturesWithThreadHandler(client);
 

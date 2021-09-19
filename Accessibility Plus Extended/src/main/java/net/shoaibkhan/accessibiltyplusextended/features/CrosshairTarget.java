@@ -94,7 +94,7 @@ public class CrosshairTarget {
 					try {
 						EntityHitResult entityHitResult = (EntityHitResult) hit;
 
-						if (((EntityHitResult) hit).getEntity() == EntityLocking.lockedOnEntity) break;
+						if (((EntityHitResult) hit).getEntity() == PointsOfInterestsHandler.lockedOnEntity) break;
 
 						if (!modInit.mainThreadMap.containsKey("entity_narrator_key")) {
 							MutableText entityMutableText = new LiteralText("").append(entityHitResult.getEntity().getName());

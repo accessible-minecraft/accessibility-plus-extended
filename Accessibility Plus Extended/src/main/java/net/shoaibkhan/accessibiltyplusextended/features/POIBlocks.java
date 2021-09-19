@@ -8,21 +8,25 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.property.Property;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.Map.Entry;
+
+import com.google.common.collect.ImmutableSet;
 
 public class POIBlocks {
     private MinecraftClient client;
-    private Map<Double, String> oreBlocks = new HashMap<>();
-    private Map<Double, BlockPos> doorBlocks = new HashMap<>();
-    private Map<Double, BlockPos> buttonBlocks = new HashMap<>();
-    private Map<Double, BlockPos> blocks = new HashMap<>();
+    private Map<Double, String> oreBlocks = new TreeMap<>();
+    private Map<Double, BlockPos> doorBlocks = new TreeMap<>();
+    private Map<Double, BlockPos> buttonBlocks = new TreeMap<>();
+    private Map<Double, BlockPos> blocks = new TreeMap<>();
 
     private List<String> blockList;
 
@@ -97,7 +101,16 @@ public class POIBlocks {
         } else if (block instanceof AbstractButtonBlock) {
             buttonBlocks.put(diff, blockPos);
         } else if (block instanceof DoorBlock) {
-            doorBlocks.put(diff, blockPos);
+            ImmutableSet<Entry<Property<?>, Comparable<?>>> entries = blockState.getEntries().entrySet();
+            for (Entry<Property<?>, Comparable<?>> i : entries) {
+
+                if (i.getKey().getName().equalsIgnoreCase("half")) {
+                    if (i.getValue().toString().equalsIgnoreCase("upper"))
+                        doorBlocks.put(diff, blockPos);
+                    break;
+                }
+
+            }
         } else if (block instanceof LeavesBlock) {
             System.out.println("\n\n\n\t\tLEAVES\t" + client.world.getBlockState(blockPos).get(LeavesBlock.DISTANCE)
                     + "\t\t\n\n\n");
