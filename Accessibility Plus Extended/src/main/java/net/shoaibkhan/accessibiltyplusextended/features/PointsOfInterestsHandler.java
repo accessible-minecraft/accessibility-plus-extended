@@ -30,6 +30,7 @@ public class PointsOfInterestsHandler extends Thread {
     private MinecraftClient client;
     public static Entity lockedOnEntity = null;
     public static Vec3d lockedOnBlock = null;
+    public static BlockState lockedOnBlockState = null;
     public static Entity toBeLocked = null;
     public static boolean hostileEntityInRange = false;
 
@@ -55,7 +56,7 @@ public class PointsOfInterestsHandler extends Thread {
         }
     }
 
-    public Vec3d getButtonsAbsolutePosition(BlockPos blockPos) {
+    public Vec3d getButtonsAbsolutePosition(MinecraftClient client, BlockPos blockPos) {
         BlockState blockState = client.world.getBlockState(blockPos);
         ImmutableSet<Entry<Property<?>, Comparable<?>>> entries = blockState.getEntries().entrySet();
 
@@ -159,7 +160,7 @@ public class PointsOfInterestsHandler extends Thread {
                     Entry<Double, BlockPos> entry = PointsOfInterestsHandler.buttonBlocks.entrySet().iterator().next();
                     BlockPos blockPos = entry.getValue();
 
-                    lockedOnBlock = new PointsOfInterestsHandler().getButtonsAbsolutePosition(blockPos);
+                    lockedOnBlock = new PointsOfInterestsHandler().getButtonsAbsolutePosition(client, blockPos);
 
                 } else if (PointsOfInterestsHandler.doorBlocks.entrySet().iterator().hasNext()) {
                     Entry<Double, BlockPos> entry = PointsOfInterestsHandler.doorBlocks.entrySet().iterator().next();
@@ -167,16 +168,66 @@ public class PointsOfInterestsHandler extends Thread {
                     BlockState blockState = client.world.getBlockState(blockPos);
                     ImmutableSet<Entry<Property<?>, Comparable<?>>> entries = blockState.getEntries().entrySet();
 
+                    String facing = "", hinge = "", open = "";
+
                     for (Entry<Property<?>, Comparable<?>> i : entries) {
 
-                        System.out.println("Key" + i.getKey().getName());
-                        System.out.println("Value" + i.getValue());
+                        if (i.getKey().getName().equalsIgnoreCase("facing"))
+                            facing = i.getValue().toString();
+                        else if (i.getKey().getName().equalsIgnoreCase("hinge"))
+                            hinge = i.getValue().toString();
+                        else if (i.getKey().getName().equalsIgnoreCase("open"))
+                            open = i.getValue().toString();
 
                     }
 
                     double x = (int) blockPos.getX();
                     double y = (int) blockPos.getY();
                     double z = (int) blockPos.getZ();
+
+                    if (x < 0)
+                        x += 0.5;
+                    else
+                        x -= 0.5;
+
+                    if (z < 0)
+                        z += 0.5;
+                    else
+                        z -= 0.5;
+
+                    y += 0.5;
+
+                    if (open.equalsIgnoreCase("false")) {
+                        if (facing.equalsIgnoreCase("north"))
+                            z += 0.5;
+                        else if (facing.equalsIgnoreCase("south"))
+                            z -= 0.5;
+                        else if (facing.equalsIgnoreCase("east"))
+                            x -= 0.5;
+                        else if (facing.equalsIgnoreCase("west"))
+                            x += 0.5;
+                    } else {
+                        if (hinge.equalsIgnoreCase("right")) {
+                            if (facing.equalsIgnoreCase("north"))
+                                x += 0.5;
+                            else if (facing.equalsIgnoreCase("south"))
+                                x -= 0.5;
+                            else if (facing.equalsIgnoreCase("east"))
+                                z += 0.5;
+                            else if (facing.equalsIgnoreCase("west"))
+                                z -= 0.5;
+                        } else {
+                            if (facing.equalsIgnoreCase("north"))
+                                x -= 0.5;
+                            else if (facing.equalsIgnoreCase("south"))
+                                x += 0.5;
+                            else if (facing.equalsIgnoreCase("east"))
+                                z -= 0.5;
+                            else if (facing.equalsIgnoreCase("west"))
+                                z += 0.5;
+                        }
+                    }
+
                     Vec3d temp = new Vec3d(x, y, z);
 
                     lockedOnBlock = temp;
