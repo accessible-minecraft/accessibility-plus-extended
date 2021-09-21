@@ -70,8 +70,10 @@ public class FeaturesWithThreadHandler {
 
 			// Point Of Interest
 			if(Config.get(ConfigKeys.POI_KEY.getKey())){
-				if(!pointsOfInterestsHandler.isAlive())
+				if(!pointsOfInterestsHandler.isAlive()){
+					pointsOfInterestsHandler = new PointsOfInterestsHandler();
 					pointsOfInterestsHandler.start();
+				}
 			}
 		}
 	}

@@ -12,7 +12,6 @@ public class CustomWait extends Thread {
 					for (Map.Entry<String, Integer> entry : modInit.mainThreadMap.entrySet()) {
 						entry.setValue(entry.getValue()-1);
 						if(entry.getValue()<=10) {
-							System.out.println("removed "+entry.getKey());
 							modInit.mainThreadMap.remove(entry.getKey());
 						}
 					}

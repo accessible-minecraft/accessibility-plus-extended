@@ -15,8 +15,8 @@ import net.minecraft.util.math.Vec3d;
 
 public class POIEntities {
 	private MinecraftClient client;
-	private Map<Double, Entity> passiveEntity = new TreeMap<>();
-	private Map<Double, Entity> hostileEntity = new TreeMap<>();
+	private TreeMap<Double, Entity> passiveEntity = new TreeMap<>();
+	private TreeMap<Double, Entity> hostileEntity = new TreeMap<>();
 
 	public POIEntities() {
 		this.client = MinecraftClient.getInstance();

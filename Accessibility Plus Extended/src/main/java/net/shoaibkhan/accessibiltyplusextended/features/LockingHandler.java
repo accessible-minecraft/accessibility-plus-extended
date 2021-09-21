@@ -8,7 +8,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.argument.EntityAnchorArgumentType.EntityAnchor;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.state.property.Property;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
@@ -46,13 +45,13 @@ public class LockingHandler {
 
         while (modInit.LockEntityKey.wasPressed()) {
             if (HudRenderCallBackClass.isAltPressed && (lockedOnEntity != null || lockedOnBlock != null)) {
+                NarratorPlus.narrate("Unlocked");
                 lockedOnEntity = null;
                 lockedOnBlock = null;
-                NarratorPlus.narrate("Unlocked");
             } else {
 
                 if (!PointsOfInterestsHandler.hostileEntity.isEmpty()) {
-                    Entry<Double, Entity> entry = PointsOfInterestsHandler.hostileEntity.entrySet().iterator().next();
+                    Entry<Double, Entity> entry = PointsOfInterestsHandler.hostileEntity.firstEntry();
                     Entity entity = entry.getValue();
 
                     MutableText mutableText = (new LiteralText("")).append(entity.getName());
@@ -67,75 +66,55 @@ public class LockingHandler {
                 } else {
                     Double closest = -9999.0;
 
-                    Entry<Double, Entity> closestHostileEntityEntry = null;
-                    Double closestHostileEntityDouble = -9999.0;
-                    if (!PointsOfInterestsHandler.hostileEntity.isEmpty()) {
-                        closestHostileEntityEntry = PointsOfInterestsHandler.hostileEntity.entrySet().iterator().next();
-                        closestHostileEntityDouble = closestHostileEntityEntry.getKey();
-                        closest = closestHostileEntityDouble;
-                    }
-
                     Entry<Double, Entity> closestPassiveEntityEntry = null;
                     Double closestPassiveEntityDouble = -9999.0;
                     if (!PointsOfInterestsHandler.passiveEntity.isEmpty()) {
-                        closestPassiveEntityEntry = PointsOfInterestsHandler.passiveEntity.entrySet().iterator().next();
+                        closestPassiveEntityEntry = PointsOfInterestsHandler.passiveEntity.firstEntry();
                         closestPassiveEntityDouble = closestPassiveEntityEntry.getKey();
                         closest = closestPassiveEntityDouble;
                     }
 
-                    Entry<Double, BlockPos> closestDoorBlockEntry = null;
+                    Entry<Double, Vec3d> closestDoorBlockEntry = null;
                     Double closestDoorBlockDouble = -9999.0;
                     if (!PointsOfInterestsHandler.doorBlocks.isEmpty()) {
-                        closestDoorBlockEntry = PointsOfInterestsHandler.doorBlocks.entrySet().iterator().next();
+                        closestDoorBlockEntry = PointsOfInterestsHandler.doorBlocks.firstEntry();
                         closestDoorBlockDouble = closestDoorBlockEntry.getKey();
                         closest = closestDoorBlockDouble;
                     }
 
-                    Entry<Double, BlockPos> closestButtonBlockEntry = null;
+                    Entry<Double, Vec3d> closestButtonBlockEntry = null;
                     Double closestButtonBlockDouble = -9999.0;
                     if (!PointsOfInterestsHandler.buttonBlocks.isEmpty()) {
-                        closestButtonBlockEntry = PointsOfInterestsHandler.buttonBlocks.entrySet().iterator().next();
+                        closestButtonBlockEntry = PointsOfInterestsHandler.buttonBlocks.firstEntry();
                         closestButtonBlockDouble = closestButtonBlockEntry.getKey();
                         closest = closestButtonBlockDouble;
                     }
 
-                    Entry<Double, BlockPos> closestBlockEntry = null;
+                    Entry<Double, Vec3d> closestBlockEntry = null;
                     Double closestBlockDouble = -9999.0;
                     if (!PointsOfInterestsHandler.blocks.isEmpty()) {
-                        closestBlockEntry = PointsOfInterestsHandler.blocks.entrySet().iterator().next();
+                        closestBlockEntry = PointsOfInterestsHandler.blocks.firstEntry();
                         closestBlockDouble = closestBlockEntry.getKey();
                         closest = closestBlockDouble;
                     }
 
-                    Entry<Double, BlockPos> closestOreBlockEntry = null;
+                    Entry<Double, Vec3d> closestOreBlockEntry = null;
                     Double closestOreBlockDouble = -9999.0;
                     if (!PointsOfInterestsHandler.oreBlocks.isEmpty()) {
-                        closestOreBlockEntry = PointsOfInterestsHandler.oreBlocks.entrySet().iterator().next();
+                        closestOreBlockEntry = PointsOfInterestsHandler.oreBlocks.firstEntry();
                         closestOreBlockDouble = closestOreBlockEntry.getKey();
                         closest = closestOreBlockDouble;
                     }
 
+
                     if (closest != -9999.0) {
-                        if(closestHostileEntityDouble!=-9999.0) closest = Math.min(closest, closestHostileEntityDouble);
                         if(closestPassiveEntityDouble!=-9999.0) closest = Math.min(closest, closestPassiveEntityDouble);
                         if(closestDoorBlockDouble!=-9999.0) closest = Math.min(closest, closestDoorBlockDouble);
                         if(closestButtonBlockDouble!=-9999.0) closest = Math.min(closest, closestButtonBlockDouble);
                         if(closestOreBlockDouble!=-9999.0) closest = Math.min(closest, closestOreBlockDouble);
                         if(closestBlockDouble!=-9999.0) closest = Math.min(closest, closestBlockDouble);
 
-                        if (closest == closestHostileEntityDouble && closestHostileEntityDouble!=-9999.0) {
-                            MutableText mutableText = (new LiteralText(""))
-                                    .append(closestHostileEntityEntry.getValue().getName());
-                            String name = mutableText.getString();
-                            String text = name;
-                            if (Config.get(ConfigKeys.ENTITY_NARRATOR_NARRATE_DISTANCE_KEY.getKey()))
-                                text += " " + HudRenderCallBackClass.get_position_difference(toBeLocked.getBlockPos(),
-                                        client);
-                            NarratorPlus.narrate(text);
-
-                            lockedOnEntity = closestHostileEntityEntry.getValue();
-                            lockedOnBlock = null;
-                        } else if (closest == closestPassiveEntityDouble && closestPassiveEntityDouble!=-9999.0) {
+                        if (closest.equals(closestPassiveEntityDouble) && closestPassiveEntityDouble!=-9999.0) {
                             MutableText mutableText = (new LiteralText(""))
                                     .append(closestPassiveEntityEntry.getValue().getName());
                             String name = mutableText.getString();
@@ -147,49 +126,17 @@ public class LockingHandler {
 
                             lockedOnEntity = closestPassiveEntityEntry.getValue();
                             lockedOnBlock = null;
-                        } else if (closest == closestDoorBlockDouble && closestDoorBlockDouble!=-9999.0) {
+                        } else if (closest.equals(closestDoorBlockDouble) && closestDoorBlockDouble!=-9999.0) {
                             lockedOnBlock = getDoorAbsolutePosition(client, closestDoorBlockEntry.getValue());
                             lockedOnEntity = null;
-                        } else if (closest == closestButtonBlockDouble && closestButtonBlockDouble!=-9999.0) {
-                            lockedOnBlock = getButtonsAbsolutePosition(client, closestButtonBlockEntry.getValue());
+                        } else if (closest.equals(closestButtonBlockDouble) && closestButtonBlockDouble!=-9999.0) {
+                            lockedOnBlock = getButtonsAbsolutePosition(client, closestDoorBlockEntry.getValue());
                             lockedOnEntity = null;
-                        } else if (closest == closestBlockDouble && closestBlockDouble!=-9999.0) {
-                            double x = (int) closestBlockEntry.getValue().getX();
-                            double y = (int) closestBlockEntry.getValue().getY();
-                            double z = (int) closestBlockEntry.getValue().getZ();
-
-                            if (x < 0)
-                                x += 0.5;
-                            else
-                                x -= 0.5;
-
-                            if (z < 0)
-                                z += 0.5;
-                            else
-                                z -= 0.5;
-
-                            y += 0.5;
-
-                            lockedOnBlock = new Vec3d(x, y, z);
+                        } else if (closest.equals(closestBlockDouble) && closestBlockDouble!=-9999.0) {
+                            lockedOnBlock = closestBlockEntry.getValue();
                             lockedOnEntity = null;
-                        } else if (closest == closestOreBlockDouble && closestOreBlockDouble!=-9999.0) {
-                            double x = (int) closestOreBlockEntry.getValue().getX();
-                            double y = (int) closestOreBlockEntry.getValue().getY();
-                            double z = (int) closestOreBlockEntry.getValue().getZ();
-
-                            if (x < 0)
-                                x += 0.5;
-                            else
-                                x -= 0.5;
-
-                            if (z < 0)
-                                z += 0.5;
-                            else
-                                z -= 0.5;
-
-                            y += 0.5;
-
-                            lockedOnBlock = new Vec3d(x, y, z);
+                        } else if (closest.equals(closestOreBlockDouble) && closestOreBlockDouble!=-9999.0) {
+                            lockedOnBlock = closestOreBlockEntry.getValue();
                             lockedOnEntity = null;
                         }
                     }
@@ -198,13 +145,13 @@ public class LockingHandler {
         }
     }
 
-    private Vec3d getButtonsAbsolutePosition(MinecraftClient client, BlockPos blockPos) {
-        BlockState blockState = client.world.getBlockState(blockPos);
+    private Vec3d getButtonsAbsolutePosition(MinecraftClient client, Vec3d blockPos) {
+        BlockState blockState = client.world.getBlockState(new BlockPos(blockPos));
         ImmutableSet<Entry<Property<?>, Comparable<?>>> entries = blockState.getEntries().entrySet();
 
-        double x = (int) blockPos.getX();
-        double y = (int) blockPos.getY();
-        double z = (int) blockPos.getZ();
+        double x = blockPos.getX();
+        double y = blockPos.getY();
+        double z = blockPos.getZ();
 
         String face = "", facing = "";
 
@@ -218,43 +165,10 @@ public class LockingHandler {
             }
         }
 
-        if (face.equalsIgnoreCase("floor")) {
-            if (x < 0)
-                x += 0.5;
-            else
-                x -= 0.5;
-
-            if (z < 0)
-                z += 0.5;
-            else
-                z -= 0.5;
-
-        } else if (face.equalsIgnoreCase("ceiling")) {
-            if (x < 0)
-                x += 0.5;
-            else
-                x -= 0.5;
-
-            if (z < 0)
-                z += 0.5;
-            else
-                z -= 0.5;
-
-            y += 1;
-
-        } else if (face.equalsIgnoreCase("wall")) {
-            if (x < 0)
-                x += 0.5;
-            else
-                x -= 0.5;
-
-            if (z < 0)
-                z += 0.5;
-            else
-                z -= 0.5;
-
+        if (face.equalsIgnoreCase("ceiling")) {
             y += 0.5;
 
+        } else if (face.equalsIgnoreCase("wall")) {
             if (facing.equalsIgnoreCase("north"))
                 z += 0.5;
             else if (facing.equalsIgnoreCase("south"))
@@ -263,14 +177,13 @@ public class LockingHandler {
                 x -= 0.5;
             else if (facing.equalsIgnoreCase("west"))
                 x += 0.5;
-
         }
 
         return new Vec3d(x, y, z);
     }
 
-    private Vec3d getDoorAbsolutePosition(MinecraftClient client, BlockPos blockPos) {
-        BlockState blockState = client.world.getBlockState(blockPos);
+    private Vec3d getDoorAbsolutePosition(MinecraftClient client, Vec3d blockPos) {
+        BlockState blockState = client.world.getBlockState(new BlockPos(blockPos));
         ImmutableSet<Entry<Property<?>, Comparable<?>>> entries = blockState.getEntries().entrySet();
 
         String facing = "", hinge = "", open = "";
@@ -286,21 +199,9 @@ public class LockingHandler {
 
         }
 
-        double x = (int) blockPos.getX();
-        double y = (int) blockPos.getY();
-        double z = (int) blockPos.getZ();
-
-        if (x < 0)
-            x += 0.5;
-        else
-            x -= 0.5;
-
-        if (z < 0)
-            z += 0.5;
-        else
-            z -= 0.5;
-
-        y += 0.5;
+        double x = blockPos.getX();
+        double y = blockPos.getY();
+        double z = blockPos.getZ();
 
         if (open.equalsIgnoreCase("false")) {
             if (facing.equalsIgnoreCase("north"))

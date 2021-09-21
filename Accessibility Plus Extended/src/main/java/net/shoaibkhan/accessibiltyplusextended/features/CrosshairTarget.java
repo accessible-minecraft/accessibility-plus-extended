@@ -31,14 +31,11 @@ public class CrosshairTarget {
 				break;
 			case BLOCK:
 				assert client.world != null;
-				if (Config.get(ConfigKeys.NARRATE_BLOCK_SIDE_KEY.getKey())
+				if (Config.get(ConfigKeys.READ_BLOCKS_KEY.getKey())
 						|| Config.get(ConfigKeys.READ_SIGNS_CONTENTS.getKey())) {
 					BlockHitResult blockHitResult = (BlockHitResult) hit;
 					BlockState blockState = client.world.getBlockState(blockHitResult.getBlockPos());
 					Block block = blockState.getBlock();
-
-					if (block == client.world.getBlockState(new BlockPos(LockingHandler.lockedOnBlock)).getBlock())
-						break;
 
 					String name;
 					MutableText blockMutableText = new LiteralText("").append(block.getName());
@@ -46,8 +43,12 @@ public class CrosshairTarget {
 
 					String searchQuery = name + blockHitResult.getBlockPos();
 
-					if (!(blockState + "").toLowerCase().contains("sign")
-							&& Config.get(ConfigKeys.READ_BLOCKS_KEY.getKey())) {
+					if (LockingHandler.lockedOnBlock != null)
+						if (block == client.world.getBlockState(new BlockPos(LockingHandler.lockedOnBlock)).getBlock())
+							if (blockState == client.world.getBlockState(new BlockPos(LockingHandler.lockedOnBlock)))
+								break;
+
+					if (!name.toLowerCase().contains("sign") && Config.get(ConfigKeys.READ_BLOCKS_KEY.getKey())) {
 						if (!modInit.mainThreadMap.containsKey(searchQuery)) {
 							text += name;
 
@@ -65,14 +66,13 @@ public class CrosshairTarget {
 							modInit.mainThreadMap.put(searchQuery, 5000);
 						}
 					}
-					if (blockState.toString().contains("sign") && Config.get(ConfigKeys.READ_SIGNS_CONTENTS.getKey())) {
+					if (name.toLowerCase().contains("sign") && Config.get(ConfigKeys.READ_SIGNS_CONTENTS.getKey())) {
 						if (!modInit.mainThreadMap.containsKey(searchQuery)) {
 							String output = "";
 							try {
 								SignBlockEntity signentity = (SignBlockEntity) client.world
 										.getBlockEntity(blockHitResult.getBlockPos());
 								output += " says: ";
-								assert signentity != null;
 
 								// 1.17
 								output += "1: " + signentity.getTextOnRow(0, false).getString() + ", ";

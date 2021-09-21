@@ -1,5 +1,12 @@
 package net.shoaibkhan.accessibiltyplusextended.features;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
+import com.google.common.collect.ImmutableSet;
+
 import net.minecraft.block.AbstractButtonBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,21 +19,14 @@ import net.minecraft.state.property.Property;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.Map.Entry;
-
-import com.google.common.collect.ImmutableSet;
+import net.shoaibkhan.accessibiltyplusextended.modInit;
 
 public class POIBlocks {
     private MinecraftClient client;
-    private Map<Double, BlockPos> oreBlocks = new TreeMap<>();
-    private Map<Double, BlockPos> doorBlocks = new TreeMap<>();
-    private Map<Double, BlockPos> buttonBlocks = new TreeMap<>();
-    private Map<Double, BlockPos> blocks = new TreeMap<>();
+    private TreeMap<Double, Vec3d> oreBlocks = new TreeMap<>();
+    private TreeMap<Double, Vec3d> doorBlocks = new TreeMap<>();
+    private TreeMap<Double, Vec3d> buttonBlocks = new TreeMap<>();
+    private TreeMap<Double, Vec3d> blocks = new TreeMap<>();
 
     private List<String> blockList;
 
@@ -50,6 +50,9 @@ public class POIBlocks {
         blockList.add("daylight detector");
         blockList.add("jukebox");
         blockList.add("loom");
+        blockList.add("furnace");
+        blockList.add("blast furnace");
+        blockList.add("smoker");
 
         main();
     }
@@ -92,25 +95,25 @@ public class POIBlocks {
         double posX = blockPos.getX();
         double posY = blockPos.getY();
         double posZ = blockPos.getZ();
-        Vec3d blockVec3dPos = new Vec3d(posX, posY, posZ);
+        Vec3d blockVec3dPos = new Vec3d(posX + 0.5, posY + 0.5, posZ + 0.5);
 
         double diff = playerVec3dPos.distanceTo(blockVec3dPos);
+        boolean playSound = false;
 
         if (name.contains("ore")) {
-            oreBlocks.put(diff, blockPos);
-            client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.25f, -5f, true);
+            oreBlocks.put(diff, blockVec3dPos);
+            playSound = true;
         } else if (block instanceof AbstractButtonBlock) {
-            buttonBlocks.put(diff, blockPos);
-            client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.25f, -5f, true);
+            buttonBlocks.put(diff, blockVec3dPos);
+            playSound = true;
         } else if (block instanceof DoorBlock) {
             ImmutableSet<Entry<Property<?>, Comparable<?>>> entries = blockState.getEntries().entrySet();
             for (Entry<Property<?>, Comparable<?>> i : entries) {
 
                 if (i.getKey().getName().equalsIgnoreCase("half")) {
                     if (i.getValue().toString().equalsIgnoreCase("upper")) {
-                        doorBlocks.put(diff, blockPos);
-                        client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.25f,
-                                -5f, true);
+                        doorBlocks.put(diff, blockVec3dPos);
+                        playSound = true;
                     }
                     break;
                 }
@@ -120,8 +123,8 @@ public class POIBlocks {
             System.out.println("\n\n\n\t\tLEAVES\t" + client.world.getBlockState(blockPos).get(LeavesBlock.DISTANCE)
                     + "\t\t\n\n\n");
         } else if (blockList.contains(name)) {
-            blocks.put(diff, blockPos);
-            client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.25f, -5f, true);
+            blocks.put(diff, blockVec3dPos);
+            playSound = true;
         } else if (name.equalsIgnoreCase("air") && val - 1 >= 0) {
             checkBlock(new BlockPos(new Vec3d(posX, posY, posZ - 1)), val - 1); // North Block
             checkBlock(new BlockPos(new Vec3d(posX, posY, posZ + 1)), val - 1); // South Block
@@ -129,6 +132,12 @@ public class POIBlocks {
             checkBlock(new BlockPos(new Vec3d(posX + 1, posY, posZ)), val - 1); // East Block
             checkBlock(new BlockPos(new Vec3d(posX, posY + 1, posZ)), val - 1); // Top Block
             checkBlock(new BlockPos(new Vec3d(posX, posY - 1, posZ)), val - 1); // Bottom Block
+        }
+
+        if (playSound && !modInit.mainThreadMap.containsKey("sound+" + blockPos)) {
+            client.world.playSound(new BlockPos(blockVec3dPos), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS,
+                    0.05f, -5f, true);
+            modInit.mainThreadMap.put("sound+" + blockPos, 3000);
         }
     }
 }

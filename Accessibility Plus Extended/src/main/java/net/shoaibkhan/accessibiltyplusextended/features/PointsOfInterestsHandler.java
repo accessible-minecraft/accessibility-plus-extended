@@ -1,18 +1,18 @@
 package net.shoaibkhan.accessibiltyplusextended.features;
 
-import java.util.Map;
+import java.util.TreeMap;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 public class PointsOfInterestsHandler extends Thread {
-    public static Map<Double, BlockPos> oreBlocks;
-    public static Map<Double, BlockPos> doorBlocks;
-    public static Map<Double, BlockPos> buttonBlocks;
-    public static Map<Double, BlockPos> blocks;
-    public static Map<Double, Entity> passiveEntity;
-    public static Map<Double, Entity> hostileEntity;
+    public static TreeMap<Double, Vec3d> oreBlocks    = new TreeMap<>();
+    public static TreeMap<Double, Vec3d> doorBlocks   = new TreeMap<>();
+    public static TreeMap<Double, Vec3d> buttonBlocks = new TreeMap<>();
+    public static TreeMap<Double, Vec3d> blocks       = new TreeMap<>();
+    public static TreeMap<Double, Entity> passiveEntity  = new TreeMap<>();
+    public static TreeMap<Double, Entity> hostileEntity  = new TreeMap<>();
     private MinecraftClient client;
 
     public void run() {
@@ -20,15 +20,13 @@ public class PointsOfInterestsHandler extends Thread {
         while (true) {
             if(client==null) continue;
             if(client.player==null) continue;
+            if(client.isPaused()) continue;
             try {
+                Thread.sleep(1000);
+
                 new POIBlocks();
                 new POIEntities();
 
-                System.out.println(passiveEntity);
-                System.out.println(hostileEntity);
-                System.out.println(doorBlocks);
-
-                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
