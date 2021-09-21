@@ -9,6 +9,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
@@ -30,10 +31,14 @@ public class CrosshairTarget {
 				break;
 			case BLOCK:
 				assert client.world != null;
-				if (Config.get(ConfigKeys.NARRATE_BLOCK_SIDE_KEY.getKey()) || Config.get(ConfigKeys.READ_SIGNS_CONTENTS.getKey())) {
+				if (Config.get(ConfigKeys.NARRATE_BLOCK_SIDE_KEY.getKey())
+						|| Config.get(ConfigKeys.READ_SIGNS_CONTENTS.getKey())) {
 					BlockHitResult blockHitResult = (BlockHitResult) hit;
 					BlockState blockState = client.world.getBlockState(blockHitResult.getBlockPos());
 					Block block = blockState.getBlock();
+
+					if (block == client.world.getBlockState(new BlockPos(LockingHandler.lockedOnBlock)).getBlock())
+						break;
 
 					String name;
 					MutableText blockMutableText = new LiteralText("").append(block.getName());
@@ -41,7 +46,8 @@ public class CrosshairTarget {
 
 					String searchQuery = name + blockHitResult.getBlockPos();
 
-					if (!(blockState + "").toLowerCase().contains("sign") && Config.get(ConfigKeys.READ_BLOCKS_KEY.getKey())) {
+					if (!(blockState + "").toLowerCase().contains("sign")
+							&& Config.get(ConfigKeys.READ_BLOCKS_KEY.getKey())) {
 						if (!modInit.mainThreadMap.containsKey(searchQuery)) {
 							text += name;
 
@@ -63,7 +69,8 @@ public class CrosshairTarget {
 						if (!modInit.mainThreadMap.containsKey(searchQuery)) {
 							String output = "";
 							try {
-								SignBlockEntity signentity = (SignBlockEntity) client.world.getBlockEntity(blockHitResult.getBlockPos());
+								SignBlockEntity signentity = (SignBlockEntity) client.world
+										.getBlockEntity(blockHitResult.getBlockPos());
 								output += " says: ";
 								assert signentity != null;
 
@@ -73,11 +80,11 @@ public class CrosshairTarget {
 								output += "3: " + signentity.getTextOnRow(2, false).getString() + ", ";
 								output += "4: " + signentity.getTextOnRow(3, false).getString();
 
-//								// 1.16
-//								output += "1: " + signentity.getTextOnRow(0).getString() + ", ";
-//								output += "2: " + signentity.getTextOnRow(1).getString() + ", ";
-//								output += "3: " + signentity.getTextOnRow(2).getString() + ", ";
-//								output += "4: " + signentity.getTextOnRow(3).getString();
+								// // 1.16
+								// output += "1: " + signentity.getTextOnRow(0).getString() + ", ";
+								// output += "2: " + signentity.getTextOnRow(1).getString() + ", ";
+								// output += "3: " + signentity.getTextOnRow(2).getString() + ", ";
+								// output += "4: " + signentity.getTextOnRow(3).getString();
 							} catch (Exception e) {
 								e.printStackTrace();
 							} finally {
@@ -94,10 +101,12 @@ public class CrosshairTarget {
 					try {
 						EntityHitResult entityHitResult = (EntityHitResult) hit;
 
-						if (((EntityHitResult) hit).getEntity() == PointsOfInterestsHandler.lockedOnEntity) break;
+						if (((EntityHitResult) hit).getEntity() == LockingHandler.lockedOnEntity)
+							break;
 
 						if (!modInit.mainThreadMap.containsKey("entity_narrator_key")) {
-							MutableText entityMutableText = new LiteralText("").append(entityHitResult.getEntity().getName());
+							MutableText entityMutableText = new LiteralText("")
+									.append(entityHitResult.getEntity().getName());
 							text = entityMutableText.getString();
 
 							NarratorPlus.narrate(text);

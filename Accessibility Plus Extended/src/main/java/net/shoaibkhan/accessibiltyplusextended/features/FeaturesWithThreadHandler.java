@@ -45,18 +45,18 @@ public class FeaturesWithThreadHandler {
 			}
 
 			// Ore Detector
-			if (Config.get(ConfigKeys.ORE_DETECTOR_KEY.getKey()) || Config.get(ConfigKeys.LAVA_DETECTOR_KEY.getKey())
-					|| Config.get(ConfigKeys.WATER_DETECTOR_KEY.getKey())) {
-				for (int i = 0; i < oreDetectorThreads.length; i++) {
-					if (!oreDetectorThreads[i].alive) {
-						oreDetectorThreads[i].start();
-					} else if (oreDetectorThreads[i].alive && oreDetectorThreads[i].finished) {
-						oreDetectorThreads[i].interrupt();
-						oreDetectorThreads[i] = new OreDetectorThread();
-						oreDetectorThreads[i].start();
-					}
-				}
-			}
+			// if (Config.get(ConfigKeys.ORE_DETECTOR_KEY.getKey()) || Config.get(ConfigKeys.LAVA_DETECTOR_KEY.getKey())
+			// 		|| Config.get(ConfigKeys.WATER_DETECTOR_KEY.getKey())) {
+			// 	for (int i = 0; i < oreDetectorThreads.length; i++) {
+			// 		if (!oreDetectorThreads[i].alive) {
+			// 			oreDetectorThreads[i].start();
+			// 		} else if (oreDetectorThreads[i].alive && oreDetectorThreads[i].finished) {
+			// 			oreDetectorThreads[i].interrupt();
+			// 			oreDetectorThreads[i] = new OreDetectorThread();
+			// 			oreDetectorThreads[i].start();
+			// 		}
+			// 	}
+			// }
 
 			// Durability Checker
 			if (!modInit.mainThreadMap.containsKey("durablity_thread_key")

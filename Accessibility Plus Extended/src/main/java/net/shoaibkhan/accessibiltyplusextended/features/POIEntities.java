@@ -8,6 +8,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -23,7 +25,6 @@ public class POIEntities {
 
 	private void main() {
 		double closestDouble = -99999;
-		Entity closestEntity = null;
 		try {
 			for (Entity i : client.world.getEntities()) {
 				if (!(i instanceof MobEntity))
@@ -41,21 +42,18 @@ public class POIEntities {
 						passiveEntity.put(distance, i);
 					} else if (i instanceof HostileEntity) {
 						hostileEntity.put(distance, i);
-						PointsOfInterestsHandler.hostileEntityInRange = true;
 					}
+					client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.25f, -5f,
+							true);
 				}
 
 				if (closestDouble == -99999 || closestDouble > distance) {
 					closestDouble = entityVec3d.distanceTo(playerVec3d);
-					closestEntity = i;
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (closestDouble > 4.0)
-			closestEntity = null;
-		PointsOfInterestsHandler.toBeLocked = closestEntity;
 		PointsOfInterestsHandler.passiveEntity = passiveEntity;
 		PointsOfInterestsHandler.hostileEntity = hostileEntity;
 	}

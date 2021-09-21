@@ -14,6 +14,7 @@ import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.features.POIEntities;
 import net.shoaibkhan.accessibiltyplusextended.features.PointsOfInterestsHandler;
 import net.shoaibkhan.accessibiltyplusextended.features.FeaturesWithThreadHandler;
+import net.shoaibkhan.accessibiltyplusextended.features.LockingHandler;
 import net.shoaibkhan.accessibiltyplusextended.gui.AccessibilityPlusConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigScreen;
@@ -46,7 +47,7 @@ public class HudRenderCallBackClass {
 
 			keyPresses(CONFIG_KEY);
 
-			PointsOfInterestsHandler.lockingHandlerMethod();
+			new LockingHandler();
 
 			new FeaturesWithThreadHandler(client);
 

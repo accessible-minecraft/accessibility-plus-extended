@@ -23,7 +23,7 @@ import com.google.common.collect.ImmutableSet;
 
 public class POIBlocks {
     private MinecraftClient client;
-    private Map<Double, String> oreBlocks = new TreeMap<>();
+    private Map<Double, BlockPos> oreBlocks = new TreeMap<>();
     private Map<Double, BlockPos> doorBlocks = new TreeMap<>();
     private Map<Double, BlockPos> buttonBlocks = new TreeMap<>();
     private Map<Double, BlockPos> blocks = new TreeMap<>();
@@ -97,16 +97,21 @@ public class POIBlocks {
         double diff = playerVec3dPos.distanceTo(blockVec3dPos);
 
         if (name.contains("ore")) {
-            oreBlocks.put(diff, name);
+            oreBlocks.put(diff, blockPos);
+            client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.25f, -5f, true);
         } else if (block instanceof AbstractButtonBlock) {
             buttonBlocks.put(diff, blockPos);
+            client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.25f, -5f, true);
         } else if (block instanceof DoorBlock) {
             ImmutableSet<Entry<Property<?>, Comparable<?>>> entries = blockState.getEntries().entrySet();
             for (Entry<Property<?>, Comparable<?>> i : entries) {
 
                 if (i.getKey().getName().equalsIgnoreCase("half")) {
-                    if (i.getValue().toString().equalsIgnoreCase("upper"))
+                    if (i.getValue().toString().equalsIgnoreCase("upper")) {
                         doorBlocks.put(diff, blockPos);
+                        client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.25f,
+                                -5f, true);
+                    }
                     break;
                 }
 
@@ -116,7 +121,7 @@ public class POIBlocks {
                     + "\t\t\n\n\n");
         } else if (blockList.contains(name)) {
             blocks.put(diff, blockPos);
-            client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f, true);
+            client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.25f, -5f, true);
         } else if (name.equalsIgnoreCase("air") && val - 1 >= 0) {
             checkBlock(new BlockPos(new Vec3d(posX, posY, posZ - 1)), val - 1); // North Block
             checkBlock(new BlockPos(new Vec3d(posX, posY, posZ + 1)), val - 1); // South Block
