@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 
-public class POIBlocks {
+public class POIBlocks extends Thread {
     private MinecraftClient client;
     private TreeMap<Double, Vec3d> oreBlocks = new TreeMap<>();
     private TreeMap<Double, Vec3d> doorBlocks = new TreeMap<>();
@@ -29,9 +29,11 @@ public class POIBlocks {
     private TreeMap<Double, Vec3d> blocks = new TreeMap<>();
 
     private List<String> blockList;
+    public boolean running = false;
 
-    public POIBlocks() {
+    public void run() {
         client = MinecraftClient.getInstance();
+        running = true;
 
         blockList = new ArrayList<String>();
         blockList.add("chest");
@@ -53,6 +55,20 @@ public class POIBlocks {
         blockList.add("furnace");
         blockList.add("blast furnace");
         blockList.add("smoker");
+        blockList.add("bee nest");
+        blockList.add("bee hive");
+        blockList.add("lectern");
+        blockList.add("item frame");
+        blockList.add("glow item frame");
+        blockList.add("composter");
+        blockList.add("barrel");
+        blockList.add("barrel");
+        blockList.add("cartography table");
+        blockList.add("fletching table");
+        blockList.add("grindstone");
+        blockList.add("bell");
+        blockList.add("smithing table");
+        blockList.add("respawn anchor");
 
         main();
     }
@@ -68,9 +84,9 @@ public class POIBlocks {
         int posZ = pos.getZ();
         int rangeVal;
         try {
-            rangeVal = 4;
+            rangeVal = 6;
         } catch (Exception e) {
-            rangeVal = 4;
+            rangeVal = 6;
         }
         checkBlock(new BlockPos(new Vec3d(posX, posY, posZ)), 0);
         checkBlock(new BlockPos(new Vec3d(posX, posY + 3, posZ)), 0);
@@ -81,6 +97,8 @@ public class POIBlocks {
         PointsOfInterestsHandler.doorBlocks = this.doorBlocks;
         PointsOfInterestsHandler.buttonBlocks = this.buttonBlocks;
         PointsOfInterestsHandler.blocks = this.blocks;
+
+        running = false;
     }
 
     private void checkBlock(BlockPos blockPos, int val) {
@@ -100,7 +118,7 @@ public class POIBlocks {
         double diff = playerVec3dPos.distanceTo(blockVec3dPos);
         boolean playSound = false;
 
-        if (name.contains("ore")) {
+        if (name.contains("ore") || name.equalsIgnoreCase("ancient debris")) {
             oreBlocks.put(diff, blockVec3dPos);
             playSound = true;
         } else if (block instanceof AbstractButtonBlock) {
@@ -120,9 +138,11 @@ public class POIBlocks {
 
             }
         } else if (block instanceof LeavesBlock) {
-            System.out.println("\n\n\n\t\tLEAVES\t" + client.world.getBlockState(blockPos).get(LeavesBlock.DISTANCE)
-                    + "\t\t\n\n\n");
-        } else if (blockList.contains(name)) {
+            // System.out.println("\n\n\n\t\tLEAVES\t" +
+            // client.world.getBlockState(blockPos).get(LeavesBlock.DISTANCE)
+            // + "\t\t\n\n\n");
+        } else if (blockList.contains(name) || name.contains("shulker box") || name.contains("fence gate")
+                || name.contains("candle")) {
             blocks.put(diff, blockVec3dPos);
             playSound = true;
         } else if (name.equalsIgnoreCase("air") && val - 1 >= 0) {

@@ -43,7 +43,7 @@ public class LockingHandler {
             client.player.lookAt(EntityAnchor.EYES, lockedOnBlock);
         }
 
-        while (modInit.LockEntityKey.wasPressed()) {
+        if (modInit.LockEntityKey.wasPressed()) {
             if (HudRenderCallBackClass.isAltPressed && (lockedOnEntity != null || lockedOnBlock != null)) {
                 NarratorPlus.narrate("Unlocked");
                 lockedOnEntity = null;

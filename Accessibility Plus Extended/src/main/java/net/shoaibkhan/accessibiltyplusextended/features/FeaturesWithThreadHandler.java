@@ -1,20 +1,18 @@
 package net.shoaibkhan.accessibiltyplusextended.features;
 
 import net.minecraft.client.MinecraftClient;
-import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.DurabilityThread;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.FallDetectorThread;
-import net.shoaibkhan.accessibiltyplusextended.features.withThreads.OreDetectorThread;
 
 public class FeaturesWithThreadHandler {
 	private static FallDetectorThread[] fallDetectorThreads = { new FallDetectorThread(), new FallDetectorThread(),
 			new FallDetectorThread() };
-	private static OreDetectorThread[] oreDetectorThreads = { new OreDetectorThread(), new OreDetectorThread(),
-			new OreDetectorThread() };
 	private static DurabilityThread durabilityThread = new DurabilityThread();
-	private static PointsOfInterestsHandler pointsOfInterestsHandler = new PointsOfInterestsHandler();
+	private static POIEntities poiEntities = new POIEntities();
+	private static POIBlocks poiBlocks = new POIBlocks();
 	public static int fallDetectorFlag = 0;
 	private final MinecraftClient client;
 
@@ -70,9 +68,16 @@ public class FeaturesWithThreadHandler {
 
 			// Point Of Interest
 			if(Config.get(ConfigKeys.POI_KEY.getKey())){
-				if(!pointsOfInterestsHandler.isAlive()){
-					pointsOfInterestsHandler = new PointsOfInterestsHandler();
-					pointsOfInterestsHandler.start();
+				if(!poiEntities.running){
+					poiEntities = new POIEntities();
+					poiEntities.start();
+				}
+
+				
+
+				if(!poiBlocks.running){
+					poiBlocks = new POIBlocks();
+					poiBlocks.start();
 				}
 			}
 		}

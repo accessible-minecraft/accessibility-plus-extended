@@ -13,18 +13,19 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-public class POIEntities {
+public class POIEntities extends Thread {
 	private MinecraftClient client;
 	private TreeMap<Double, Entity> passiveEntity = new TreeMap<>();
 	private TreeMap<Double, Entity> hostileEntity = new TreeMap<>();
+	public boolean running = false;
 
-	public POIEntities() {
+	public void run() {
 		this.client = MinecraftClient.getInstance();
+		running = true;
 		this.main();
 	}
 
 	private void main() {
-		double closestDouble = -99999;
 		try {
 			for (Entity i : client.world.getEntities()) {
 				if (!(i instanceof MobEntity))
@@ -37,7 +38,7 @@ public class POIEntities {
 						client.player.getBlockPos().getZ());
 				Double distance = entityVec3d.distanceTo(playerVec3d);
 
-				if (distance <= 4.0) {
+				if (distance <= 6.0) {
 					if (i instanceof PassiveEntity) {
 						passiveEntity.put(distance, i);
 					} else if (i instanceof HostileEntity) {
@@ -47,15 +48,13 @@ public class POIEntities {
 							true);
 				}
 
-				if (closestDouble == -99999 || closestDouble > distance) {
-					closestDouble = entityVec3d.distanceTo(playerVec3d);
-				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		PointsOfInterestsHandler.passiveEntity = passiveEntity;
 		PointsOfInterestsHandler.hostileEntity = hostileEntity;
+		running = false;
 	}
 
 }

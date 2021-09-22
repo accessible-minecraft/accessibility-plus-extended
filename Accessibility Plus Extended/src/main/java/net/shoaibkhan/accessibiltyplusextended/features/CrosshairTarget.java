@@ -43,10 +43,6 @@ public class CrosshairTarget {
 
 					String searchQuery = name + blockHitResult.getBlockPos();
 
-					if (LockingHandler.lockedOnBlock != null)
-						if (block == client.world.getBlockState(new BlockPos(LockingHandler.lockedOnBlock)).getBlock())
-							if (blockState == client.world.getBlockState(new BlockPos(LockingHandler.lockedOnBlock)))
-								break;
 
 					if (!name.toLowerCase().contains("sign") && Config.get(ConfigKeys.READ_BLOCKS_KEY.getKey())) {
 						if (!modInit.mainThreadMap.containsKey(searchQuery)) {
