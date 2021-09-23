@@ -1,10 +1,10 @@
 package net.shoaibkhan.accessibiltyplusextended.features;
 
-import java.util.Map;
 import java.util.TreeMap;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
@@ -12,6 +12,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.shoaibkhan.accessibiltyplusextended.modInit;
 
 public class POIEntities extends Thread {
 	private MinecraftClient client;
@@ -28,7 +29,7 @@ public class POIEntities extends Thread {
 	private void main() {
 		try {
 			for (Entity i : client.world.getEntities()) {
-				if (!(i instanceof MobEntity))
+				if (!(i instanceof MobEntity || i instanceof ItemEntity))
 					continue;
 
 				BlockPos blockPos = i.getBlockPos();
@@ -39,21 +40,46 @@ public class POIEntities extends Thread {
 				Double distance = entityVec3d.distanceTo(playerVec3d);
 
 				if (distance <= 6.0) {
+					String entityString = i + "";
+					int z = entityString.indexOf("/");
+					int y = entityString.indexOf(",", z);
+					entityString = entityString.substring(z, y);
+
 					if (i instanceof PassiveEntity) {
 						passiveEntity.put(distance, i);
+						if (!modInit.mainThreadMap.containsKey("passiveentity+" + entityString)) {
+							client.world.playSound(blockPos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.BLOCKS,
+									0.15f, 0f, true);
+							modInit.mainThreadMap.put("passiveentity+" + entityString, 3000);
+						}
 					} else if (i instanceof HostileEntity) {
 						hostileEntity.put(distance, i);
+						if (!modInit.mainThreadMap.containsKey("hostileentity+" + entityString)) {
+							client.world.playSound(blockPos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.BLOCKS,
+									0.15f, 2f, true);
+							modInit.mainThreadMap.put("hostileentity+" + entityString, 3000);
+						}
+					} else if (i instanceof ItemEntity) {
+						if (((ItemEntity) i).isOnGround()) {
+							if (!modInit.mainThreadMap.containsKey("itementity+" + i)) {
+								client.world.playSound(blockPos, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_ON,
+										SoundCategory.BLOCKS, 0.15f, 2f, true);
+								modInit.mainThreadMap.put("itementity+" + i, 3000);
+							}
+						}
 					}
-					client.world.playSound(blockPos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.25f, -5f,
-							true);
 				}
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		PointsOfInterestsHandler.passiveEntity = passiveEntity;
 		PointsOfInterestsHandler.hostileEntity = hostileEntity;
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		running = false;
 	}
 

@@ -13,7 +13,6 @@ import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
-import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
 public class ConfigGui extends LightweightGuiDescription {
   private ClientPlayerEntity player;

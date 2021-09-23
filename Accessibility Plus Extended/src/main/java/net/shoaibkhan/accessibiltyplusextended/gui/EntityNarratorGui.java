@@ -10,9 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
-import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
-import net.shoaibkhan.accessibiltyplusextended.features.withThreads.DurabilityThread;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 
 public class EntityNarratorGui extends LightweightGuiDescription {
