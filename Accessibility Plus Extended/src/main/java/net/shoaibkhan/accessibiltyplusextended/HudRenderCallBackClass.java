@@ -11,8 +11,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
-import net.shoaibkhan.accessibiltyplusextended.features.POIEntities;
-import net.shoaibkhan.accessibiltyplusextended.features.PointsOfInterestsHandler;
 import net.shoaibkhan.accessibiltyplusextended.features.FeaturesWithThreadHandler;
 import net.shoaibkhan.accessibiltyplusextended.features.LockingHandler;
 import net.shoaibkhan.accessibiltyplusextended.gui.AccessibilityPlusConfigGui;
@@ -25,7 +23,7 @@ public class HudRenderCallBackClass {
 	public static boolean isTradeScreenOpen = false;
 	public static boolean isAltPressed, isControlPressed, isDPressed, isAPressed, isWPressed, isSPressed, isRPressed,
 			isFPressed, isCPressed, isVPressed, isTPressed, isEnterPressed;
-	private KeyBinding CONFIG_KEY, LockEntityKey, AP_CONFIG_KEY;
+	private KeyBinding CONFIG_KEY, AP_CONFIG_KEY;
 	public static int currentColumn = 0;
 	public static int currentRow = 0;
 	private final HudScreenHandler hudScreenHandler;
@@ -33,7 +31,6 @@ public class HudRenderCallBackClass {
 	public HudRenderCallBackClass(KeyBinding CONFIG_KEY, KeyBinding LockEntityKey, KeyBinding AP_CONFIG_KEY) {
 		this.CONFIG_KEY = CONFIG_KEY;
 		this.AP_CONFIG_KEY = AP_CONFIG_KEY;
-		this.LockEntityKey = LockEntityKey;
 		hudScreenHandler = new HudScreenHandler();
 		HudRenderCallback.EVENT.register(this::hudRenderCallbackEventMethod);
 	}
@@ -86,6 +83,11 @@ public class HudRenderCallBackClass {
 			} else {
 				Screen screen = client.currentScreen;
 				hudScreenHandler.screenHandler(screen);
+
+				// Reset lockOnBlock
+				LockingHandler.lockedOnBlockEntries = "";
+				LockingHandler.lockedOnBlock = null;
+                LockingHandler.isLockedOnLadder = false;
 			}
 		}
 	}
@@ -94,11 +96,11 @@ public class HudRenderCallBackClass {
 		isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
 				InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())
 				|| InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
-				InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
+						InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
 		isControlPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
 				InputUtil.fromTranslationKey("key.keyboard.left.control").getCode())
 				|| InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
-				InputUtil.fromTranslationKey("key.keyboard.right.control").getCode()));
+						InputUtil.fromTranslationKey("key.keyboard.right.control").getCode()));
 
 		while (CONFIG_KEY.wasPressed()) {
 			if (!isControlPressed) {

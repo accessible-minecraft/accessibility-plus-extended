@@ -11,8 +11,10 @@ import net.minecraft.block.AbstractButtonBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DoorBlock;
-import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.LadderBlock;
+import net.minecraft.block.LeverBlock;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Property;
@@ -26,8 +28,11 @@ public class POIBlocks extends Thread {
     private TreeMap<Double, Vec3d> oreBlocks = new TreeMap<>();
     private TreeMap<Double, Vec3d> doorBlocks = new TreeMap<>();
     private TreeMap<Double, Vec3d> buttonBlocks = new TreeMap<>();
+    private TreeMap<Double, Vec3d> ladderBlocks = new TreeMap<>();
+    private TreeMap<Double, Vec3d> leverBlocks = new TreeMap<>();
     private TreeMap<Double, Vec3d> blocks = new TreeMap<>();
 
+    private List<String> blockListWithInterface;
     private List<String> blockList;
     public boolean running = false;
 
@@ -35,40 +40,42 @@ public class POIBlocks extends Thread {
         client = MinecraftClient.getInstance();
         running = true;
 
+        blockListWithInterface = new ArrayList<String>();
         blockList = new ArrayList<String>();
-        blockList.add("chest");
-        blockList.add("large chest");
-        blockList.add("ender chest");
-        blockList.add("crafting table");
-        blockList.add("enchanting table");
-        blockList.add("stonecutter");
-        blockList.add("trapped chest");
+        blockListWithInterface.add("chest");
+        blockListWithInterface.add("large chest");
+        blockListWithInterface.add("ender chest");
+        blockListWithInterface.add("crafting table");
+        blockListWithInterface.add("enchanting table");
+        blockListWithInterface.add("stonecutter");
+        blockListWithInterface.add("trapped chest");
+        blockListWithInterface.add("hopper");
+        blockListWithInterface.add("dispenser");
+        blockListWithInterface.add("dropper");
+        blockListWithInterface.add("loom");
+        blockListWithInterface.add("furnace");
+        blockListWithInterface.add("blast furnace");
+        blockListWithInterface.add("smoker");
+        blockListWithInterface.add("lectern");
+        blockListWithInterface.add("barrel");
+        blockListWithInterface.add("cartography table");
+        blockListWithInterface.add("fletching table");
+        blockListWithInterface.add("grindstone");
+        blockListWithInterface.add("smithing table");
+
         blockList.add("piston");
+        blockList.add("respawn anchor");
+        blockList.add("bell");
         blockList.add("sticky piston");
         blockList.add("observer");
-        blockList.add("hopper");
-        blockList.add("dispenser");
-        blockList.add("dropper");
         blockList.add("daylight detector");
         blockList.add("jukebox");
-        blockList.add("loom");
-        blockList.add("furnace");
-        blockList.add("blast furnace");
-        blockList.add("smoker");
         blockList.add("bee nest");
         blockList.add("bee hive");
-        blockList.add("lectern");
         blockList.add("item frame");
         blockList.add("glow item frame");
         blockList.add("composter");
-        blockList.add("barrel");
-        blockList.add("barrel");
-        blockList.add("cartography table");
-        blockList.add("fletching table");
-        blockList.add("grindstone");
-        blockList.add("bell");
-        blockList.add("smithing table");
-        blockList.add("respawn anchor");
+        blockList.add("lodestone");
 
         main();
     }
@@ -96,8 +103,15 @@ public class POIBlocks extends Thread {
         PointsOfInterestsHandler.oreBlocks = this.oreBlocks;
         PointsOfInterestsHandler.doorBlocks = this.doorBlocks;
         PointsOfInterestsHandler.buttonBlocks = this.buttonBlocks;
+        PointsOfInterestsHandler.ladderBlocks = this.ladderBlocks;
+        PointsOfInterestsHandler.leverBlocks = this.leverBlocks;
         PointsOfInterestsHandler.blocks = this.blocks;
 
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         running = false;
     }
 
@@ -117,13 +131,30 @@ public class POIBlocks extends Thread {
 
         double diff = playerVec3dPos.distanceTo(blockVec3dPos);
         boolean playSound = false;
+        String soundType = "";
 
-        if (name.contains("ore") || name.equalsIgnoreCase("ancient debris")) {
+        FluidState fluidState = client.world.getFluidState(blockPos);
+
+        if ((name.contains("lava") || name.contains("water")) && fluidState.getLevel() == 8) {
+            blocks.put(diff, blockVec3dPos);
+            playSound = true;
+            soundType = "blocks";
+        } else if (name.contains("ore") || name.equalsIgnoreCase("ancient debris")) {
             oreBlocks.put(diff, blockVec3dPos);
             playSound = true;
+            soundType = "ore";
         } else if (block instanceof AbstractButtonBlock) {
             buttonBlocks.put(diff, blockVec3dPos);
             playSound = true;
+            soundType = "blocks";
+        } else if (block instanceof LadderBlock) {
+            ladderBlocks.put(diff, blockVec3dPos);
+            playSound = true;
+            soundType = "blocks";
+        } else if (block instanceof LeverBlock) {
+            leverBlocks.put(diff, blockVec3dPos);
+            playSound = true;
+            soundType = "blocks";
         } else if (block instanceof DoorBlock) {
             ImmutableSet<Entry<Property<?>, Comparable<?>>> entries = blockState.getEntries().entrySet();
             for (Entry<Property<?>, Comparable<?>> i : entries) {
@@ -132,19 +163,20 @@ public class POIBlocks extends Thread {
                     if (i.getValue().toString().equalsIgnoreCase("upper")) {
                         doorBlocks.put(diff, blockVec3dPos);
                         playSound = true;
+                        soundType = "blocks";
                     }
                     break;
                 }
 
             }
-        } else if (block instanceof LeavesBlock) {
-            // System.out.println("\n\n\n\t\tLEAVES\t" +
-            // client.world.getBlockState(blockPos).get(LeavesBlock.DISTANCE)
-            // + "\t\t\n\n\n");
-        } else if (blockList.contains(name) || name.contains("shulker box") || name.contains("fence gate")
-                || name.contains("candle")) {
+        } else if (blockList.contains(name) || name.contains("fence gate")) {
             blocks.put(diff, blockVec3dPos);
             playSound = true;
+            soundType = "blocks";
+        } else if (blockListWithInterface.contains(name) || name.contains("shulker box")) {
+            blocks.put(diff, blockVec3dPos);
+            playSound = true;
+            soundType = "blocksWithInterface";
         } else if (name.equalsIgnoreCase("air") && val - 1 >= 0) {
             checkBlock(new BlockPos(new Vec3d(posX, posY, posZ - 1)), val - 1); // North Block
             checkBlock(new BlockPos(new Vec3d(posX, posY, posZ + 1)), val - 1); // South Block
@@ -155,8 +187,17 @@ public class POIBlocks extends Thread {
         }
 
         if (playSound && !modInit.mainThreadMap.containsKey("sound+" + blockPos)) {
-            client.world.playSound(new BlockPos(blockVec3dPos), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS,
-                    0.05f, -5f, true);
+
+            if (soundType.equalsIgnoreCase("ore"))
+                client.world.playSound(new BlockPos(blockVec3dPos), SoundEvents.ENTITY_ITEM_PICKUP,
+                        SoundCategory.BLOCKS, 0.15f, -5f, true);
+            else if (soundType.equalsIgnoreCase("blocks"))
+                client.world.playSound(new BlockPos(blockVec3dPos), SoundEvents.BLOCK_NOTE_BLOCK_BIT,
+                        SoundCategory.BLOCKS, 0.15f, 2f, true);
+            else if (soundType.equalsIgnoreCase("blocksWithInterface"))
+                client.world.playSound(new BlockPos(blockVec3dPos), SoundEvents.BLOCK_NOTE_BLOCK_BANJO,
+                        SoundCategory.BLOCKS, 0.15f, 0f, true);
+
             modInit.mainThreadMap.put("sound+" + blockPos, 3000);
         }
     }

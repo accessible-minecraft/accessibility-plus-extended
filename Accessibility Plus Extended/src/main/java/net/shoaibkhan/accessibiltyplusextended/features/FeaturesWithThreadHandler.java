@@ -73,7 +73,6 @@ public class FeaturesWithThreadHandler {
 					poiEntities.start();
 				}
 
-				
 
 				if(!poiBlocks.running){
 					poiBlocks = new POIBlocks();
