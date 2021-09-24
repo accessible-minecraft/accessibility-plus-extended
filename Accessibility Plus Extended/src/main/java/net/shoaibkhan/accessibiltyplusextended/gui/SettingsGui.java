@@ -78,7 +78,7 @@ public class SettingsGui extends LightweightGuiDescription {
 
 	private void onFindFluidClick() {
 		this.player.closeScreen();
-		this.client.openScreen(new ConfigScreen(new FindFluidGui(player, client), "Fall Detector Settings", player));
+		this.client.openScreen(new ConfigScreen(new FindFluidGui(player, client), "Find Fluid Settings", player));
 	}
 
 	private void onDurabilityCheckerClick() {
