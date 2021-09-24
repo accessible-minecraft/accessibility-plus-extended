@@ -1,4 +1,4 @@
-package net.shoaibkhan.accessibiltyplusextended.features;
+package net.shoaibkhan.accessibiltyplusextended.features.withThreads;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
+import net.shoaibkhan.accessibiltyplusextended.features.POIHandler;
 
 public class POIBlocks extends Thread {
     private MinecraftClient client;

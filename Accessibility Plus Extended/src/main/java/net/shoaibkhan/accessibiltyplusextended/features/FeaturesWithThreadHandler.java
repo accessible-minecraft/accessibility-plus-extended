@@ -6,6 +6,8 @@ import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.DurabilityThread;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.FallDetectorThread;
+import net.shoaibkhan.accessibiltyplusextended.features.withThreads.POIBlocks;
+import net.shoaibkhan.accessibiltyplusextended.features.withThreads.POIEntities;
 
 public class FeaturesWithThreadHandler {
 	private static FallDetectorThread[] fallDetectorThreads = { new FallDetectorThread(), new FallDetectorThread(),
@@ -42,19 +44,6 @@ public class FeaturesWithThreadHandler {
 				}
 			}
 
-			// Ore Detector
-			// if (Config.get(ConfigKeys.ORE_DETECTOR_KEY.getKey()) || Config.get(ConfigKeys.LAVA_DETECTOR_KEY.getKey())
-			// 		|| Config.get(ConfigKeys.WATER_DETECTOR_KEY.getKey())) {
-			// 	for (int i = 0; i < oreDetectorThreads.length; i++) {
-			// 		if (!oreDetectorThreads[i].alive) {
-			// 			oreDetectorThreads[i].start();
-			// 		} else if (oreDetectorThreads[i].alive && oreDetectorThreads[i].finished) {
-			// 			oreDetectorThreads[i].interrupt();
-			// 			oreDetectorThreads[i] = new OreDetectorThread();
-			// 			oreDetectorThreads[i].start();
-			// 		}
-			// 	}
-			// }
 
 			// Durability Checker
 			if (!modInit.mainThreadMap.containsKey("durablity_thread_key")

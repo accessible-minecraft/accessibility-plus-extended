@@ -1,4 +1,4 @@
-package net.shoaibkhan.accessibiltyplusextended.features;
+package net.shoaibkhan.accessibiltyplusextended.features.withThreads;
 
 import java.util.TreeMap;
 
@@ -14,6 +14,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
+import net.shoaibkhan.accessibiltyplusextended.features.POIHandler;
 
 public class POIEntities extends Thread {
 	private MinecraftClient client;
