@@ -11,7 +11,7 @@ public class ArrayButton extends WButton {
   private String[] array;
 
   public ArrayButton(String translationKey, String jsonKey, String[] array) {
-    super(new TranslatableText(translationKey, " :" + array[Config.getInt(jsonKey)]));
+    super(new TranslatableText(translationKey,array[Config.getInt(jsonKey)]));
     this.translateKey = translationKey;
     this.jsonKey = jsonKey;
     this.array = array.clone();
@@ -26,7 +26,7 @@ public class ArrayButton extends WButton {
       if (val == array.length)
         val = 0;
       Config.setString(jsonKey, val + "");
-      TranslatableText newButtonText = new TranslatableText(this.translateKey , "" + array[Config.getInt(jsonKey)]);
+      TranslatableText newButtonText = new TranslatableText(this.translateKey , array[Config.getInt(jsonKey)]);
       this.setLabel(newButtonText);
     }
     return InputResult.PROCESSED;
@@ -41,7 +41,7 @@ public class ArrayButton extends WButton {
 //       if (val == array.length)
 //         val = 0;
 //       Config.setString(jsonKey, val + "");
-//       TranslatableText newButtonText = new TranslatableText(this.translateKey , " :" + array[Config.getInt(jsonKey)]);
+//       TranslatableText newButtonText = new TranslatableText(this.translateKey , array[Config.getInt(jsonKey)]);
 //       this.setLabel(newButtonText);
 //     }
 //   }

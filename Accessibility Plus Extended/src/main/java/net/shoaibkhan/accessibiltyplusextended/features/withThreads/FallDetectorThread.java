@@ -66,7 +66,9 @@ public class FallDetectorThread extends Thread {
 			int posY = blockPos.getY();
 			int posZ = blockPos.getZ();
 
-			if (blockName.contains("air") && !modInit.mainThreadMap.containsKey("lava_detector_key")
+			if(client.player.isFallFlying()) return;
+
+			if (blockName.contains("air") && !modInit.mainThreadMap.containsKey("fluid_detector_key")
 					&& !modInit.mainThreadMap.containsKey("fall_detector_key")) {
 				Block topBlock = client.world.getBlockState(new BlockPos(new Vec3d(posX, posY + 1, posZ))).getBlock();
 				MutableText topBlocklockNameMutable = (new LiteralText("")).append(topBlock.getName());
@@ -113,25 +115,6 @@ public class FallDetectorThread extends Thread {
 		int posX = blockPos.getX();
 		int posY = blockPos.getY();
 		int posZ = blockPos.getZ();
-
-		// if(blockName.contains("lava") &&
-		// !modInit.mainThreadMap.containsKey("lava_detector_key")) {
-		// if(!modInit.mainThreadMap.containsKey("lava_detector_key")) {
-		// client.player.sendMessage(new LiteralText("Warning Lava"), true);
-		// modInit.mainThreadMap.put("lava_detector_key", 5000);
-		// return -9999;
-		// }
-		// }
-
-		// if(blockName.contains("water") &&
-		// !modInit.mainThreadMap.containsKey("lava_detector_key") &&
-		// !modInit.mainThreadMap.containsKey("water_detector_key")) {
-		// if(!modInit.mainThreadMap.containsKey("water_detector_key")) {
-		// client.player.sendMessage(new LiteralText("Warning Water"), true);
-		// modInit.mainThreadMap.put("water_detector_key", 5000);
-		// return -9999;
-		// }
-		// }
 
 		if (blockName.contains("air"))
 			return 1 + getDepth((new BlockPos(new Vec3d(posX, posY - 1, posZ))), limit - 1);

@@ -43,6 +43,16 @@ public class POIHandler {
         }
     }
 
+    public static int getFluidDetectorDelay(){
+        try {
+            int index = Config.getInt(ConfigKeys.POI_FLUID_DETECTOR_DELAY.getKey());
+            return Integer.parseInt(delay[index]) * 1000;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 3000;
+        }
+    }
+
     public static float getVolume(){
         try {
             int index = Config.getInt(ConfigKeys.POI_VOLUME.getKey());
@@ -50,6 +60,16 @@ public class POIHandler {
         } catch (Exception e) {
             e.printStackTrace();
             return 0.25f;
+        }
+    }
+
+    public static float getUnlockingSoundVolume(){
+        try {
+            int index = Config.getInt(ConfigKeys.POI_UNLOCKING_SOUND_VOLUME.getKey());
+            return Float.parseFloat(volume[index]);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0.4f;
         }
     }
 }

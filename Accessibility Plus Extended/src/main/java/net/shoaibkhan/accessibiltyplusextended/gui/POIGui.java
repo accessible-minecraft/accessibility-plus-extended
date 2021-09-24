@@ -39,13 +39,25 @@ public class POIGui extends LightweightGuiDescription {
     ArrayButton poiDelay = new ArrayButton("gui.apextended.config.buttons.delay", ConfigKeys.POI_DELAY.getKey(), POIHandler.delay);
     root.add(poiDelay, 1, 7, 10, 1);
 
+    ConfigButton poiUnlockingSound = new ConfigButton("gui.apextended.config.buttons.poiunlockingsound", ConfigKeys.POI_UNLOCKING_SOUND_KEY.getKey());
+    root.add(poiUnlockingSound, 1, 9, 10, 1);
+
+    ArrayButton poiUnlockingSoundVolume = new ArrayButton("gui.apextended.config.buttons.poiunlockingsoundvolume", ConfigKeys.POI_UNLOCKING_SOUND_VOLUME.getKey(), POIHandler.volume);
+    root.add(poiUnlockingSoundVolume, 12, 9, 10, 1);
+
+    ConfigButton poiFluidDetector = new ConfigButton("gui.apextended.config.buttons.poifluiddetector", ConfigKeys.POI_FLUID_DETECTOR_Key.getKey());
+    root.add(poiFluidDetector, 1, 11, 10, 1);
+
+    ArrayButton poiFluidDetectorDelay = new ArrayButton("gui.apextended.config.buttons.poifluiddetectordelay", ConfigKeys.POI_FLUID_DETECTOR_DELAY.getKey(), POIHandler.delay);
+    root.add(poiFluidDetectorDelay, 12, 11, 10, 1);
+
     WButton back = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));
     back.setOnClick(this::onBackClick);
-    root.add(back, 2, 9, 7, 1);
+    root.add(back, 2, 13, 7, 1);
 
     WButton done = new WButton(new TranslatableText("gui.apextended.config.buttons.done"));
     done.setOnClick(this::onDoneClick);
-    root.add(done, 12, 9, 7, 1);
+    root.add(done, 12, 13, 7, 1);
 
     WLabel label = new WLabel(new LiteralText("POI Settings"), modInit.colors("red", 100));
     label.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -53,7 +65,7 @@ public class POIGui extends LightweightGuiDescription {
 
     WLabel fakeLabel = new WLabel(new LiteralText(""), modInit.colors("red", 100));
     fakeLabel.setHorizontalAlignment(HorizontalAlignment.CENTER);
-    root.add(fakeLabel, 0, 10, 21, 1);
+    root.add(fakeLabel, 0, 14, 21, 1);
 
     root.validate(this);
   }
