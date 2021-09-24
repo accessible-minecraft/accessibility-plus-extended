@@ -170,6 +170,10 @@ public class Config {
 		data.add(ConfigKeys.POI_VOLUME.getKey(), new JsonPrimitive("5"));
 		data.add(ConfigKeys.POI_RANGE.getKey(), new JsonPrimitive("1"));
 		data.add(ConfigKeys.POI_DELAY.getKey(), new JsonPrimitive("1"));
+		data.add(ConfigKeys.POI_UNLOCKING_SOUND_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.POI_UNLOCKING_SOUND_VOLUME.getKey(), new JsonPrimitive("10"));
+		data.add(ConfigKeys.POI_FLUID_DETECTOR_Key.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.POI_FLUID_DETECTOR_DELAY.getKey(), new JsonPrimitive("4"));
 
 		// Accessibility Plus
 		data.add(ConfigKeys.READ_BLOCKS_KEY.getKey(), new JsonPrimitive(true));

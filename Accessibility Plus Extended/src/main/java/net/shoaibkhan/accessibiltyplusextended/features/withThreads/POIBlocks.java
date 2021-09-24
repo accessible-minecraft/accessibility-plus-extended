@@ -22,7 +22,10 @@ import net.minecraft.state.property.Property;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
+import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.features.POIHandler;
 
 public class POIBlocks extends Thread {
@@ -139,10 +142,19 @@ public class POIBlocks extends Thread {
 
         FluidState fluidState = client.world.getFluidState(blockPos);
 
-        if ((name.contains("lava") || name.contains("water")) && fluidState.getLevel() == 8) {
-            blocks.put(diff, blockVec3dPos);
-            playSound = true;
-            soundType = "blocks";
+        if ((name.contains("lava") || name.contains("water"))) {
+            if (fluidState.getLevel() == 8) {
+                blocks.put(diff, blockVec3dPos);
+                playSound = true;
+                soundType = "blocks";
+            }
+
+            if (Config.get(ConfigKeys.POI_FLUID_DETECTOR_Key.getKey())
+                    && !modInit.mainThreadMap.containsKey("fluid_detector_key")) {
+                int delay = POIHandler.getFluidDetectorDelay();
+                NarratorPlus.narrate("Warning " + name);
+                modInit.mainThreadMap.put("fluid_detector_key", delay);
+            }
         } else if (name.contains("ore") || name.equalsIgnoreCase("ancient debris")) {
             oreBlocks.put(diff, blockVec3dPos);
             playSound = true;
