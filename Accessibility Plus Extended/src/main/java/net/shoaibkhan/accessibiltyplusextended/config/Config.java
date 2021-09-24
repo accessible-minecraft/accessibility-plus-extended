@@ -148,9 +148,6 @@ public class Config {
 		data.add(ConfigKeys.FALL_DETECTOR_RANGE_KEY.getKey(), new JsonPrimitive("5"));
 		data.add(ConfigKeys.FALL_DETECTOR_DEPTH.getKey(), new JsonPrimitive("2"));
 
-		data.add(ConfigKeys.LAVA_DETECTOR_KEY.getKey(), new JsonPrimitive(false));
-		data.add(ConfigKeys.WATER_DETECTOR_KEY.getKey(), new JsonPrimitive(false));
-
 		data.add(ConfigKeys.NARRATE_BLOCK_SIDE_KEY.getKey(), new JsonPrimitive(false));
 
 		data.add(ConfigKeys.DURABILITY_CHECK_KEY.getKey(), new JsonPrimitive(true));
@@ -159,12 +156,6 @@ public class Config {
 
 		data.add(ConfigKeys.ENTITY_NARRATOR_KEY.getKey(), new JsonPrimitive(true));
 
-		data.add(ConfigKeys.ORE_DETECTOR_KEY.getKey(), new JsonPrimitive(false));
-		data.add(ConfigKeys.ORE_DETECTOR_VOLUME.getKey(), new JsonPrimitive("5"));
-		data.add(ConfigKeys.ORE_DETECTOR_PITCH.getKey(), new JsonPrimitive("20"));
-		data.add(ConfigKeys.ORE_DETECTOR_RANGE.getKey(), new JsonPrimitive("1"));
-		data.add(ConfigKeys.ORE_DETECTOR_DELAY.getKey(), new JsonPrimitive("10"));
-
 		data.add(ConfigKeys.FIND_FLUID_TEXT_KEY.getKey(), new JsonPrimitive(true));
 		data.add(ConfigKeys.FIND_FLUID_VOLUME.getKey(), new JsonPrimitive("5"));
 		data.add(ConfigKeys.FIND_FLUID_PITCH.getKey(), new JsonPrimitive("5"));
@@ -172,9 +163,13 @@ public class Config {
 
 		data.add(ConfigKeys.CHAT_NARRATION.getKey(), new JsonPrimitive("0"));
 
+		// Point of Interest
 		data.add(ConfigKeys.POI_KEY.getKey(), new JsonPrimitive(true));
 		data.add(ConfigKeys.POI_ENTITY_LOCKING_NARRATE_DISTANCE_KEY.getKey(), new JsonPrimitive(false));
 		data.add(ConfigKeys.POI_BLOCKS_LOCKING_NARRATE_DISTANCE_KEY.getKey(), new JsonPrimitive(false));
+		data.add(ConfigKeys.POI_VOLUME.getKey(), new JsonPrimitive("5"));
+		data.add(ConfigKeys.POI_RANGE.getKey(), new JsonPrimitive("1"));
+		data.add(ConfigKeys.POI_DELAY.getKey(), new JsonPrimitive("1"));
 
 		// Accessibility Plus
 		data.add(ConfigKeys.READ_BLOCKS_KEY.getKey(), new JsonPrimitive(true));

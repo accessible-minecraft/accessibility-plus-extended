@@ -26,7 +26,7 @@ public class ArrayButton extends WButton {
       if (val == array.length)
         val = 0;
       Config.setString(jsonKey, val + "");
-      TranslatableText newButtonText = new TranslatableText(this.translateKey , " :" + array[Config.getInt(jsonKey)]);
+      TranslatableText newButtonText = new TranslatableText(this.translateKey , "" + array[Config.getInt(jsonKey)]);
       this.setLabel(newButtonText);
     }
     return InputResult.PROCESSED;

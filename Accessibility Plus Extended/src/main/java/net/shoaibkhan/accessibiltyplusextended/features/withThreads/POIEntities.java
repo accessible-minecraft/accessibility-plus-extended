@@ -33,12 +33,12 @@ public class POIEntities extends Thread {
 			for (Entity i : client.world.getEntities()) {
 
 				// For curseforge
-				if (!(i instanceof MobEntity || i instanceof ItemEntity))
-					continue;
+				// if (!(i instanceof MobEntity || i instanceof ItemEntity))
+				// continue;
 
 				// For discord
-				// if (!(i instanceof MobEntity || i instanceof ItemEntity || i instanceof PlayerEntity))
-					// continue;
+				if (!(i instanceof MobEntity || i instanceof ItemEntity || (i instanceof PlayerEntity && i!=client.player)))
+					continue;
 
 				BlockPos blockPos = i.getBlockPos();
 
@@ -47,7 +47,11 @@ public class POIEntities extends Thread {
 						client.player.getBlockPos().getZ());
 				Double distance = entityVec3d.distanceTo(playerVec3d);
 
-				if (distance <= 6.0) {
+				int range = POIHandler.getRange();
+				float volume = POIHandler.getVolume();
+				int delay = POIHandler.getDelay();
+
+				if (distance <= range) {
 					String entityString = i + "";
 					int z = entityString.indexOf("/");
 					int y = entityString.indexOf(",", z);
@@ -57,30 +61,30 @@ public class POIEntities extends Thread {
 						passiveEntity.put(distance, i);
 						if (!modInit.mainThreadMap.containsKey("passiveentity+" + entityString)) {
 							client.world.playSound(blockPos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.BLOCKS,
-									0.15f, 0f, true);
-							modInit.mainThreadMap.put("passiveentity+" + entityString, 3000);
+									volume, 0f, true);
+							modInit.mainThreadMap.put("passiveentity+" + entityString, delay);
 						}
 					} else if (i instanceof HostileEntity) {
 						hostileEntity.put(distance, i);
 						if (!modInit.mainThreadMap.containsKey("hostileentity+" + entityString)) {
 							client.world.playSound(blockPos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.BLOCKS,
-									0.15f, 2f, true);
-							modInit.mainThreadMap.put("hostileentity+" + entityString, 3000);
+									volume, 2f, true);
+							modInit.mainThreadMap.put("hostileentity+" + entityString, delay);
 						}
 					} else if (i instanceof ItemEntity) {
 						if (((ItemEntity) i).isOnGround()) {
 							if (!modInit.mainThreadMap.containsKey("itementity+" + i)) {
 								client.world.playSound(blockPos, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_ON,
-										SoundCategory.BLOCKS, 0.15f, 2f, true);
-								modInit.mainThreadMap.put("itementity+" + i, 3000);
+										SoundCategory.BLOCKS, volume, 2f, true);
+								modInit.mainThreadMap.put("itementity+" + i, delay);
 							}
 						}
-					} else if (i instanceof PlayerEntity){
+					} else if (i instanceof PlayerEntity) {
 						passiveEntity.put(distance, i);
 						if (!modInit.mainThreadMap.containsKey("passiveentity+" + entityString)) {
 							client.world.playSound(blockPos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.BLOCKS,
-									0.15f, 0f, true);
-							modInit.mainThreadMap.put("passiveentity+" + entityString, 3000);
+									volume, 0f, true);
+							modInit.mainThreadMap.put("passiveentity+" + entityString, delay);
 						}
 					}
 				}

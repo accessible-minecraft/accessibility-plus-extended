@@ -13,6 +13,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.LeverBlock;
+import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.sound.SoundCategory;
@@ -31,7 +32,10 @@ public class POIBlocks extends Thread {
     private TreeMap<Double, Vec3d> buttonBlocks = new TreeMap<>();
     private TreeMap<Double, Vec3d> ladderBlocks = new TreeMap<>();
     private TreeMap<Double, Vec3d> leverBlocks = new TreeMap<>();
+    private TreeMap<Double, Vec3d> trapDoorBlocks = new TreeMap<>();
     private TreeMap<Double, Vec3d> blocks = new TreeMap<>();
+    private float volume;
+    private int delay;
 
     private List<String> blockListWithInterface;
     private List<String> blockList;
@@ -40,6 +44,8 @@ public class POIBlocks extends Thread {
     public void run() {
         client = MinecraftClient.getInstance();
         running = true;
+        volume = POIHandler.getVolume();
+        delay = POIHandler.getDelay();
 
         blockListWithInterface = new ArrayList<String>();
         blockList = new ArrayList<String>();
@@ -90,12 +96,8 @@ public class POIBlocks extends Thread {
         int posX = pos.getX();
         int posY = pos.getY() - 1;
         int posZ = pos.getZ();
-        int rangeVal;
-        try {
-            rangeVal = 6;
-        } catch (Exception e) {
-            rangeVal = 6;
-        }
+        int rangeVal = POIHandler.getRange();
+
         checkBlock(new BlockPos(new Vec3d(posX, posY, posZ)), 0);
         checkBlock(new BlockPos(new Vec3d(posX, posY + 3, posZ)), 0);
         checkBlock(new BlockPos(new Vec3d(posX, posY + 1, posZ)), rangeVal);
@@ -106,6 +108,7 @@ public class POIBlocks extends Thread {
         POIHandler.buttonBlocks = this.buttonBlocks;
         POIHandler.ladderBlocks = this.ladderBlocks;
         POIHandler.leverBlocks = this.leverBlocks;
+        POIHandler.trapDoorBlocks = this.trapDoorBlocks;
         POIHandler.blocks = this.blocks;
 
         try {
@@ -152,6 +155,10 @@ public class POIBlocks extends Thread {
             ladderBlocks.put(diff, blockVec3dPos);
             playSound = true;
             soundType = "blocks";
+        } else if (block instanceof TrapdoorBlock) {
+            trapDoorBlocks.put(diff, blockVec3dPos);
+            playSound = true;
+            soundType = "blocks";
         } else if (block instanceof LeverBlock) {
             leverBlocks.put(diff, blockVec3dPos);
             playSound = true;
@@ -191,15 +198,15 @@ public class POIBlocks extends Thread {
 
             if (soundType.equalsIgnoreCase("ore"))
                 client.world.playSound(new BlockPos(blockVec3dPos), SoundEvents.ENTITY_ITEM_PICKUP,
-                        SoundCategory.BLOCKS, 0.15f, -5f, true);
+                        SoundCategory.BLOCKS, volume, -5f, true);
             else if (soundType.equalsIgnoreCase("blocks"))
                 client.world.playSound(new BlockPos(blockVec3dPos), SoundEvents.BLOCK_NOTE_BLOCK_BIT,
-                        SoundCategory.BLOCKS, 0.15f, 2f, true);
+                        SoundCategory.BLOCKS, volume, 2f, true);
             else if (soundType.equalsIgnoreCase("blocksWithInterface"))
                 client.world.playSound(new BlockPos(blockVec3dPos), SoundEvents.BLOCK_NOTE_BLOCK_BANJO,
-                        SoundCategory.BLOCKS, 0.15f, 0f, true);
+                        SoundCategory.BLOCKS, volume, 0f, true);
 
-            modInit.mainThreadMap.put("sound+" + blockPos, 3000);
+            modInit.mainThreadMap.put("sound+" + blockPos, delay);
         }
     }
 }

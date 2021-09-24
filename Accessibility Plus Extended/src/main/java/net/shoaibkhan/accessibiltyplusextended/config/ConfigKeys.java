@@ -8,8 +8,6 @@ public enum ConfigKeys {
     FALL_DETECTOR_DEPTH("fall_detector_depth"),
 
     // Misc
-    LAVA_DETECTOR_KEY("lava_detector_key"),
-    WATER_DETECTOR_KEY("water_detector_key"),
     NARRATE_BLOCK_SIDE_KEY("narrate_blocks_side_key"),
 
     // Durability Checker Key
@@ -19,13 +17,6 @@ public enum ConfigKeys {
 
     // Entity Narration key
     ENTITY_NARRATOR_KEY("entity_narrator_key"),
-
-    // Ore Detector Keys
-    ORE_DETECTOR_KEY("ore_detector_key"),
-    ORE_DETECTOR_VOLUME("ore_detector_volume"),
-    ORE_DETECTOR_PITCH("ore_detector_pitch"),
-    ORE_DETECTOR_RANGE("ore_detector_range"),
-    ORE_DETECTOR_DELAY("ore_detector_delay"),
 
     // Find Fluid Keys
     FIND_FLUID_TEXT_KEY("find_fluid_text_key"),
@@ -46,6 +37,9 @@ public enum ConfigKeys {
     // Point Of Interest
     POI_ENTITY_LOCKING_NARRATE_DISTANCE_KEY("poi_entity_locking_narrate_distance_key"),
     POI_BLOCKS_LOCKING_NARRATE_DISTANCE_KEY("poi_blocks_locking_narrate_distance_key"),
+    POI_VOLUME("poi_volume"),
+    POI_RANGE("poi_range"),
+    POI_DELAY("poi_delay"),
     POI_KEY("point_of_interest_key");
 
     private final String key;

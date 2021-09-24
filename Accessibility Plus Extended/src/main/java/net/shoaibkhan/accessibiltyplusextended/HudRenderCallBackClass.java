@@ -44,7 +44,8 @@ public class HudRenderCallBackClass {
 
 			keyPresses(CONFIG_KEY);
 
-			new LockingHandler();
+			if (Config.get(ConfigKeys.POI_KEY.getKey()))
+				new LockingHandler();
 
 			new FeaturesWithThreadHandler(client);
 
@@ -87,7 +88,7 @@ public class HudRenderCallBackClass {
 				// Reset lockOnBlock
 				LockingHandler.lockedOnBlockEntries = "";
 				LockingHandler.lockedOnBlock = null;
-                LockingHandler.isLockedOnLadder = false;
+				LockingHandler.isLockedOnLadder = false;
 			}
 		}
 	}
