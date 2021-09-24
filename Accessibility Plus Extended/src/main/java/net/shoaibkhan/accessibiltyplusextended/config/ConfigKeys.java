@@ -19,7 +19,6 @@ public enum ConfigKeys {
 
     // Entity Narration key
     ENTITY_NARRATOR_KEY("entity_narrator_key"),
-    ENTITY_NARRATOR_NARRATE_DISTANCE_KEY("entity_narrator_narrate_distance_key"),
 
     // Ore Detector Keys
     ORE_DETECTOR_KEY("ore_detector_key"),
@@ -45,6 +44,8 @@ public enum ConfigKeys {
     ATION_BAR_KEY("ap_action_bar_key"),
 
     // Point Of Interest
+    POI_ENTITY_LOCKING_NARRATE_DISTANCE_KEY("poi_entity_locking_narrate_distance_key"),
+    POI_BLOCKS_LOCKING_NARRATE_DISTANCE_KEY("poi_blocks_locking_narrate_distance_key"),
     POI_KEY("point_of_interest_key");
 
     private final String key;

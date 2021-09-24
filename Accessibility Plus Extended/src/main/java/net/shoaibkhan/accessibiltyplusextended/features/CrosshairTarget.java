@@ -2,7 +2,6 @@ package net.shoaibkhan.accessibiltyplusextended.features;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.NoteBlock;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.LiteralText;
@@ -41,10 +40,14 @@ public class CrosshairTarget {
 					MutableText blockMutableText = new LiteralText("").append(block.getName());
 					name = blockMutableText.getString();
 
-					String searchQuery = name + blockHitResult.getBlockPos();
+					String blockPos = (blockHitResult.getBlockPos() + "").replace("Mutable{x", "BlockPos{x");
+
+					String searchQuery = name + blockPos;
+
+					String blockEntries = blockState.getEntries() + "" + blockState.getBlock() + "" + blockPos;
 
 					if (!name.toLowerCase().contains("sign") && Config.get(ConfigKeys.READ_BLOCKS_KEY.getKey())) {
-						if (!modInit.mainThreadMap.containsKey(searchQuery)) {
+						if (!modInit.mainThreadMap.containsKey(searchQuery) && !blockEntries.equalsIgnoreCase(LockingHandler.lockedOnBlockEntries)) {
 							text += name;
 
 							String side;
@@ -55,10 +58,6 @@ public class CrosshairTarget {
 								if (side.equalsIgnoreCase("down"))
 									side = "bottom";
 								text += " " + side;
-							}
-
-							if (block instanceof NoteBlock) {
-								System.out.println("\n\n\n\nNoteblock\t" + blockState.getEntries() + "\n\n\n\n");
 							}
 
 							NarratorPlus.narrate(text);

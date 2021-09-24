@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 
 import com.google.common.collect.ImmutableSet;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.argument.EntityAnchorArgumentType.EntityAnchor;
@@ -24,7 +25,6 @@ public class LockingHandler {
     public static Vec3d lockedOnBlock = null;
     public static boolean isLockedOnLadder = false;
     public static String lockedOnBlockEntries = "";
-    private Entity toBeLocked = null;
 
     public LockingHandler() {
         main();
@@ -50,8 +50,8 @@ public class LockingHandler {
         }
 
         if (lockedOnBlock != null) {
-            String entries = client.world.getBlockState(new BlockPos(lockedOnBlock)).getEntries() + ""
-                    + client.world.getBlockState(new BlockPos(lockedOnBlock)).getBlock().getName();
+            BlockState blockState = client.world.getBlockState(new BlockPos(lockedOnBlock));
+            String entries = blockState.getEntries() + "" + blockState.getBlock() + "" + (new BlockPos(lockedOnBlock));
             if (entries.equalsIgnoreCase(lockedOnBlockEntries))
                 client.player.lookAt(EntityAnchor.EYES, lockedOnBlock);
             else {
@@ -77,15 +77,17 @@ public class LockingHandler {
                     MutableText mutableText = (new LiteralText("")).append(entity.getName());
                     String name = mutableText.getString();
                     String text = name;
-                    if (Config.get(ConfigKeys.ENTITY_NARRATOR_NARRATE_DISTANCE_KEY.getKey()))
-                        text += " " + HudRenderCallBackClass.get_position_difference(toBeLocked.getBlockPos(), client);
-                    NarratorPlus.narrate(text);
-
                     lockedOnEntity = entity;
                     lockedOnBlockEntries = "";
 
                     lockedOnBlock = null;
                     isLockedOnLadder = false;
+
+                    if (Config.get(ConfigKeys.POI_ENTITY_LOCKING_NARRATE_DISTANCE_KEY.getKey())) {
+                        text += " " + HudRenderCallBackClass.get_position_difference(entity.getBlockPos(), client);
+                        NarratorPlus.narrate(text);
+                    }
+
                 } else {
                     Double closest = -9999.0;
 
@@ -166,70 +168,64 @@ public class LockingHandler {
                                     .append(closestPassiveEntityEntry.getValue().getName());
                             String name = mutableText.getString();
                             String text = name;
-                            if (Config.get(ConfigKeys.ENTITY_NARRATOR_NARRATE_DISTANCE_KEY.getKey()))
-                                text += " " + HudRenderCallBackClass.get_position_difference(toBeLocked.getBlockPos(),
-                                        client);
-                            NarratorPlus.narrate(text);
 
                             lockedOnEntity = closestPassiveEntityEntry.getValue();
                             lockedOnBlockEntries = "";
                             lockedOnBlock = null;
                             isLockedOnLadder = false;
+
+                            if (Config.get(ConfigKeys.POI_ENTITY_LOCKING_NARRATE_DISTANCE_KEY.getKey())) {
+                                text += " " + HudRenderCallBackClass
+                                        .get_position_difference(lockedOnEntity.getBlockPos(), client);
+                                NarratorPlus.narrate(text);
+                            }
+
                         } else if (closest.equals(closestDoorBlockDouble) && closestDoorBlockDouble != -9999.0) {
                             Vec3d absolutePos = getDoorAbsolutePosition(client, closestDoorBlockEntry.getValue());
-                            lockedOnBlockEntries = client.world
-                                    .getBlockState(new BlockPos(closestDoorBlockEntry.getValue())).getEntries() + ""
-                                    + client.world.getBlockState(new BlockPos(closestDoorBlockEntry.getValue()))
-                                            .getBlock().getName();
-
                             lockedOnBlock = absolutePos;
                             lockedOnEntity = null;
                             isLockedOnLadder = false;
                         } else if (closest.equals(closestButtonBlockDouble) && closestButtonBlockDouble != -9999.0) {
                             Vec3d absolutePos = getButtonsAbsolutePosition(client, closestButtonBlockEntry.getValue());
-                            lockedOnBlockEntries = client.world
-                                    .getBlockState(new BlockPos(closestButtonBlockEntry.getValue())).getEntries() + ""
-                                    + client.world.getBlockState(new BlockPos(closestButtonBlockEntry.getValue()))
-                                            .getBlock().getName();
-
                             lockedOnBlock = absolutePos;
                             lockedOnEntity = null;
                             isLockedOnLadder = false;
                         } else if (closest.equals(closestLadderBlockDouble) && closestLadderBlockDouble != -9999.0) {
                             Vec3d absolutePos = getLaddersAbsolutePosition(client, closestLadderBlockEntry.getValue());
                             isLockedOnLadder = true;
-                            lockedOnBlockEntries = client.world.getBlockState(new BlockPos(absolutePos)).getEntries()
-                                    + "" + client.world.getBlockState(new BlockPos(absolutePos)).getBlock().getName();
-
                             lockedOnBlock = absolutePos;
                             lockedOnEntity = null;
                         } else if (closest.equals(closestLeverBlockDouble) && closestLeverBlockDouble != -9999.0) {
                             Vec3d absolutePos = getLeversAbsolutePosition(client, closestLeverBlockEntry.getValue());
-                            lockedOnBlockEntries = client.world
-                                    .getBlockState(new BlockPos(closestLeverBlockEntry.getValue())).getEntries() + ""
-                                    + client.world.getBlockState(new BlockPos(closestLeverBlockEntry.getValue()))
-                                            .getBlock().getName();
-
                             lockedOnBlock = absolutePos;
                             lockedOnEntity = null;
                             isLockedOnLadder = false;
                         } else if (closest.equals(closestBlockDouble) && closestBlockDouble != -9999.0) {
                             lockedOnBlock = closestBlockEntry.getValue();
-                            lockedOnBlockEntries = client.world
-                                    .getBlockState(new BlockPos(closestBlockEntry.getValue())).getEntries() + ""
-                                    + client.world.getBlockState(new BlockPos(closestBlockEntry.getValue())).getBlock()
-                                            .getName();
                             lockedOnEntity = null;
                             isLockedOnLadder = false;
                         } else if (closest.equals(closestOreBlockDouble) && closestOreBlockDouble != -9999.0) {
                             lockedOnBlock = closestOreBlockEntry.getValue();
-                            lockedOnBlockEntries = client.world
-                                    .getBlockState(new BlockPos(closestOreBlockEntry.getValue())).getEntries() + ""
-                                    + client.world.getBlockState(new BlockPos(closestOreBlockEntry.getValue()))
-                                            .getBlock().getName();
                             lockedOnEntity = null;
                             isLockedOnLadder = false;
                         }
+
+                        if (lockedOnBlock != null) {
+                            BlockState blockState = client.world.getBlockState(new BlockPos(lockedOnBlock));
+                            lockedOnBlockEntries = blockState.getEntries() + "" + blockState.getBlock() + "" + (new BlockPos(lockedOnBlock));
+                            if (Config.get(ConfigKeys.POI_BLOCKS_LOCKING_NARRATE_DISTANCE_KEY.getKey())) {
+                                Block closestBlock = client.world
+                                        .getBlockState(new BlockPos(closestOreBlockEntry.getValue())).getBlock();
+
+                                MutableText mutableText = (new LiteralText("")).append(closestBlock.getName());
+                                String name = mutableText.getString();
+                                String text = name;
+                                text += " " + HudRenderCallBackClass
+                                        .get_position_difference(new BlockPos(lockedOnBlock), client);
+                                NarratorPlus.narrate(text);
+                            }
+                        }
+
                     }
                 }
             }

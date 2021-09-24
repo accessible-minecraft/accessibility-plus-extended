@@ -23,7 +23,7 @@ public class EntityNarratorGui extends LightweightGuiDescription {
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ConfigButton nddButton = new ConfigButton("gui.apextended.config.buttons.narratedistancediff", ConfigKeys.ENTITY_NARRATOR_NARRATE_DISTANCE_KEY.getKey());
+    ConfigButton nddButton = new ConfigButton("gui.apextended.config.buttons.narratedistancediff", ConfigKeys.POI_ENTITY_LOCKING_NARRATE_DISTANCE_KEY.getKey());
     root.add(nddButton, 1, 3, 10, 1);
 
     WButton backButton = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));

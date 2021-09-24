@@ -158,7 +158,6 @@ public class Config {
 		data.add(ConfigKeys.DURABILITY_THRESHOLD_KEY.getKey(), new JsonPrimitive("4"));
 
 		data.add(ConfigKeys.ENTITY_NARRATOR_KEY.getKey(), new JsonPrimitive(true));
-		data.add(ConfigKeys.ENTITY_NARRATOR_NARRATE_DISTANCE_KEY.getKey(), new JsonPrimitive(false));
 
 		data.add(ConfigKeys.ORE_DETECTOR_KEY.getKey(), new JsonPrimitive(false));
 		data.add(ConfigKeys.ORE_DETECTOR_VOLUME.getKey(), new JsonPrimitive("5"));
@@ -174,6 +173,8 @@ public class Config {
 		data.add(ConfigKeys.CHAT_NARRATION.getKey(), new JsonPrimitive("0"));
 
 		data.add(ConfigKeys.POI_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.POI_ENTITY_LOCKING_NARRATE_DISTANCE_KEY.getKey(), new JsonPrimitive(false));
+		data.add(ConfigKeys.POI_BLOCKS_LOCKING_NARRATE_DISTANCE_KEY.getKey(), new JsonPrimitive(false));
 
 		// Accessibility Plus
 		data.add(ConfigKeys.READ_BLOCKS_KEY.getKey(), new JsonPrimitive(true));
