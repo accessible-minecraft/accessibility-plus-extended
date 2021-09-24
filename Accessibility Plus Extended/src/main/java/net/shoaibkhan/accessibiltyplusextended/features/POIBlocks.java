@@ -100,12 +100,12 @@ public class POIBlocks extends Thread {
         checkBlock(new BlockPos(new Vec3d(posX, posY + 1, posZ)), rangeVal);
         checkBlock(new BlockPos(new Vec3d(posX, posY + 2, posZ)), rangeVal);
 
-        PointsOfInterestsHandler.oreBlocks = this.oreBlocks;
-        PointsOfInterestsHandler.doorBlocks = this.doorBlocks;
-        PointsOfInterestsHandler.buttonBlocks = this.buttonBlocks;
-        PointsOfInterestsHandler.ladderBlocks = this.ladderBlocks;
-        PointsOfInterestsHandler.leverBlocks = this.leverBlocks;
-        PointsOfInterestsHandler.blocks = this.blocks;
+        POIHandler.oreBlocks = this.oreBlocks;
+        POIHandler.doorBlocks = this.doorBlocks;
+        POIHandler.buttonBlocks = this.buttonBlocks;
+        POIHandler.ladderBlocks = this.ladderBlocks;
+        POIHandler.leverBlocks = this.leverBlocks;
+        POIHandler.blocks = this.blocks;
 
         try {
             Thread.sleep(500);

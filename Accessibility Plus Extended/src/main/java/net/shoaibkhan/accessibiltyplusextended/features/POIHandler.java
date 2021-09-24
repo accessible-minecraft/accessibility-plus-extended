@@ -5,7 +5,7 @@ import java.util.TreeMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 
-public class PointsOfInterestsHandler{
+public class POIHandler{
     public static TreeMap<Double, Vec3d> oreBlocks = new TreeMap<>();
     public static TreeMap<Double, Vec3d> doorBlocks = new TreeMap<>();
     public static TreeMap<Double, Vec3d> buttonBlocks = new TreeMap<>();

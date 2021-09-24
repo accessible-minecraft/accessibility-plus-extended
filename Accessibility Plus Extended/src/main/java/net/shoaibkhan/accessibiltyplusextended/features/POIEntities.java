@@ -73,8 +73,8 @@ public class POIEntities extends Thread {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		PointsOfInterestsHandler.passiveEntity = passiveEntity;
-		PointsOfInterestsHandler.hostileEntity = hostileEntity;
+		POIHandler.passiveEntity = passiveEntity;
+		POIHandler.hostileEntity = hostileEntity;
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
