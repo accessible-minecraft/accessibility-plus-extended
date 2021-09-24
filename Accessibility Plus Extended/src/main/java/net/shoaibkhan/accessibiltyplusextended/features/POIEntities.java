@@ -8,6 +8,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -29,8 +30,14 @@ public class POIEntities extends Thread {
 	private void main() {
 		try {
 			for (Entity i : client.world.getEntities()) {
+
+				// For curseforge
 				if (!(i instanceof MobEntity || i instanceof ItemEntity))
 					continue;
+
+				// For discord
+				// if (!(i instanceof MobEntity || i instanceof ItemEntity || i instanceof PlayerEntity))
+					// continue;
 
 				BlockPos blockPos = i.getBlockPos();
 
@@ -66,6 +73,13 @@ public class POIEntities extends Thread {
 										SoundCategory.BLOCKS, 0.15f, 2f, true);
 								modInit.mainThreadMap.put("itementity+" + i, 3000);
 							}
+						}
+					} else if (i instanceof PlayerEntity){
+						passiveEntity.put(distance, i);
+						if (!modInit.mainThreadMap.containsKey("passiveentity+" + entityString)) {
+							client.world.playSound(blockPos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.BLOCKS,
+									0.15f, 0f, true);
+							modInit.mainThreadMap.put("passiveentity+" + entityString, 3000);
 						}
 					}
 				}
