@@ -4,6 +4,7 @@ import java.util.TreeMap;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EyeOfEnderEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -14,12 +15,14 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
+import net.shoaibkhan.accessibiltyplusextended.features.LockingHandler;
 import net.shoaibkhan.accessibiltyplusextended.features.POIHandler;
 
 public class POIEntities extends Thread {
 	private MinecraftClient client;
 	private TreeMap<Double, Entity> passiveEntity = new TreeMap<>();
 	private TreeMap<Double, Entity> hostileEntity = new TreeMap<>();
+	private TreeMap<Double, Entity> eyeOfEnderEntity = new TreeMap<>();
 	public boolean running = false;
 
 	public void run() {
@@ -33,11 +36,12 @@ public class POIEntities extends Thread {
 			for (Entity i : client.world.getEntities()) {
 
 				// For curseforge
-				// if (!(i instanceof MobEntity || i instanceof ItemEntity))
+				// if (!(i instanceof MobEntity || i instanceof ItemEntity || i instanceOf))
 				// continue;
 
 				// For discord
-				if (!(i instanceof MobEntity || i instanceof ItemEntity || (i instanceof PlayerEntity && i!=client.player)))
+				if (!(i instanceof MobEntity || i instanceof ItemEntity || i instanceof EyeOfEnderEntity
+						|| (i instanceof PlayerEntity && i != client.player)))
 					continue;
 
 				BlockPos blockPos = i.getBlockPos();
@@ -57,7 +61,15 @@ public class POIEntities extends Thread {
 					int y = entityString.indexOf(",", z);
 					entityString = entityString.substring(z, y);
 
-					if (i instanceof PassiveEntity) {
+					if (i instanceof EyeOfEnderEntity && distance <= 0.2) {
+						eyeOfEnderEntity.put(distance, i);
+						LockingHandler.lockedOnEntity = i;
+						LockingHandler.lockedOnBlockEntries = "";
+
+						LockingHandler.lockedOnBlock = null;
+						LockingHandler.isLockedOntoLadder = false;
+
+					} else if (i instanceof PassiveEntity) {
 						passiveEntity.put(distance, i);
 						if (!modInit.mainThreadMap.containsKey("passiveentity+" + entityString)) {
 							client.world.playSound(blockPos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.BLOCKS,
@@ -94,11 +106,7 @@ public class POIEntities extends Thread {
 		}
 		POIHandler.passiveEntity = passiveEntity;
 		POIHandler.hostileEntity = hostileEntity;
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		POIHandler.eyeOfEnderEntity = eyeOfEnderEntity;
 		running = false;
 	}
 

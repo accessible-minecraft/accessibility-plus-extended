@@ -57,6 +57,7 @@ public class POIBlocks extends Thread {
         blockListWithInterface.add("ender chest");
         blockListWithInterface.add("crafting table");
         blockListWithInterface.add("enchanting table");
+        blockListWithInterface.add("brewing stand");
         blockListWithInterface.add("stonecutter");
         blockListWithInterface.add("trapped chest");
         blockListWithInterface.add("hopper");
@@ -114,11 +115,6 @@ public class POIBlocks extends Thread {
         POIHandler.trapDoorBlocks = this.trapDoorBlocks;
         POIHandler.blocks = this.blocks;
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         running = false;
     }
 
@@ -193,7 +189,7 @@ public class POIBlocks extends Thread {
             blocks.put(diff, blockVec3dPos);
             playSound = true;
             soundType = "blocks";
-        } else if (blockListWithInterface.contains(name) || name.contains("shulker box")) {
+        } else if (blockListWithInterface.contains(name) || name.contains("shulker box") || name.contains("anvil")) {
             blocks.put(diff, blockVec3dPos);
             playSound = true;
             soundType = "blocksWithInterface";

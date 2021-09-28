@@ -88,7 +88,7 @@ public class HudRenderCallBackClass {
 				// Reset lockOnBlock
 				LockingHandler.lockedOnBlockEntries = "";
 				LockingHandler.lockedOnBlock = null;
-				LockingHandler.isLockedOnLadder = false;
+				LockingHandler.isLockedOntoLadder = false;
 			}
 		}
 	}
