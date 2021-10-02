@@ -36,7 +36,7 @@ public class POIEntities extends Thread {
 			for (Entity i : client.world.getEntities()) {
 
 				// For curseforge
-				// if (!(i instanceof MobEntity || i instanceof ItemEntity || i instanceOf))
+				// if (!(i instanceof MobEntity || i instanceof ItemEntity || i instanceof EyeOfEnderEntity))
 				// continue;
 
 				// For discord
