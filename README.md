@@ -2,17 +2,21 @@
 
 ## Description
 
+(This page will updated soon)
+
  A minecraft java mod that adds more accessibility options to improve performance. Join the discord server to get updates, request feature or report bugs. 
 
- | [Discord](https://discord.gg/yQjjsDqWQX) | [Download](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended/files) | [Issues](https://github.com/shoaib11120/Accessibility-Plus-Extended/issues) | [CurseForge](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended) |
+ | [Discord](https://discord.gg/yQjjsDqWQX) | [Download](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus-extended/files) | [Github](https://github.com/accessible-minecraft/accessibility-plus-extended) |
 
 ## Requirements
 
 **For v1.5.0 and above:-**
+
 - [Fabric](https://fabricmc.net/wiki/install)
 - [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus) has been added to this mod itself. So no need to install it for 1.5.0 and above versions.
 
 **For v1.4.0:-**
+
 - [Fabric](https://fabricmc.net/wiki/install)
 - [Accessibility Plus](https://www.curseforge.com/minecraft/mc-mods/accessibility-plus)
 
@@ -26,7 +30,7 @@
 ## New Keybindings
 
 - **B** = Open configuration menu.
-- **Y** = Lock onto nearby mob entity
+- **Y** = Lock onto nearby entity or block
 - **Alt + Y** = Disable locking
 
 ## New Commands
@@ -46,17 +50,13 @@
 
  __Enabled__ by default. This feature reads the name of the entity the player is pointing at.
 
-### **Mob Locking System**
-
-This feature locks onto a closest mob within a 10 blocks radius. The keybinding for this feature is **'Y'** and **'Alt +Y'** to disable locking.
-
 ### **Fall Detector**
 
  __Disabled__ by default. This feature warns if the player heading towards a fall with depth greater than or equal to 5. It also warns the player if there is lava below the player's level.
 
-### **Ore Detector**
+### **Points of Interests**
 
- __Disabled__ by default. This feature detects if there is an exposed ore block nearby and plays a sound (item pickup sound by default) at the block's position. You can choose to play a custom sound from the config menu but it is experimental at the moment. You can also change the volume and pitch of the sound. The default value for volume is __0.25__ and that of pitch is __-5__.
+ __Enabled__ by default. This feature detects if there is an exposed special block (like ores, crafting table, etc.) or entity nearby and plays a sound at the block's position. And on pressing 'Y', it locks onto the closest block or entity and unlocks when we press 'Alt + Y' or the block or entity nearby. The highest priority is hostile mob so if a hostile mob is in range it will lock onto that instead of other things. It also plays sound at dropped items in range and it also tracks Eye of Ender when we throw them.
 
 ### **Durability Checker**
 
@@ -72,19 +72,17 @@ Settings for specific features:-
 - **Range** = Change the horizontal range to check for fall.
 - **Depth** = Change the minimum height for a fall.
 
-### **Ore Detector** 
+### **Points Of Interests or POI** 
 
+- **Narrate Entity Distance** = Narrates the entity's relative distance along with the name.
+- **Narrate Block Distance** = Narrates the block's relative distance along with the name.
 - **Volume** = Change the volume of the sound played.
-- **Pitch** = Change the pitch of the sound played.
-- **Delay** = Change the delay between ore detection.
-- **Range** = Change the range (both horizontal and vertical) to check for an ore block.
-
-### **Find Fluid (findlava and findwater) Settings**
-
-- **Text** = Choose whether to narrate the relative position of the source block or a sound, like in ore detector.
-- **Range** = Change the range (both horizontal and vertical) to check for an ore block.
-- **Volume** = Change the volume of the sound played.
-- **Pitch** = Change the pitch of the sound played.
+- **Delay** = Change the delay between sounds.
+- **Range** = Change the range.
+- **Play Unlocking Sound** = Plays a sound when the entity or block gets unlocked.
+- **Unlocking Sound Volume** = Change the volume of the unlocking sound.
+- **Fluid Detector** = Enable or disable the fluid detector.
+- **Fluid Detector Delay** = Change the delay of fluid detector
 
 ## Contact
 
