@@ -14,47 +14,6 @@ public class Config {
 	private static JsonObject data;
 	private static String CONFIG_PATH = Paths.get("config", "apextended", "config.json").toString();
 
-	// Fall Detector Key
-	public static final String FallDetectorKey = "fall_detector_key";
-	public static final String FallDetectorRange = "fall_detector_range";
-	public static final String FallDetectorDepth = "fall_detector_depth";
-
-	// Misc
-	public static final String LavaDetectorKey = "lava_detector_key";
-	public static final String WaterDetectorKey = "water_detector_key";
-	public static final String NarrateBlockSideKey = "narrate_blocks_side_key";
-
-	// Durability Checker Key
-	public static final String DurabilityCheckKey = "durability_check_key";
-	public static final String DurabilityToolTipKey = "durability_tool_tip_key";
-	public static final String DurabilityThresholdKey = "durability_threshold_key";
-
-	// Entity Narration key
-	public static final String EntityNarratorKey = "entity_narrator_key";
-	public static final String EntityNarratorNarrateDistanceKey = "entity_narrator_narrate_distance_key";
-
-	// Ore Detector Keys
-	public static final String OreDetectorKey = "ore_detector_key";
-	public static final String OreDetectorVolume = "ore_detector_volume";
-	public static final String OreDetectorPitch = "ore_detector_pitch";
-	public static final String OreDetectorRange = "ore_detector_range";
-	public static final String OreDetectorDelay = "ore_detector_delay";
-
-	// Find Fluid Keys
-	public static final String FindFluidTextKey = "find_fluid_text_key";
-	public static final String FindFluidVolume = "find_fluid_volume";
-	public static final String FindFluidPitch = "find_fluid_pitch";
-	public static final String FindFluidRange = "find_fluid_range";
-
-	// Chat Narration Key
-	public static final String ChatNarration = "chat_narration";
-
-	// Accessibility Plus Keys
-	public static final String READ_BLOCKS_KEY = "ap_read_blocks";
-	public static final String READ_TOOLTIPS_KEY = "ap_read_tooltip";
-	public static final String READ_SIGNS_CONTENTS = "ap_read_signs_contents";
-	public static final String INV_KEYBOARD_CONTROL_KEY = "ap_inventory_keyboard_control";
-	public static final String ATION_BAR_KEY = "ap_action_bar_key";
 
 	public Config() {
 	}
@@ -185,41 +144,43 @@ public class Config {
 
 	private static JsonObject resetData() {
 		data = new JsonObject();
-		data.add(getFalldetectorkey(), new JsonPrimitive(false));
-		data.add(getFalldetectorrange(), new JsonPrimitive("5"));
-		data.add(getFalldetectordepth(), new JsonPrimitive("2"));
+		data.add(ConfigKeys.FALL_DETECTOR_KEY.getKey(), new JsonPrimitive(false));
+		data.add(ConfigKeys.FALL_DETECTOR_RANGE_KEY.getKey(), new JsonPrimitive("5"));
+		data.add(ConfigKeys.FALL_DETECTOR_DEPTH.getKey(), new JsonPrimitive("2"));
 
-		data.add(getOredetectorkey(), new JsonPrimitive(false));
-		data.add(getLavadetectorkey(), new JsonPrimitive(false));
-		data.add(getWaterdetectorkey(), new JsonPrimitive(false));
+		data.add(ConfigKeys.NARRATE_BLOCK_SIDE_KEY.getKey(), new JsonPrimitive(false));
 
-		data.add(getNarrateblocksidekey(), new JsonPrimitive(false));
+		data.add(ConfigKeys.DURABILITY_CHECK_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.DURABILITY_TOOL_TIP_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.DURABILITY_THRESHOLD_KEY.getKey(), new JsonPrimitive("4"));
 
-		data.add(getDurabilitycheckerkey(), new JsonPrimitive(true));
-		data.add(getDurabilitytooltipkey(), new JsonPrimitive(true));
-		data.add(getDurabilitythresholdkey(), new JsonPrimitive("4"));
+		data.add(ConfigKeys.ENTITY_NARRATOR_KEY.getKey(), new JsonPrimitive(true));
 
-		data.add(getEntitynarratorkey(), new JsonPrimitive(true));
-		data.add(getEntitynarratornarratedistancekey(), new JsonPrimitive(false));
+		data.add(ConfigKeys.FIND_FLUID_TEXT_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.FIND_FLUID_VOLUME.getKey(), new JsonPrimitive("5"));
+		data.add(ConfigKeys.FIND_FLUID_PITCH.getKey(), new JsonPrimitive("5"));
+		data.add(ConfigKeys.FIND_FLUID_RANGE.getKey(), new JsonPrimitive("5"));
 
-		data.add(getOredetectorvolume(), new JsonPrimitive("5"));
-		data.add(getOredetectorpitch(), new JsonPrimitive("20"));
-		data.add(getOredetectorrange(), new JsonPrimitive("1"));
-		data.add(getOredetectordelay(), new JsonPrimitive("10"));
+		data.add(ConfigKeys.CHAT_NARRATION.getKey(), new JsonPrimitive("0"));
 
-		data.add(getFindfluidtextkey(), new JsonPrimitive(true));
-		data.add(getFindfluidvolume(), new JsonPrimitive("5"));
-		data.add(getFindfluidpitch(), new JsonPrimitive("20"));
-		data.add(getFindfluidrange(), new JsonPrimitive("7"));
-
-		data.add(getChatnarration(), new JsonPrimitive("0"));
+		// Point of Interest
+		data.add(ConfigKeys.POI_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.POI_ENTITY_LOCKING_NARRATE_DISTANCE_KEY.getKey(), new JsonPrimitive(false));
+		data.add(ConfigKeys.POI_BLOCKS_LOCKING_NARRATE_DISTANCE_KEY.getKey(), new JsonPrimitive(false));
+		data.add(ConfigKeys.POI_VOLUME.getKey(), new JsonPrimitive("5"));
+		data.add(ConfigKeys.POI_RANGE.getKey(), new JsonPrimitive("1"));
+		data.add(ConfigKeys.POI_DELAY.getKey(), new JsonPrimitive("1"));
+		data.add(ConfigKeys.POI_UNLOCKING_SOUND_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.POI_UNLOCKING_SOUND_VOLUME.getKey(), new JsonPrimitive("10"));
+		data.add(ConfigKeys.POI_FLUID_DETECTOR_Key.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.POI_FLUID_DETECTOR_DELAY.getKey(), new JsonPrimitive("4"));
 
 		// Accessibility Plus
-		data.add(getReadblocksKey(), new JsonPrimitive(true));
-		data.add(getReadTooltipsKey(), new JsonPrimitive(true));
-		data.add(getReadSignsContents(), new JsonPrimitive(true));
-		data.add(getInvKeyboardControlKey(), new JsonPrimitive(true));
-		data.add(getAtionBarKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.READ_BLOCKS_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.READ_TOOLTIPS_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.READ_SIGNS_CONTENTS.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.ATION_BAR_KEY.getKey(), new JsonPrimitive(true));
 
 		saveConfig(data);
 		return data;
@@ -241,109 +202,4 @@ public class Config {
 		}
 		data = newConfig;
 	}
-
-	public static String getReadblocksKey() {
-		return READ_BLOCKS_KEY;
-	}
-
-	public static String getReadTooltipsKey() {
-		return READ_TOOLTIPS_KEY;
-	}
-
-	public static String getReadSignsContents() {
-		return READ_SIGNS_CONTENTS;
-	}
-
-	public static String getInvKeyboardControlKey() {
-		return INV_KEYBOARD_CONTROL_KEY;
-	}
-
-	public static String getAtionBarKey() {
-		return ATION_BAR_KEY;
-	}
-
-	public static String getDurabilitythresholdkey() {
-		return DurabilityThresholdKey;
-	}
-
-	public static String getDurabilitytooltipkey() {
-		return DurabilityToolTipKey;
-	}
-
-	public static String getChatnarration() {
-		return ChatNarration;
-	}
-
-	public static String getFalldetectordepth() {
-		return FallDetectorDepth;
-	}
-
-	public static String getFalldetectorrange() {
-		return FallDetectorRange;
-	}
-
-	public static String getOredetectordelay() {
-		return OreDetectorDelay;
-	}
-
-	public static String getFindfluidtextkey() {
-		return FindFluidTextKey;
-	}
-
-	public static String getFindfluidvolume() {
-		return FindFluidVolume;
-	}
-
-	public static String getFindfluidpitch() {
-		return FindFluidPitch;
-	}
-
-	public static String getFindfluidrange() {
-		return FindFluidRange;
-	}
-
-	public static String getOredetectorrange() {
-		return OreDetectorRange;
-	}
-
-	public static String getOredetectorvolume() {
-		return OreDetectorVolume;
-	}
-
-	public static String getOredetectorpitch() {
-		return OreDetectorPitch;
-	}
-
-	public static String getLavadetectorkey() {
-		return LavaDetectorKey;
-	}
-
-	public static String getWaterdetectorkey() {
-		return WaterDetectorKey;
-	}
-
-	public static String getOredetectorkey() {
-		return OreDetectorKey;
-	}
-
-	public static String getEntitynarratorkey() {
-		return EntityNarratorKey;
-	}
-
-	public static String getEntitynarratornarratedistancekey() {
-		return EntityNarratorNarrateDistanceKey;
-	}
-
-	public static String getDurabilitycheckerkey() {
-		return DurabilityCheckKey;
-	}
-
-	public static String getFalldetectorkey() {
-		return FallDetectorKey;
-	}
-
-	public static String getNarrateblocksidekey() {
-		return NarrateBlockSideKey;
-	}
-
 }

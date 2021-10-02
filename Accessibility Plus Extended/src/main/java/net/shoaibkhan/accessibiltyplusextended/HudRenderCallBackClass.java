@@ -4,14 +4,15 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
-// import net.minecraft.client.options.KeyBinding;
-import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.options.KeyBinding;
+// import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
-import net.shoaibkhan.accessibiltyplusextended.features.EntityLocking;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.features.FeaturesWithThreadHandler;
+import net.shoaibkhan.accessibiltyplusextended.features.LockingHandler;
 import net.shoaibkhan.accessibiltyplusextended.gui.AccessibilityPlusConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigScreen;
@@ -22,15 +23,14 @@ public class HudRenderCallBackClass {
 	public static boolean isTradeScreenOpen = false;
 	public static boolean isAltPressed, isControlPressed, isDPressed, isAPressed, isWPressed, isSPressed, isRPressed,
 			isFPressed, isCPressed, isVPressed, isTPressed, isEnterPressed;
-	private KeyBinding CONFIG_KEY, LockEntityKey, AP_CONFIG_KEY;
+	private KeyBinding CONFIG_KEY, AP_CONFIG_KEY;
 	public static int currentColumn = 0;
 	public static int currentRow = 0;
-	private HudScreenHandler hudScreenHandler;
+	private final HudScreenHandler hudScreenHandler;
 
 	public HudRenderCallBackClass(KeyBinding CONFIG_KEY, KeyBinding LockEntityKey, KeyBinding AP_CONFIG_KEY) {
 		this.CONFIG_KEY = CONFIG_KEY;
 		this.AP_CONFIG_KEY = AP_CONFIG_KEY;
-		this.LockEntityKey = LockEntityKey;
 		hudScreenHandler = new HudScreenHandler();
 		HudRenderCallback.EVENT.register(this::hudRenderCallbackEventMethod);
 	}
@@ -44,7 +44,8 @@ public class HudRenderCallBackClass {
 
 			keyPresses(CONFIG_KEY);
 
-			new EntityLocking(client, LockEntityKey);
+			if (Config.get(ConfigKeys.POI_KEY.getKey()))
+				new LockingHandler();
 
 			new FeaturesWithThreadHandler(client);
 
@@ -52,7 +53,7 @@ public class HudRenderCallBackClass {
 			e.printStackTrace();
 		}
 
-		if (Config.get(Config.getInvKeyboardControlKey())) {
+		if (Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
 
 			isDPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
 					InputUtil.fromTranslationKey("key.keyboard.d").getCode()));
@@ -83,6 +84,11 @@ public class HudRenderCallBackClass {
 			} else {
 				Screen screen = client.currentScreen;
 				hudScreenHandler.screenHandler(screen);
+
+				// Reset lockOnBlock
+				LockingHandler.lockedOnBlockEntries = "";
+				LockingHandler.lockedOnBlock = null;
+				LockingHandler.isLockedOntoLadder = false;
 			}
 		}
 	}
@@ -91,11 +97,11 @@ public class HudRenderCallBackClass {
 		isAltPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
 				InputUtil.fromTranslationKey("key.keyboard.left.alt").getCode())
 				|| InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
-				InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
+						InputUtil.fromTranslationKey("key.keyboard.right.alt").getCode()));
 		isControlPressed = (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
 				InputUtil.fromTranslationKey("key.keyboard.left.control").getCode())
 				|| InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(),
-				InputUtil.fromTranslationKey("key.keyboard.right.control").getCode()));
+						InputUtil.fromTranslationKey("key.keyboard.right.control").getCode()));
 
 		while (CONFIG_KEY.wasPressed()) {
 			if (!isControlPressed) {

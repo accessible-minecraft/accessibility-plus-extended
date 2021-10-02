@@ -22,9 +22,9 @@ public class SettingsGui extends LightweightGuiDescription {
 		WGridPanel root = new WGridPanel();
 		setRootPanel(root);
 
-		WButton oreDetectorButton = new WButton(new TranslatableText("gui.apextended.config.buttons.oredetectorsettings"));
-		oreDetectorButton.setOnClick(this::onOreDetectorClick);
-		root.add(oreDetectorButton, 1, 3, 7, 1);
+		WButton poiButton = new WButton(new TranslatableText("gui.apextended.config.buttons.poisettings"));
+		poiButton.setOnClick(this::onOreDetectorClick);
+		root.add(poiButton, 1, 3, 7, 1);
 
 		WButton fallDetectorButton = new WButton(new TranslatableText("gui.apextended.config.buttons.falldetectorsettings"));
 		fallDetectorButton.setOnClick(this::onFallDetectorClick);
@@ -38,24 +38,20 @@ public class SettingsGui extends LightweightGuiDescription {
 		durabilityCheckerButton.setOnClick(this::onDurabilityCheckerClick);
 		root.add(durabilityCheckerButton, 11, 5, 9, 1);
 
-		WButton entityNarratorButton = new WButton(new TranslatableText("gui.apextended.config.buttons.entitynarratorsettings"));
-		entityNarratorButton .setOnClick(this::onEntityNarratorClick);
-		root.add(entityNarratorButton , 1, 7, 9, 1);
-
 		WButton backButton = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));
 		backButton.setOnClick(this::onBackClick);
-		root.add(backButton, 2, 9, 7, 1);
+		root.add(backButton, 2, 7, 7, 1);
 
 		WButton doneButton = new WButton(new TranslatableText("gui.apextended.config.buttons.done"));
 		doneButton.setOnClick(this::onDoneClick);
-		root.add(doneButton, 12, 9, 7, 1);
+		root.add(doneButton, 12, 7, 7, 1);
 
 		WLabel label = new WLabel(new TranslatableText("gui.apextended.config.buttons.settings"), modInit.colors("red", 100));
 		label.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(label, 0, 1, 21, 1);
 		WLabel fakeLabel = new WLabel(new LiteralText(""), modInit.colors("red", 100));
 		fakeLabel.setHorizontalAlignment(HorizontalAlignment.CENTER);
-		root.add(fakeLabel, 0, 10, 21, 1);
+		root.add(fakeLabel, 0, 8, 21, 1);
 
 		root.validate(this);
 	}
@@ -72,7 +68,7 @@ public class SettingsGui extends LightweightGuiDescription {
 
 	private void onOreDetectorClick() {
 		this.player.closeScreen();
-		this.client.openScreen(new ConfigScreen(new OreDetectorGui(player, client), "Ore Detector Settings", player));
+		this.client.openScreen(new ConfigScreen(new POIGui(player, client), "POI Settings", player));
 	}
 
 	private void onFallDetectorClick() {
@@ -82,17 +78,12 @@ public class SettingsGui extends LightweightGuiDescription {
 
 	private void onFindFluidClick() {
 		this.player.closeScreen();
-		this.client.openScreen(new ConfigScreen(new FindFluidGui(player, client), "Fall Detector Settings", player));
+		this.client.openScreen(new ConfigScreen(new FindFluidGui(player, client), "Find Fluid Settings", player));
 	}
 
 	private void onDurabilityCheckerClick() {
 		this.player.closeScreen();
 		this.client.openScreen( new ConfigScreen(new DurabilityCheckerGui(player, client), "Durability Checker Settings", player));
-	}
-
-	private void onEntityNarratorClick() {
-		this.player.closeScreen();
-		this.client.openScreen( new ConfigScreen(new EntityNarratorGui(player, client), "Entity Narrator Settings", player));
 	}
 
 	@Override

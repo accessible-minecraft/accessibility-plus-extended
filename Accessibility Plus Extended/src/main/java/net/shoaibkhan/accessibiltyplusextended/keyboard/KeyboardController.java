@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.util.List;
 
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import org.lwjgl.glfw.GLFW;
 
 import blue.endless.jankson.annotation.Nullable;
@@ -13,8 +14,8 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
-//import net.minecraft.client.options.KeyBinding;
-import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.options.KeyBinding;
+// import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
@@ -73,7 +74,7 @@ public class KeyboardController {
     RIGHT_CLICK_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.mouserightclick",
         InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_X, "key.categories.apextended.inventorycontrol"));
 
-    if(Config.get(Config.getInvKeyboardControlKey())) {
+    if(Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
       ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
       ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
     }
@@ -104,7 +105,7 @@ public class KeyboardController {
 
   private static ActionResult onKeyPress(MinecraftClient mc, Screen currentScreen, int keyCode, int scanCode,
       int modifiers) {
-    if (screen != null && Config.get(Config.getInvKeyboardControlKey()) && !HudScreenHandler.isSearchingRecipies) {
+    if (screen != null && Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey()) && !HudScreenHandler.isSearchingRecipies) {
       if (LEFT_KEY.matchesKey(keyCode, scanCode)) {
         focusSlotAt(FocusDirection.LEFT);
       } else if (RIGHT_KEY.matchesKey(keyCode, scanCode)) {

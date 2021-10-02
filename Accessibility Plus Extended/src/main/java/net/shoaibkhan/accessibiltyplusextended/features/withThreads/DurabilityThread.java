@@ -6,11 +6,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
 public class DurabilityThread extends Thread {
-	private MinecraftClient client;
+	private final MinecraftClient client;
 	private double threshold;
 	public static String[] thresholdArray = { "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60",
 			"65", "70", "75", "80", "85", "90", "95" };
@@ -22,14 +23,15 @@ public class DurabilityThread extends Thread {
 
 	public void run() {
 		try {
-			threshold = Integer.parseInt(thresholdArray[Config.getInt(Config.getDurabilitythresholdkey())] + "");
+			threshold = Integer.parseInt(thresholdArray[Config.getInt(ConfigKeys.DURABILITY_THRESHOLD_KEY.getKey())] + "");
 		} catch (Exception e) {
 			threshold = 25;
 		}
 
 		try {
-			PlayerInventory playerInventory = this.client.player.getInventory(); // For 1.17
-//			PlayerInventory playerInventory = this.client.player.inventory;      // For 1.16
+			assert this.client.player != null;
+			// PlayerInventory playerInventory = this.client.player.getInventory(); // For 1.17
+			PlayerInventory playerInventory = this.client.player.inventory;      // For 1.16
 			int size = playerInventory.size();
 			for (int i = 0; i <= size; i++) {
 				ItemStack itemStack = playerInventory.getStack(i);

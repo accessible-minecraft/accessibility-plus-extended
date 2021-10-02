@@ -8,7 +8,7 @@ import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.TranslatableText;
-import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 
 public class AccessibilityPlusConfigGui extends LightweightGuiDescription {
     private ClientPlayerEntity player;
@@ -20,19 +20,19 @@ public class AccessibilityPlusConfigGui extends LightweightGuiDescription {
         setRootPanel(root);
         root.setSize(240, 240);
 
-        ConfigButton readBlocksButton = new ConfigButton("gui.apextended.config.buttons.readblocks", Config.getReadblocksKey());
+        ConfigButton readBlocksButton = new ConfigButton("gui.apextended.config.buttons.readblocks", ConfigKeys.READ_BLOCKS_KEY.getKey());
         root.add(readBlocksButton, 0, 1, 10, 1);
 
-        ConfigButton readTooltipsButton = new ConfigButton("gui.apextended.config.buttons.readtooltips", Config.getReadTooltipsKey());
+        ConfigButton readTooltipsButton = new ConfigButton("gui.apextended.config.buttons.readtooltips", ConfigKeys.READ_TOOLTIPS_KEY.getKey());
         root.add(readTooltipsButton, 11, 1, 10, 1);
 
-        ConfigButton readSignsButton = new ConfigButton("gui.apextended.config.buttons.readsignscontents", Config.getReadSignsContents());
+        ConfigButton readSignsButton = new ConfigButton("gui.apextended.config.buttons.readsignscontents", ConfigKeys.READ_SIGNS_CONTENTS.getKey());
         root.add(readSignsButton, 0, 2, 10, 1);
 
-        ConfigButton inventoryKeyboardControllButton = new ConfigButton("gui.apextended.config.buttons.inventorykeyboardcontrol", Config.INV_KEYBOARD_CONTROL_KEY);
+        ConfigButton inventoryKeyboardControllButton = new ConfigButton("gui.apextended.config.buttons.inventorykeyboardcontrol", ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey());
         root.add(inventoryKeyboardControllButton, 11, 2, 10, 1);
 
-        ConfigButton actionBarButton = new ConfigButton("gui.apextended.config.buttons.actionbar", Config.getAtionBarKey());
+        ConfigButton actionBarButton = new ConfigButton("gui.apextended.config.buttons.actionbar", ConfigKeys.ATION_BAR_KEY.getKey());
         root.add(actionBarButton, 0, 3, 10, 1);
 
         WButton doneButton = new WButton(new TranslatableText("gui.apextended.config.buttons.done"));

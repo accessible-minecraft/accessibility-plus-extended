@@ -10,8 +10,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
-import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.FallDetectorThread;
 
 public class FallDetectorGui extends LightweightGuiDescription {
@@ -24,10 +24,10 @@ public class FallDetectorGui extends LightweightGuiDescription {
     WGridPanel root = new WGridPanel();
     setRootPanel(root);
 
-    ArrayButton fdrButton = new ArrayButton("gui.apextended.config.buttons.range", Config.getFalldetectorrange(), FallDetectorThread.range);
+    ArrayButton fdrButton = new ArrayButton("gui.apextended.config.buttons.range", ConfigKeys.FALL_DETECTOR_RANGE_KEY.getKey(), FallDetectorThread.range);
     root.add(fdrButton, 1, 3, 10, 1);
 
-    ArrayButton fdcButton = new ArrayButton("gui.apextended.config.buttons.depth", Config.getFalldetectordepth(), FallDetectorThread.depthArray);
+    ArrayButton fdcButton = new ArrayButton("gui.apextended.config.buttons.depth", ConfigKeys.FALL_DETECTOR_DEPTH.getKey(), FallDetectorThread.depthArray);
     root.add(fdcButton, 12, 3, 10, 1);
 
     WButton backButton = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));
