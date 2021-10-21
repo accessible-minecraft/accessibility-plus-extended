@@ -1,40 +1,24 @@
 package net.shoaibkhan.accessibiltyplusextended.keyboard;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.util.List;
-
-import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
-import org.lwjgl.glfw.GLFW;
-
 import blue.endless.jankson.annotation.Nullable;
-import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
-import me.shedaniel.cloth.api.client.events.v0.ScreenHooks;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.options.KeyBinding;
-// import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
+import net.shoaibkhan.accessibiltyplusextended.HudRenderCallBackClass;
 import net.shoaibkhan.accessibiltyplusextended.HudScreenHandler;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.mixin.AccessorHandledScreen;
+import net.shoaibkhan.accessibiltyplusextended.util.KeyBinds;
+import org.lwjgl.glfw.GLFW;
+
+import java.awt.*;
+import java.util.List;
+
 
 public class KeyboardController {
-  private static KeyBinding LEFT_KEY;
-  private static KeyBinding RIGHT_KEY;
-  private static KeyBinding UP_KEY;
-  private static KeyBinding DOWN_KEY;
-  private static KeyBinding GROUP_KEY;
-  private static KeyBinding HOME_KEY;
-  private static KeyBinding END_KEY;
-  private static KeyBinding CLICK_KEY;
-  private static KeyBinding RIGHT_CLICK_KEY;
   private static MinecraftClient client;
   @Nullable
   private static List<SlotsGroup> groups;
@@ -55,28 +39,60 @@ public class KeyboardController {
   }
 
   public KeyboardController() {
-    LEFT_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.left", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_LEFT, "key.categories.apextended.inventorycontrol"));
-    RIGHT_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.right", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_RIGHT, "key.categories.apextended.inventorycontrol"));
-    UP_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.up", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_UP, "key.categories.apextended.inventorycontrol"));
-    DOWN_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.down", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_DOWN, "key.categories.apextended.inventorycontrol"));
-    GROUP_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.group", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_TAB, "key.categories.apextended.inventorycontrol"));
-    HOME_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.home", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_HOME, "key.categories.apextended.inventorycontrol"));
-    END_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.end", InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_END, "key.categories.apextended.inventorycontrol"));
-    CLICK_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.mouseclick",
-        InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Z, "key.categories.apextended.inventorycontrol"));
-    RIGHT_CLICK_KEY = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.mouserightclick",
-        InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_X, "key.categories.apextended.inventorycontrol"));
+      client = MinecraftClient.getInstance();
 
-    if(Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
-      ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
-      ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
+      main();
+//    if(Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
+//      ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
+//      ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
+//    }
+  }
+
+  private void main(){
+
+    groups = null;
+    screen = null;
+    currentGroup = null;
+    currentSlot = null;
+
+    if (client.currentScreen != null && client.currentScreen instanceof AccessorHandledScreen) {
+      screen = (AccessorHandledScreen) client.currentScreen;
+      groups = SlotsGroup.generateGroupsFromSlots(screen.getHandler().slots);
+      moveMouseToHome();
+    }
+
+    if (screen != null && Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey()) && !HudScreenHandler.isSearchingRecipies) {
+      if (KeyBinds.LEFT_KEY.getKeyBind().wasPressed()) {
+        focusSlotAt(FocusDirection.LEFT);
+      } else if (KeyBinds.RIGHT_KEY.getKeyBind().wasPressed()) {
+        focusSlotAt(FocusDirection.RIGHT);
+      } else if (KeyBinds.UP_KEY.getKeyBind().wasPressed()) {
+        focusSlotAt(FocusDirection.UP);
+      } else if (KeyBinds.DOWN_KEY.getKeyBind().wasPressed()) {
+        focusSlotAt(FocusDirection.DOWN);
+      } else if (KeyBinds.GROUP_KEY.getKeyBind().wasPressed()) {
+        if (HudRenderCallBackClass.isShiftPressed) {
+          focusGroupVertically(false);
+        } else {
+          focusGroupVertically(true);
+        }
+      } else if (KeyBinds.HOME_KEY.getKeyBind().wasPressed()) {
+        if (HudRenderCallBackClass.isShiftPressed) {
+          focusEdgeGroup(false);
+        } else {
+          focusEdgeSlot(false);
+        }
+      } else if (KeyBinds.END_KEY.getKeyBind().wasPressed()) {
+        if (HudRenderCallBackClass.isShiftPressed) {
+          focusEdgeGroup(true);
+        } else {
+          focusEdgeSlot(true);
+        }
+      } else if (KeyBinds.CLICK_KEY.getKeyBind().wasPressed()) {
+        click(false);
+      } else if (KeyBinds.RIGHT_CLICK_KEY.getKeyBind().wasPressed()) {
+        click(true);
+      }
     }
   }
 
@@ -86,60 +102,6 @@ public class KeyboardController {
     } else {
       return hasControlOverMouse;
     }
-  }
-
-  private static ActionResult onScreenOpen(MinecraftClient mc, Screen currentScreen, ScreenHooks screenHooks) {
-    client = mc;
-    groups = null;
-    screen = null;
-    currentGroup = null;
-    currentSlot = null;
-
-    if (currentScreen != null && currentScreen instanceof AccessorHandledScreen) {
-      screen = (AccessorHandledScreen) currentScreen;
-      groups = SlotsGroup.generateGroupsFromSlots(screen.getHandler().slots);
-      moveMouseToHome();
-    }
-    return ActionResult.PASS;
-  }
-
-  private static ActionResult onKeyPress(MinecraftClient mc, Screen currentScreen, int keyCode, int scanCode,
-      int modifiers) {
-    if (screen != null && Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey()) && !HudScreenHandler.isSearchingRecipies) {
-      if (LEFT_KEY.matchesKey(keyCode, scanCode)) {
-        focusSlotAt(FocusDirection.LEFT);
-      } else if (RIGHT_KEY.matchesKey(keyCode, scanCode)) {
-        focusSlotAt(FocusDirection.RIGHT);
-      } else if (UP_KEY.matchesKey(keyCode, scanCode)) {
-        focusSlotAt(FocusDirection.UP);
-      } else if (DOWN_KEY.matchesKey(keyCode, scanCode)) {
-        focusSlotAt(FocusDirection.DOWN);
-      } else if (GROUP_KEY.matchesKey(keyCode, scanCode)) {
-        if (modifiers == GLFW.GLFW_MOD_SHIFT) {
-          focusGroupVertically(false);
-        } else {
-          focusGroupVertically(true);
-        }
-        return ActionResult.SUCCESS;
-      } else if (HOME_KEY.matchesKey(keyCode, scanCode)) {
-        if (modifiers == GLFW.GLFW_MOD_SHIFT) {
-          focusEdgeGroup(false);
-        } else {
-          focusEdgeSlot(false);
-        }
-      } else if (END_KEY.matchesKey(keyCode, scanCode)) {
-        if (modifiers == GLFW.GLFW_MOD_SHIFT) {
-          focusEdgeGroup(true);
-        } else {
-          focusEdgeSlot(true);
-        }
-      } else if (CLICK_KEY.matchesKey(keyCode, scanCode)) {
-        click(false);
-      } else if (RIGHT_CLICK_KEY.matchesKey(keyCode, scanCode)) {
-        click(true);
-      }
-    }
-    return ActionResult.PASS;
   }
 
   private static void focusSlotAt(FocusDirection direction) {

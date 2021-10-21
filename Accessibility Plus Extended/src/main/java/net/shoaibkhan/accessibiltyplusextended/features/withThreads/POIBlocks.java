@@ -138,7 +138,7 @@ public class POIBlocks extends Thread {
 
         FluidState fluidState = client.world.getFluidState(blockPos);
 
-        if ((name.contains("lava") || name.contains("water"))) {
+        if ((name.contains("lava") || name.contains("water")) && Config.get(ConfigKeys.POI_FLUID_DETECTOR_Key.getKey())) {
             if (fluidState.getLevel() == 8) {
                 blocks.put(diff, blockVec3dPos);
                 playSound = true;

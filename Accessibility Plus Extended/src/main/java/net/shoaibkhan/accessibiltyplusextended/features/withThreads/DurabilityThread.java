@@ -30,8 +30,8 @@ public class DurabilityThread extends Thread {
 
 		try {
 			assert this.client.player != null;
-			// PlayerInventory playerInventory = this.client.player.getInventory(); // For 1.17
-			PlayerInventory playerInventory = this.client.player.inventory;      // For 1.16
+			 PlayerInventory playerInventory = this.client.player.getInventory(); // For 1.17
+//			PlayerInventory playerInventory = this.client.player.inventory;      // For 1.16
 			int size = playerInventory.size();
 			for (int i = 0; i <= size; i++) {
 				ItemStack itemStack = playerInventory.getStack(i);

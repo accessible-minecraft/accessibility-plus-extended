@@ -36,12 +36,11 @@ public class POIEntities extends Thread {
 			for (Entity i : client.world.getEntities()) {
 
 				// For curseforge
-				// if (!(i instanceof MobEntity || i instanceof ItemEntity || i instanceof EyeOfEnderEntity))
-				// continue;
+//				 if (!(i instanceof MobEntity || i instanceof ItemEntity || i instanceof EyeOfEnderEntity))
+//				 continue;
 
 				// For discord
-				if (!(i instanceof MobEntity || i instanceof ItemEntity || i instanceof EyeOfEnderEntity
-						|| (i instanceof PlayerEntity && i != client.player)))
+				if (!(i instanceof MobEntity || i instanceof ItemEntity || i instanceof EyeOfEnderEntity || (i instanceof PlayerEntity && i != client.player)))
 					continue;
 
 				BlockPos blockPos = i.getBlockPos();

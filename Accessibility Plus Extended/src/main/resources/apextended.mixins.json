@@ -12,6 +12,7 @@
     "ActionbarInject",
     "ItemStackTooltipInject",
     "NarratorManagerInject",
+    "ChatNarrationMixin",
     "RenderTooltipInject"
   ],
   "injectors": {

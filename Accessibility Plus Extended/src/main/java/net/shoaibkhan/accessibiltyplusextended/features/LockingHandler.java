@@ -21,6 +21,7 @@ import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
+import net.shoaibkhan.accessibiltyplusextended.util.KeyBinds;
 
 public class LockingHandler {
     public static Entity lockedOnEntity = null;
@@ -83,7 +84,7 @@ public class LockingHandler {
             }
         }
 
-        if (modInit.LockEntityKey.wasPressed()) {
+        if (KeyBinds.LockEntityKey.getKeyBind().wasPressed()) {
             if (HudRenderCallBackClass.isAltPressed && (lockedOnEntity != null || lockedOnBlock != null)) {
                 NarratorPlus.narrate("Unlocked");
                 lockedOnEntity = null;
