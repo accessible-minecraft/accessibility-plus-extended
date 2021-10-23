@@ -1,11 +1,14 @@
 package net.shoaibkhan.accessibiltyplusextended.keyboard;
 
 import blue.endless.jankson.annotation.Nullable;
+import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
+import me.shedaniel.cloth.api.client.events.v0.ScreenHooks;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
-import net.shoaibkhan.accessibiltyplusextended.HudRenderCallBackClass;
+import net.minecraft.util.ActionResult;
 import net.shoaibkhan.accessibiltyplusextended.HudScreenHandler;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
@@ -16,7 +19,6 @@ import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 import java.util.List;
-
 
 public class KeyboardController {
   private static MinecraftClient client;
@@ -39,60 +41,9 @@ public class KeyboardController {
   }
 
   public KeyboardController() {
-      client = MinecraftClient.getInstance();
-
-      main();
-//    if(Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
-//      ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
-//      ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
-//    }
-  }
-
-  private void main(){
-
-    groups = null;
-    screen = null;
-    currentGroup = null;
-    currentSlot = null;
-
-    if (client.currentScreen != null && client.currentScreen instanceof AccessorHandledScreen) {
-      screen = (AccessorHandledScreen) client.currentScreen;
-      groups = SlotsGroup.generateGroupsFromSlots(screen.getHandler().slots);
-      moveMouseToHome();
-    }
-
-    if (screen != null && Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey()) && !HudScreenHandler.isSearchingRecipies) {
-      if (KeyBinds.LEFT_KEY.getKeyBind().wasPressed()) {
-        focusSlotAt(FocusDirection.LEFT);
-      } else if (KeyBinds.RIGHT_KEY.getKeyBind().wasPressed()) {
-        focusSlotAt(FocusDirection.RIGHT);
-      } else if (KeyBinds.UP_KEY.getKeyBind().wasPressed()) {
-        focusSlotAt(FocusDirection.UP);
-      } else if (KeyBinds.DOWN_KEY.getKeyBind().wasPressed()) {
-        focusSlotAt(FocusDirection.DOWN);
-      } else if (KeyBinds.GROUP_KEY.getKeyBind().wasPressed()) {
-        if (HudRenderCallBackClass.isShiftPressed) {
-          focusGroupVertically(false);
-        } else {
-          focusGroupVertically(true);
-        }
-      } else if (KeyBinds.HOME_KEY.getKeyBind().wasPressed()) {
-        if (HudRenderCallBackClass.isShiftPressed) {
-          focusEdgeGroup(false);
-        } else {
-          focusEdgeSlot(false);
-        }
-      } else if (KeyBinds.END_KEY.getKeyBind().wasPressed()) {
-        if (HudRenderCallBackClass.isShiftPressed) {
-          focusEdgeGroup(true);
-        } else {
-          focusEdgeSlot(true);
-        }
-      } else if (KeyBinds.CLICK_KEY.getKeyBind().wasPressed()) {
-        click(false);
-      } else if (KeyBinds.RIGHT_CLICK_KEY.getKeyBind().wasPressed()) {
-        click(true);
-      }
+    if(Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
+      ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
+      ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
     }
   }
 
@@ -102,6 +53,60 @@ public class KeyboardController {
     } else {
       return hasControlOverMouse;
     }
+  }
+
+  private static ActionResult onScreenOpen(MinecraftClient mc, Screen currentScreen, ScreenHooks screenHooks) {
+    client = mc;
+    groups = null;
+    screen = null;
+    currentGroup = null;
+    currentSlot = null;
+
+    if (currentScreen != null && currentScreen instanceof AccessorHandledScreen) {
+      screen = (AccessorHandledScreen) currentScreen;
+      groups = SlotsGroup.generateGroupsFromSlots(screen.getHandler().slots);
+      moveMouseToHome();
+    }
+    return ActionResult.PASS;
+  }
+
+  private static ActionResult onKeyPress(MinecraftClient mc, Screen currentScreen, int keyCode, int scanCode,
+      int modifiers) {
+    if (screen != null && Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey()) && !HudScreenHandler.isSearchingRecipies) {
+      if (KeyBinds.LEFT_KEY.getKeyBind().matchesKey(keyCode, scanCode)) {
+        focusSlotAt(FocusDirection.LEFT);
+      } else if (KeyBinds.RIGHT_KEY.getKeyBind().matchesKey(keyCode, scanCode)) {
+        focusSlotAt(FocusDirection.RIGHT);
+      } else if (KeyBinds.UP_KEY.getKeyBind().matchesKey(keyCode, scanCode)) {
+        focusSlotAt(FocusDirection.UP);
+      } else if (KeyBinds.DOWN_KEY.getKeyBind().matchesKey(keyCode, scanCode)) {
+        focusSlotAt(FocusDirection.DOWN);
+      } else if (KeyBinds.GROUP_KEY.getKeyBind().matchesKey(keyCode, scanCode)) {
+        if (modifiers == GLFW.GLFW_MOD_SHIFT) {
+          focusGroupVertically(false);
+        } else {
+          focusGroupVertically(true);
+        }
+        return ActionResult.SUCCESS;
+      } else if (KeyBinds.HOME_KEY.getKeyBind().matchesKey(keyCode, scanCode)) {
+        if (modifiers == GLFW.GLFW_MOD_SHIFT) {
+          focusEdgeGroup(false);
+        } else {
+          focusEdgeSlot(false);
+        }
+      } else if (KeyBinds.END_KEY.getKeyBind().matchesKey(keyCode, scanCode)) {
+        if (modifiers == GLFW.GLFW_MOD_SHIFT) {
+          focusEdgeGroup(true);
+        } else {
+          focusEdgeSlot(true);
+        }
+      } else if (KeyBinds.CLICK_KEY.getKeyBind().matchesKey(keyCode, scanCode)) {
+        click(false);
+      } else if (KeyBinds.RIGHT_CLICK_KEY.getKeyBind().matchesKey(keyCode, scanCode)) {
+        click(true);
+      }
+    }
+    return ActionResult.PASS;
   }
 
   private static void focusSlotAt(FocusDirection direction) {

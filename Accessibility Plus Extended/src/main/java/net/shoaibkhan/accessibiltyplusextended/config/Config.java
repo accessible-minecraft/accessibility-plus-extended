@@ -165,6 +165,8 @@ public class Config {
 
 		// Point of Interest
 		data.add(ConfigKeys.POI_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.POI_ENTITY_KEY.getKey(), new JsonPrimitive(true));
+		data.add(ConfigKeys.POI_BLOCK_KEY.getKey(), new JsonPrimitive(true));
 		data.add(ConfigKeys.POI_ENTITY_LOCKING_NARRATE_DISTANCE_KEY.getKey(), new JsonPrimitive(false));
 		data.add(ConfigKeys.POI_BLOCKS_LOCKING_NARRATE_DISTANCE_KEY.getKey(), new JsonPrimitive(false));
 		data.add(ConfigKeys.POI_VOLUME.getKey(), new JsonPrimitive("5"));

@@ -70,21 +70,21 @@ public class POIEntities extends Thread {
 
 					} else if (i instanceof PassiveEntity) {
 						passiveEntity.put(distance, i);
-						if (!modInit.mainThreadMap.containsKey("passiveentity+" + entityString)) {
+						if (!modInit.mainThreadMap.containsKey("passiveentity+" + entityString) && volume>0) {
 							client.world.playSound(blockPos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.BLOCKS,
 									volume, 0f, true);
 							modInit.mainThreadMap.put("passiveentity+" + entityString, delay);
 						}
 					} else if (i instanceof HostileEntity) {
 						hostileEntity.put(distance, i);
-						if (!modInit.mainThreadMap.containsKey("hostileentity+" + entityString)) {
+						if (!modInit.mainThreadMap.containsKey("hostileentity+" + entityString) && volume>0) {
 							client.world.playSound(blockPos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.BLOCKS,
 									volume, 2f, true);
 							modInit.mainThreadMap.put("hostileentity+" + entityString, delay);
 						}
 					} else if (i instanceof ItemEntity) {
-						if (((ItemEntity) i).isOnGround()) {
-							if (!modInit.mainThreadMap.containsKey("itementity+" + i)) {
+						if (i.isOnGround()) {
+							if (!modInit.mainThreadMap.containsKey("itementity+" + i) && volume>0) {
 								client.world.playSound(blockPos, SoundEvents.BLOCK_METAL_PRESSURE_PLATE_CLICK_ON,
 										SoundCategory.BLOCKS, volume, 2f, true);
 								modInit.mainThreadMap.put("itementity+" + i, delay);
@@ -92,7 +92,7 @@ public class POIEntities extends Thread {
 						}
 					} else if (i instanceof PlayerEntity) {
 						passiveEntity.put(distance, i);
-						if (!modInit.mainThreadMap.containsKey("passiveentity+" + entityString)) {
+						if (!modInit.mainThreadMap.containsKey("passiveentity+" + entityString) && volume>0) {
 							client.world.playSound(blockPos, SoundEvents.BLOCK_NOTE_BLOCK_BELL, SoundCategory.BLOCKS,
 									volume, 0f, true);
 							modInit.mainThreadMap.put("passiveentity+" + entityString, delay);

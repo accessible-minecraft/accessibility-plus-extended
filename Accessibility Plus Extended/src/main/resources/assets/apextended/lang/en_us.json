@@ -18,6 +18,8 @@
   "gui.apextended.config.buttons.readentity": "Read Entity: %s",
   "gui.apextended.config.buttons.falldetector": "Fall Detector: %s",
   "gui.apextended.config.buttons.poi": "POI: %s",
+  "gui.apextended.config.buttons.poientitykey": "Entity Detection: %s",
+  "gui.apextended.config.buttons.poiblockskey": "Blocks Detection: %s",
   "gui.apextended.config.buttons.durabilitychecker": "Durability Checker: %s",
   "gui.apextended.config.buttons.chatnarration": "Chat Narration: %s",
   "gui.apextended.config.buttons.threshold": "Threshold: %s",

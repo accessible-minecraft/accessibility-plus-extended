@@ -24,6 +24,19 @@ public class POIHandler {
     public static String[] range = { "5", "6", "7", "8"};
     public static String[] delay = { "1" ,"2","3","4" ,"5", "6", "7", "8", "9", "10"};
 
+    public static void reInitialize(){
+        oreBlocks = new TreeMap<>();
+        doorBlocks = new TreeMap<>();
+        buttonBlocks = new TreeMap<>();
+        blocks = new TreeMap<>();
+        ladderBlocks = new TreeMap<>();
+        leverBlocks = new TreeMap<>();
+        trapDoorBlocks = new TreeMap<>();
+        passiveEntity = new TreeMap<>();
+        hostileEntity = new TreeMap<>();
+        eyeOfEnderEntity = new TreeMap<>();
+    }
+
     public static int getRange(){
         try {
             int index = Config.getInt(ConfigKeys.POI_RANGE.getKey());

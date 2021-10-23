@@ -202,7 +202,7 @@ public class POIBlocks extends Thread {
             checkBlock(new BlockPos(new Vec3d(posX, posY - 1, posZ)), val - 1); // Bottom Block
         }
 
-        if (playSound && !modInit.mainThreadMap.containsKey("sound+" + blockPos)) {
+        if (playSound && !modInit.mainThreadMap.containsKey("sound+" + blockPos) && volume>0) {
 
             if (soundType.equalsIgnoreCase("ore"))
                 client.world.playSound(new BlockPos(blockVec3dPos), SoundEvents.ENTITY_ITEM_PICKUP,

@@ -37,6 +37,8 @@ public enum ConfigKeys {
     // Point Of Interest
     POI_ENTITY_LOCKING_NARRATE_DISTANCE_KEY("poi_entity_locking_narrate_distance_key"),
     POI_BLOCKS_LOCKING_NARRATE_DISTANCE_KEY("poi_blocks_locking_narrate_distance_key"),
+    POI_ENTITY_KEY("poi_entity_key"),
+    POI_BLOCK_KEY("poi_blocks_key"),
     POI_UNLOCKING_SOUND_KEY("poi_unlocking_sound_key"),
     POI_UNLOCKING_SOUND_VOLUME("poi_unlocking_sound_volume"),
     POI_FLUID_DETECTOR_Key("poi_fluid_detector_key"),

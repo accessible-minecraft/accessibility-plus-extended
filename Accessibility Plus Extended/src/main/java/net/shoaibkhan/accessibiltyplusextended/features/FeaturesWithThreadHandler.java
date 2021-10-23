@@ -57,13 +57,15 @@ public class FeaturesWithThreadHandler {
 
 			// Point Of Interest
 			if(Config.get(ConfigKeys.POI_KEY.getKey())){
-				if(!poiEntities.running){
+				POIHandler.reInitialize();
+
+				if(!poiEntities.running && Config.get(ConfigKeys.POI_ENTITY_KEY.getKey())){
 					poiEntities = new POIEntities();
 					poiEntities.start();
 				}
 
 
-				if(!poiBlocks.running){
+				if(!poiBlocks.running && Config.get(ConfigKeys.POI_BLOCK_KEY.getKey())){
 					poiBlocks = new POIBlocks();
 					poiBlocks.start();
 				}

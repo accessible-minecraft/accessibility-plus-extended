@@ -1,7 +1,7 @@
 package net.shoaibkhan.accessibiltyplusextended.gui;
 
 import io.github.cottonmc.cotton.gui.widget.WButton;
- import io.github.cottonmc.cotton.gui.widget.data.InputResult;
+import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
@@ -34,7 +34,7 @@ public class ConfigButton extends WButton {
 //		super.onClick(x, y, button);
 //		if (this.isEnabled()) {
 //			boolean enabled = Config.toggle(this.jsonKey);
-//			TranslatableText newButtonText = new TranslatableText(this.translateKey , (enabled ? " : on" : " : off"));
+//			TranslatableText newButtonText = new TranslatableText(this.translateKey , (enabled ? "on" : "off"));
 //			this.setLabel(newButtonText);
 //		}
 //	}

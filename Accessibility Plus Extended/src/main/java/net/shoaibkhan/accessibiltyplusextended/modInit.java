@@ -15,8 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// import net.minecraft.client.options.KeyBinding;
-
 public class modInit implements ModInitializer {
 	HudRenderCallBackClass hudRenderCallBackClass;
 	public static Map<String, Integer> mainThreadMap;
@@ -29,6 +27,8 @@ public class modInit implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		keyboardController = new KeyboardController();
+
 		narrator = new NarratorPlus();
 		this.initializeKeyBinds();
 		System.setProperty("java.awt.headless", "false");

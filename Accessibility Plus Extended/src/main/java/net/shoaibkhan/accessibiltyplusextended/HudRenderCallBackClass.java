@@ -45,10 +45,6 @@ public class HudRenderCallBackClass {
 				new LockingHandler();
 
 			new FeaturesWithThreadHandler(client);
-
-			if(client.currentScreen!=null){
-				new KeyboardController();
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
