@@ -1,33 +1,27 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
 import com.mojang.brigadier.CommandDispatcher;
-
-import io.github.cottonmc.clientcommands.ArgumentBuilders;
-import io.github.cottonmc.clientcommands.ClientCommandPlugin;
-import io.github.cottonmc.clientcommands.CottonClientCommandSource;
+import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.minecraft.client.MinecraftClient;
 import net.shoaibkhan.accessibiltyplusextended.features.withThreads.FluidDetectorThread;
 
-public class customCommands implements ClientCommandPlugin {
+public class customCommands {
   MinecraftClient client;
 
-  @Override
-  public void registerCommands(CommandDispatcher<CottonClientCommandSource> dispatcher) {
-    dispatcher.register(ArgumentBuilders.literal("getxp").executes(source -> {
+  public customCommands() {
+      ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("getxp").executes(source -> {
       client = MinecraftClient.getInstance();
-//      client.player.sendMessage(new LiteralText("" + client.player.experienceLevel), true);
       NarratorPlus.narrate(""+client.player.experienceLevel);
       return 1;
     }));
 
-    dispatcher.register(ArgumentBuilders.literal("isfullscreen").executes(source -> {
+      ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("isfullscreen").executes(source -> {
       client = MinecraftClient.getInstance();
-//      client.player.sendMessage(new LiteralText("" + client.options.fullscreen), true);
       NarratorPlus.narrate(""+client.options.fullscreen);
       return 1;
     }));
-    
-    dispatcher.register(ArgumentBuilders.literal("findlava").executes(source -> {
+
+      ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("findlava").executes(source -> {
       try {
         FluidDetectorThread fluidDetectorThread = new FluidDetectorThread(true, false);
         fluidDetectorThread.start();
@@ -37,7 +31,7 @@ public class customCommands implements ClientCommandPlugin {
       return 1;
     }));
 
-    dispatcher.register(ArgumentBuilders.literal("findwater").executes(source -> {
+      ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("findwater").executes(source -> {
       try {
         FluidDetectorThread fluidDetectorThread = new FluidDetectorThread(false, true);
         fluidDetectorThread.start();

@@ -98,13 +98,13 @@ public class HudRenderCallBackClass {
 			if (!isControlPressed) {
 				Screen screen = new ConfigScreen(new ConfigGui(client.player, client), "AP Extended Configuration",
 						client.player);
-				client.openScreen(screen);
+				client.setScreen(screen);
 				return;
 			}
 		}
 
 		while (KeyBinds.AP_CONFIG_KEY.getKeyBind().wasPressed()) {
-			client.openScreen(new ConfigScreen(new AccessibilityPlusConfigGui(client.player),
+			client.setScreen(new ConfigScreen(new AccessibilityPlusConfigGui(client.player),
 					"Accessibility Plus Configuration", client.player));
 			return;
 		}

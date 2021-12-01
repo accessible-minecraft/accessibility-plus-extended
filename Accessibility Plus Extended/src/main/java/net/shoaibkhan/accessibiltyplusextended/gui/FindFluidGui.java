@@ -60,7 +60,8 @@ public class FindFluidGui extends LightweightGuiDescription {
 
   private void onBackClick() {
     this.player.closeScreen();
-    this.client.openScreen(new ConfigScreen(new SettingsGui(player, client), "settings", player));
+    this.client.setScreen(new ConfigScreen(new SettingsGui(player, client), "settings", player));
+//    this.client.openScreen(new ConfigScreen(new SettingsGui(player, client), "settings", player));
   }
 
   @Override

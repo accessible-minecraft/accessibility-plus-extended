@@ -67,14 +67,9 @@ public class ConfigGui extends LightweightGuiDescription {
 
   private void onSettingsClick() {
     this.player.closeScreen();
-    this.client.openScreen(new ConfigScreen(new SettingsGui(client.player, client), "Settings", player));
+    this.client.setScreen(new ConfigScreen(new SettingsGui(client.player, client), "Settings", player));
+//    this.client.openScreen(new ConfigScreen(new SettingsGui(client.player, client), "Settings", player));
   }
-
-  // private void hbClick(){
-  // this.player.closeScreen();
-  // this.client.openScreen(new ConfigScreen(new
-  // HBConfigGui(client.player,client)));
-  // }
 
   @Override
   public void addPainters() {

@@ -62,28 +62,30 @@ public class SettingsGui extends LightweightGuiDescription {
 
 	private void onBackClick() {
 		this.player.closeScreen();
-		this.client.openScreen(
+		this.client.setScreen(
 				new ConfigScreen(new ConfigGui(client.player, client), "AP Extended Configuration", player));
+//		this.client.openScreen(
+//				new ConfigScreen(new ConfigGui(client.player, client), "AP Extended Configuration", player));
 	}
 
 	private void onOreDetectorClick() {
 		this.player.closeScreen();
-		this.client.openScreen(new ConfigScreen(new POIGui(player, client), "POI Settings", player));
+		this.client.setScreen(new ConfigScreen(new POIGui(player, client), "POI Settings", player));
 	}
 
 	private void onFallDetectorClick() {
 		this.player.closeScreen();
-		this.client.openScreen(new ConfigScreen(new FallDetectorGui(player, client), "Fall Detector Settings", player));
+		this.client.setScreen(new ConfigScreen(new FallDetectorGui(player, client), "Fall Detector Settings", player));
 	}
 
 	private void onFindFluidClick() {
 		this.player.closeScreen();
-		this.client.openScreen(new ConfigScreen(new FindFluidGui(player, client), "Find Fluid Settings", player));
+		this.client.setScreen(new ConfigScreen(new FindFluidGui(player, client), "Find Fluid Settings", player));
 	}
 
 	private void onDurabilityCheckerClick() {
 		this.player.closeScreen();
-		this.client.openScreen( new ConfigScreen(new DurabilityCheckerGui(player, client), "Durability Checker Settings", player));
+		this.client.setScreen( new ConfigScreen(new DurabilityCheckerGui(player, client), "Durability Checker Settings", player));
 	}
 
 	@Override
