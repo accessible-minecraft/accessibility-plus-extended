@@ -16,8 +16,17 @@
 // 	id 'maven-publish'
 // }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+// 1.18
+//sourceCompatibility = JavaVersion.VERSION_17
+//targetCompatibility = JavaVersion.VERSION_17
+
+// 1.17
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
+
+// 1.16
+//sourceCompatibility = JavaVersion.VERSION_1_8
+//targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -88,16 +97,13 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// ensure that the encoding is set to UTF-8, no matter what the system default is
-	// this fixes some edge cases with special characters not displaying correctly
-	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-	// If Javadoc is generated, this must be specified in that task too.
 	it.options.encoding = "UTF-8"
 
-	// The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
-	// JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
-	// We'll use that if it's available, but otherwise we'll use the older option.
-	def targetVersion = 17
+//	def targetVersion = 17 // 1.18
+
+	def targetVersion = 16 // 1.17
+
+//	def targetVersion = 8 // 1.16
 	if (JavaVersion.current().isJava9Compatible()) {
 		 it.options.release = targetVersion
 	}
