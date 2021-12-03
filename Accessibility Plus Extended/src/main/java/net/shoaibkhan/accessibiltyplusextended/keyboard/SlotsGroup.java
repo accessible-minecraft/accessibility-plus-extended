@@ -1,23 +1,20 @@
 package net.shoaibkhan.accessibiltyplusextended.keyboard;
 
+import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.CraftingResultInventory;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.screen.slot.FurnaceFuelSlot;
+import net.minecraft.screen.slot.FurnaceOutputSlot;
+import net.minecraft.screen.slot.Slot;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-// Inventories
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.CraftingResultInventory;
-// Slots
-import net.minecraft.screen.slot.FurnaceFuelSlot;
-import net.minecraft.screen.slot.FurnaceOutputSlot;
-import net.minecraft.screen.slot.Slot;
-import net.shoaibkhan.accessibiltyplusextended.mixin.AccessorSlot;
-
 public class SlotsGroup {
     public String name;
     public List<Slot> slots;
-    private HashMap<Slot, String> namesMap;
+    private final HashMap<Slot, String> namesMap;
 
     public SlotsGroup(String name, List<Slot> slots) {
         this.namesMap = new HashMap<Slot, String>();
@@ -33,6 +30,12 @@ public class SlotsGroup {
         this.namesMap.put(slot, name);
     }
 
+    public Slot getSlot(Slot current){
+        if (current==null)
+            return slots.get(0);
+        int index = slots.indexOf(current);
+        return (index==slots.size()-1)?slots.get(0):slots.get(index+1);
+    }
     public String getSlotName(Slot slot) {
         String output = this.namesMap.get(slot);
         return output != null ? output : "";
@@ -93,72 +96,71 @@ public class SlotsGroup {
 
     public static List<SlotsGroup> generateGroupsFromSlots(List<Slot> slots) {
         slots = new ArrayList<Slot>(slots);
-
-        System.out.println("\n\n\n\n\n====================");
-        for (Slot s : slots) {
-            System.out.println(String.valueOf(s.id) + ": x" + String.valueOf(s.x) + " y" + String.valueOf(s.y) + " ["
-                    + String.valueOf(((AccessorSlot) s).getInventoryIndex()) + "] " + String.valueOf(s.inventory) + " ("
-                    + String.valueOf(s) + ")");
-        }
-        System.out.println("====================\n\n\n\n");
-
         List<SlotsGroup> foundGroups = new ArrayList<SlotsGroup>();
 
         SlotsGroup hotbar = new SlotsGroup("Hotbar", null);
         for (Slot s : slots) {
-            int index = ((AccessorSlot) s).getInventoryIndex();
-            if (s.inventory instanceof PlayerInventory && index >= 0 && index <= 8) {
-                hotbar.slots.add(s);
-            }
+            System.out.println("Index:" + s.getIndex());
+            System.out.println("Slot:" + s.inventory);
+            hotbar.slots.add(s);
         }
-        slots.removeAll(hotbar.slots);
-
-        SlotsGroup playerInventory = new SlotsGroup("Inventory", null);
-        for (Slot s : slots) {
-            int index = ((AccessorSlot) s).getInventoryIndex();
-            if (s.inventory instanceof PlayerInventory && index >= 9 && index <= 35) {
-                playerInventory.slots.add(s);
-            }
-        }
-        slots.removeAll(playerInventory.slots);
-
-        SlotsGroup playerArmor = new SlotsGroup("Armor", null);
-        for (Slot s : slots) {
-            int index = ((AccessorSlot) s).getInventoryIndex();
-            if (s.inventory instanceof PlayerInventory && index >= 36 && index <= 39) {
-                playerArmor.slots.add(s);
-            }
-        }
-        slots.removeAll(playerArmor.slots);
-
-        SlotsGroup offHand = new SlotsGroup("Off hand", null);
-        for (Slot s : slots) {
-            int index = ((AccessorSlot) s).getInventoryIndex();
-            if (s.inventory instanceof PlayerInventory && index == 40) {
-                offHand.slots.add(s);
-                break;
-            }
-        }
-        slots.removeAll(offHand.slots);
-
-        while (slots.size() > 0) {
-            SlotsGroup group = new SlotsGroup(getInventoryName(slots.get(0)), getSlotNeighbours(slots.get(0), slots));
-            slots.removeAll(group.slots);
-            group.nameSlots();
-            foundGroups.add(group);
-        }
-
-        if (playerArmor.slots.size() > 0) {
-            foundGroups.add(playerArmor);
-        }
-        if (offHand.slots.size() > 0) {
-            foundGroups.add(offHand);
-        }
-        if (playerInventory.slots.size() > 0) {
-            foundGroups.add(playerInventory);
-        }
-
         foundGroups.add(hotbar);
+
+//        SlotsGroup hotbar = new SlotsGroup("Hotbar", null);
+//        for (Slot s : slots) {
+//            int index = ((AccessorSlot) s).getInventoryIndex();
+//            if (s.inventory instanceof PlayerInventory && index >= 0 && index <= 8) {
+//                hotbar.slots.add(s);
+//            }
+//        }
+//        slots.removeAll(hotbar.slots);
+//
+//        SlotsGroup playerInventory = new SlotsGroup("Inventory", null);
+//        for (Slot s : slots) {
+//            int index = ((AccessorSlot) s).getInventoryIndex();
+//            if (s.inventory instanceof PlayerInventory && index >= 9 && index <= 35) {
+//                playerInventory.slots.add(s);
+//            }
+//        }
+//        slots.removeAll(playerInventory.slots);
+//
+//        SlotsGroup playerArmor = new SlotsGroup("Armor", null);
+//        for (Slot s : slots) {
+//            int index = ((AccessorSlot) s).getInventoryIndex();
+//            if (s.inventory instanceof PlayerInventory && index >= 36 && index <= 39) {
+//                playerArmor.slots.add(s);
+//            }
+//        }
+//        slots.removeAll(playerArmor.slots);
+//
+//        SlotsGroup offHand = new SlotsGroup("Off hand", null);
+//        for (Slot s : slots) {
+//            int index = ((AccessorSlot) s).getInventoryIndex();
+//            if (s.inventory instanceof PlayerInventory && index == 40) {
+//                offHand.slots.add(s);
+//                break;
+//            }
+//        }
+//        slots.removeAll(offHand.slots);
+//
+//        while (slots.size() > 0) {
+//            SlotsGroup group = new SlotsGroup(getInventoryName(slots.get(0)), getSlotNeighbours(slots.get(0), slots));
+//            slots.removeAll(group.slots);
+//            group.nameSlots();
+//            foundGroups.add(group);
+//        }
+//
+//        if (playerArmor.slots.size() > 0) {
+//            foundGroups.add(playerArmor);
+//        }
+//        if (offHand.slots.size() > 0) {
+//            foundGroups.add(offHand);
+//        }
+//        if (playerInventory.slots.size() > 0) {
+//            foundGroups.add(playerInventory);
+//        }
+//
+//        foundGroups.add(hotbar);
         return foundGroups;
     }
 
@@ -168,7 +170,7 @@ public class SlotsGroup {
             List<String> names = new ArrayList<String>();
             for (int row = 1; row <= size; row++) {
                 for (int column = 1; column <= size; column++) {
-                    names.add(String.valueOf(row) + "x" + String.valueOf(column));
+                    names.add(row + "x" + column);
                 }
             }
             for (int i = 0; i < this.slots.size(); i++) {
@@ -184,9 +186,7 @@ public class SlotsGroup {
             return "Crafting output";
         } else if (slot.inventory instanceof CraftingInventory) {
             return "Crafting input";
-        }
-
-        if (slot instanceof FurnaceFuelSlot) {
+        } else if (slot instanceof FurnaceFuelSlot) {
             return "Fuel input";
         } else if (slot instanceof FurnaceOutputSlot) {
             return "Furnace output";
