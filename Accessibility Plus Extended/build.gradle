@@ -1,14 +1,14 @@
-//// 1.18
-//plugins {
-//	id 'fabric-loom' version '0.10-SNAPSHOT'
-//	id 'maven-publish'
-//}
+// 1.18
+plugins {
+	id 'fabric-loom' version '0.10-SNAPSHOT'
+	id 'maven-publish'
+}
 
 // 1.17
- plugins {
- 	id 'fabric-loom' version '0.9.+'
- 	id 'maven-publish'
- }
+// plugins {
+// 	id 'fabric-loom' version '0.9.+'
+// 	id 'maven-publish'
+// }
 
 // 1.16
 // plugins {
@@ -17,12 +17,12 @@
 // }
 
 // 1.18
-//sourceCompatibility = JavaVersion.VERSION_17
-//targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 // 1.17
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+//sourceCompatibility = JavaVersion.VERSION_16
+//targetCompatibility = JavaVersion.VERSION_16
 
 // 1.16
 //sourceCompatibility = JavaVersion.VERSION_1_8
@@ -58,35 +58,35 @@ repositories {
 
 
 // 1.17
-dependencies {
-minecraft "com.mojang:minecraft:1.17.1"
-mappings "net.fabricmc:yarn:1.17.1+build.64:v2"
-modImplementation "net.fabricmc:fabric-loader:0.12.6"
+//dependencies {
+//minecraft "com.mojang:minecraft:1.17.1"
+//mappings "net.fabricmc:yarn:1.17.1+build.64:v2"
+//modImplementation "net.fabricmc:fabric-loader:0.12.6"
+//
+////Fabric api
+//modImplementation "net.fabricmc.fabric-api:fabric-api:0.43.1+1.17"
+//	modImplementation include("io.github.cottonmc:LibGui:4.0.0+1.17")
+//
+//	// Detect hotkeys in screen
+//	modApi "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
+//	include "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
+//}
 
-//Fabric api
-modImplementation "net.fabricmc.fabric-api:fabric-api:0.43.1+1.17"
-	modImplementation include("io.github.cottonmc:LibGui:4.0.0+1.17")
+// 1.18
+dependencies {
+	minecraft "com.mojang:minecraft:1.18.1"
+	mappings "net.fabricmc:yarn:1.18.1+build.18:v2"
+	modImplementation "net.fabricmc:fabric-loader:0.12.12"
+
+	//Fabric api
+	modImplementation "net.fabricmc.fabric-api:fabric-api:0.45.2+1.18"
+
+	modImplementation include("io.github.cottonmc:LibGui:5.2.0+1.18")
 
 	// Detect hotkeys in screen
 	modApi "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
 	include "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
 }
-
-// 1.18
-//dependencies {
-//	minecraft "com.mojang:minecraft:1.18"
-//	mappings "net.fabricmc:yarn:1.18+build.1:v2"
-//	modImplementation "net.fabricmc:fabric-loader:0.12.6"
-//
-//	//Fabric api
-//	modImplementation "net.fabricmc.fabric-api:fabric-api:0.43.1+1.18"
-//
-//	modImplementation include("io.github.cottonmc:LibGui:5.0.0-beta.2+1.18-rc1")
-//
-//	// Detect hotkeys in screen
-////	modApi "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
-////	include "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
-//}
 
 processResources {
 	inputs.property "version", project.version

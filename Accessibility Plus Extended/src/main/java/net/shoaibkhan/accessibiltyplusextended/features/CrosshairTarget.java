@@ -72,7 +72,7 @@ public class CrosshairTarget {
 										.getBlockEntity(blockHitResult.getBlockPos());
 								output += " says: ";
 
-								// // 1.17
+								 // 1.17
 								 output += "1: " + signentity.getTextOnRow(0, false).getString() + ", ";
 								 output += "2: " + signentity.getTextOnRow(1, false).getString() + ", ";
 								 output += "3: " + signentity.getTextOnRow(2, false).getString() + ", ";
