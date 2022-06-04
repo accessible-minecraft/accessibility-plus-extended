@@ -1,11 +1,17 @@
 package net.shoaibkhan.accessibiltyplusextended.keyboard;
 
+import java.util.List;
+
+import org.lwjgl.glfw.GLFW;
+
 import blue.endless.jankson.annotation.Nullable;
 import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
 import me.shedaniel.cloth.api.client.events.v0.ScreenHooks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -15,10 +21,6 @@ import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.mixin.AccessorHandledScreen;
 import net.shoaibkhan.accessibiltyplusextended.util.KeyBinds;
-import org.lwjgl.glfw.GLFW;
-
-import java.awt.*;
-import java.util.List;
 
 public class KeyboardController {
   private static MinecraftClient client;
@@ -123,28 +125,28 @@ public class KeyboardController {
     switch (direction) {
       case UP:
         if (!currentGroup.hasSlotAbove(currentSlot)) {
-          NarratorPlus.narrate("No more slots above");
+          NarratorPlus.narrate(I18n.translate("narrate.apextended.invcon.noSlots.above"));
           return;
         }
         targetDeltaY = -18;
         break;
       case DOWN:
         if (!currentGroup.hasSlotBelow(currentSlot)) {
-          NarratorPlus.narrate("No more slots below");
+          NarratorPlus.narrate(I18n.translate("narrate.apextended.invcon.noSlots.below"));
           return;
         }
         targetDeltaY = 18;
         break;
       case LEFT:
         if (!currentGroup.hasSlotLeft(currentSlot)) {
-          NarratorPlus.narrate("No more slots to the left");
+          NarratorPlus.narrate(I18n.translate("narrate.apextended.invcon.noSlots.left"));
           return;
         }
         targetDeltaX = -18;
         break;
       case RIGHT:
         if (!currentGroup.hasSlotRight(currentSlot)) {
-          NarratorPlus.narrate("No more slots to the right");
+          NarratorPlus.narrate(I18n.translate("narrate.apextended.invcon.noSlots.right"));
           return;
         }
         targetDeltaX = 18;
@@ -168,7 +170,7 @@ public class KeyboardController {
       message += currentGroup.getSlotName(currentSlot) + ". ";
     }
     if (!currentSlot.hasStack()) {
-      message += " Empty";
+      message += I18n.translate("narrate.apextended.invcon.emptySlot");
     } else {
       List<Text> lines = currentSlot.getStack().getTooltip(client.player, TooltipContext.Default.NORMAL);
       for (Text line : lines) {
@@ -186,7 +188,7 @@ public class KeyboardController {
       return;
     }
     if (currentGroup.slots.size() == 1 && currentSlot != null) {
-      NarratorPlus.narrate("This group only has one slot!");
+      NarratorPlus.narrate(I18n.translate("narrate.apextended.invcon.onlyOneSlot"));
       return;
     }
     focusSlot(end ? currentGroup.getLastSlot() : currentGroup.getFirstSlot());
@@ -203,14 +205,13 @@ public class KeyboardController {
       int currentGroupIndex = groups.indexOf(currentGroup);
       int nextGroupIndex = currentGroupIndex + (goBelow ? 1 : -1);
       if (nextGroupIndex < 0) {
-        NarratorPlus.narrate("Reached the top group");
+        NarratorPlus.narrate(I18n.translate("narrate.apextended.invcon.reachedTopGroup"));
         return;
       } else if (nextGroupIndex > groups.size() - 1) {
-        NarratorPlus.narrate("Reached the bottom group");
+        NarratorPlus.narrate(I18n.translate("narrate.apextended.invcon.reachedBottomGroup"));
         return;
       } else {
         focusGroup(groups.get(nextGroupIndex));
-        ;
       }
     }
   }
@@ -219,7 +220,7 @@ public class KeyboardController {
     currentGroup = group;
     currentSlot = null;
     moveMouseToHome();
-    NarratorPlus.narrate(currentGroup.name);
+    NarratorPlus.narrate(currentGroup.getName());
   }
 
   private static void moveMouseToHome() {
@@ -238,23 +239,17 @@ public class KeyboardController {
     narrateCursorStack = true;
   }
 
-  private static void moveMouseTo(int x, int y) {
-    try {
-      Robot robot = new Robot();
-      robot.mouseMove(x, y);
-      lastMouseX = (double) x;
-      lastMouseY = (double) y;
-    } catch (AWTException e) {
-      e.printStackTrace();
-    } finally {
-    }
-  }
+	private static void moveMouseTo(double x, double y) {
+		InputUtil.setCursorParameters(client.getWindow().getHandle(), GLFW.GLFW_CURSOR_NORMAL, x, y);
+		lastMouseX = (double) x;
+		lastMouseY = (double) y;
+	}
 
-  private static void moveMouseToScreenCoords(int x, int y) {
-    double targetX = (screen.getX() + x) * client.getWindow().getScaleFactor() + client.getWindow().getX();
-    double targetY = (screen.getY() + y) * client.getWindow().getScaleFactor() + client.getWindow().getY();
-    moveMouseTo((int) targetX, (int) targetY);
-  }
+	private static void moveMouseToScreenCoords(int x, int y) {
+		double targetX = (screen.getX() + x) * client.getWindow().getScaleFactor();
+		double targetY = (screen.getY() + y) * client.getWindow().getScaleFactor();
+		moveMouseTo(targetX, targetY);
+	}
 
   private static void moveToSlot(Slot slot) {
     if (slot == null) {

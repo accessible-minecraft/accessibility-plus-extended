@@ -4,9 +4,12 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.features.FeaturesWithThreadHandler;
@@ -14,7 +17,6 @@ import net.shoaibkhan.accessibiltyplusextended.features.LockingHandler;
 import net.shoaibkhan.accessibiltyplusextended.gui.AccessibilityPlusConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigGui;
 import net.shoaibkhan.accessibiltyplusextended.gui.ConfigScreen;
-import net.shoaibkhan.accessibiltyplusextended.keyboard.KeyboardController;
 import net.shoaibkhan.accessibiltyplusextended.util.KeyBinds;
 
 public class HudRenderCallBackClass {
@@ -51,26 +53,16 @@ public class HudRenderCallBackClass {
 
 		if (Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
 
-			isDPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.d").getCode()));
-			isAPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.a").getCode()));
-			isWPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.w").getCode()));
-			isSPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.s").getCode()));
-			isRPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.r").getCode()));
-			isFPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.f").getCode()));
-			isCPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.c").getCode()));
-			isVPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.v").getCode()));
-			isTPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.t").getCode()));
-			isEnterPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(),
-					InputUtil.fromTranslationKey("key.keyboard.enter").getCode()));
+			isDPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.d").getCode()));
+			isAPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.a").getCode()));
+			isWPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.w").getCode()));
+			isSPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.s").getCode()));
+			isRPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.r").getCode()));
+			isFPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.f").getCode()));
+			isCPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.c").getCode()));
+			isVPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.v").getCode()));
+			isTPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.t").getCode()));
+			isEnterPressed = (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.fromTranslationKey("key.keyboard.enter").getCode()));
 
 			if (client.currentScreen == null) {
 				currentColumn = 0;
@@ -96,16 +88,14 @@ public class HudRenderCallBackClass {
 
 		while (KeyBinds.CONFIG_KEY.getKeyBind().wasPressed()) {
 			if (!isControlPressed) {
-				Screen screen = new ConfigScreen(new ConfigGui(client.player, client), "AP Extended Configuration",
-						client.player);
+				Screen screen = new ConfigScreen(new ConfigGui(client.player, client), "ext.title");
 				client.setScreen(screen);
 				return;
 			}
 		}
 
 		while (KeyBinds.AP_CONFIG_KEY.getKeyBind().wasPressed()) {
-			client.setScreen(new ConfigScreen(new AccessibilityPlusConfigGui(client.player),
-					"Accessibility Plus Configuration", client.player));
+			client.setScreen(new ConfigScreen(new AccessibilityPlusConfigGui(client.player), "title"));
 			return;
 		}
 
@@ -113,89 +103,52 @@ public class HudRenderCallBackClass {
 
 	public static String get_position_difference(BlockPos blockPos, MinecraftClient client) {
 		ClientPlayerEntity player = client.player;
-		String dir = client.player.getHorizontalFacing().asString();
-		dir = dir.toLowerCase().trim();
+		Direction dir = client.player.getHorizontalFacing();
 
-		String diffXBlockPos = ((double) player.getBlockPos().getX() - blockPos.getX()) + "";
-		String diffYBlockPos = ((double) (player.getBlockPos().getY() + 1) - blockPos.getY()) + "";
-		String diffZBlockPos = ((double) player.getBlockPos().getZ() - blockPos.getZ()) + "";
+		Vec3d diff = player.getEyePos().subtract(Vec3d.ofCenter(blockPos));
+		BlockPos diffBlockPos = new BlockPos(Math.round(diff.x), Math.round(diff.y), Math.round(diff.z));
 
-		diffXBlockPos = diffXBlockPos.substring(0, diffXBlockPos.indexOf("."));
-		diffYBlockPos = diffYBlockPos.substring(0, diffYBlockPos.indexOf("."));
-		diffZBlockPos = diffZBlockPos.substring(0, diffZBlockPos.indexOf("."));
+		String diffXBlockPos = "";
+		String diffYBlockPos = "";
+		String diffZBlockPos = "";
 
-		if (!diffXBlockPos.equalsIgnoreCase("0")) {
-			if (dir.contains("east") || dir.contains("west")) {
-				if (diffXBlockPos.contains("-") && dir.contains("east")) {
-					diffXBlockPos += " blocks away";
-				} else if (!diffXBlockPos.contains("-") && dir.contains("west")) {
-					diffXBlockPos += " blocks away";
-				} else
-					diffXBlockPos += " blocks behind";
-				diffXBlockPos = diffXBlockPos.replace("-", "");
-			} else if (dir.contains("north")) {
-				if (diffXBlockPos.contains("-"))
-					diffXBlockPos += " blocks to left";
-				else
-					diffXBlockPos += " blocks to right";
-				if (diffXBlockPos.contains("-"))
-					diffXBlockPos = diffXBlockPos.replace("-", "");
-			} else if (dir.contains("south")) {
-				if (diffXBlockPos.contains("-"))
-					diffXBlockPos += " blocks to right";
-				else
-					diffXBlockPos += " blocks to left";
-				if (diffXBlockPos.contains("-"))
-					diffXBlockPos = diffXBlockPos.replace("-", "");
+		if (diffBlockPos.getX() != 0) {
+			if (dir == Direction.NORTH) {
+				diffXBlockPos = diff(diffBlockPos.getX(), "right", "left");
+			} else if (dir == Direction.SOUTH) {
+				diffXBlockPos = diff(diffBlockPos.getX(), "left", "right");
+			} else if (dir == Direction.EAST) {
+				diffXBlockPos = diff(diffBlockPos.getX(), "away", "behind");
+			} else if (dir == Direction.WEST) {
+				diffXBlockPos = diff(diffBlockPos.getX(), "behind", "away");
 			}
-		} else {
-			diffXBlockPos = "";
 		}
 
-		if (!diffYBlockPos.equalsIgnoreCase("0")) {
-			if (diffYBlockPos.contains("-")) {
-				diffYBlockPos = diffYBlockPos.replace("-", "");
-				diffYBlockPos += " blocks up";
-			} else {
-				diffYBlockPos += " blocks down";
-			}
-		} else {
-			diffYBlockPos = "";
+		if (diffBlockPos.getY() != 0) {
+			diffYBlockPos = diff(diffBlockPos.getY(), "up", "down");
 		}
 
-		if (!diffZBlockPos.equalsIgnoreCase("0")) {
-			if (dir.contains("north") || dir.contains("south")) {
-				if (diffZBlockPos.contains("-") && dir.contains("south")) {
-					diffZBlockPos += " blocks away";
-				} else if (!diffZBlockPos.contains("-") && dir.contains("north")) {
-					diffZBlockPos += " blocks away";
-				} else
-					diffZBlockPos += " blocks behind";
-				diffZBlockPos = diffZBlockPos.replace("-", "");
-			} else if (dir.contains("east")) {
-				if (diffZBlockPos.contains("-"))
-					diffZBlockPos += " blocks to right";
-				else
-					diffZBlockPos += " blocks to left";
-				if (diffZBlockPos.contains("-"))
-					diffZBlockPos = diffZBlockPos.replace("-", "");
-			} else if (dir.contains("west")) {
-				if (diffZBlockPos.contains("-"))
-					diffZBlockPos += " blocks to left";
-				else
-					diffZBlockPos += " blocks to right";
-				if (diffZBlockPos.contains("-"))
-					diffZBlockPos = diffZBlockPos.replace("-", "");
+		if (diffBlockPos.getZ() != 0) {
+			if (dir == Direction.SOUTH) {
+				diffZBlockPos = diff(diffBlockPos.getZ(), "away", "behind");
+			} else if (dir == Direction.NORTH) {
+				diffZBlockPos = diff(diffBlockPos.getZ(), "behind", "away");
+			} else if (dir == Direction.EAST) {
+				diffZBlockPos = diff(diffBlockPos.getZ(), "right", "left");
+			} else if (dir == Direction.WEST) {
+				diffZBlockPos = diff(diffBlockPos.getZ(), "left", "right");
 			}
-		} else {
-			diffZBlockPos = "";
 		}
 
 		String text = "";
-		if (dir.contains("north") || dir.contains("south"))
+		if (dir == Direction.NORTH || dir == Direction.SOUTH)
 			text = String.format("%s  %s  %s", diffZBlockPos, diffYBlockPos, diffXBlockPos);
 		else
 			text = String.format("%s  %s  %s", diffXBlockPos, diffYBlockPos, diffZBlockPos);
 		return text;
+	}
+
+	private static String diff(int blocks, String key1, String key2) {
+		return I18n.translate("narrate.apextended.posDiff." + (blocks < 0 ? key1 : key2), Math.abs(blocks));
 	}
 }

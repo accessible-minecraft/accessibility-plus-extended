@@ -6,7 +6,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -17,9 +16,9 @@ import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 
 public class FluidDetectorThread extends Thread{
   private boolean lava, water; 
-  public static String[] volume = { "0", "0.05", "0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9", "0.95", "1" };
-  public static String[] pitch = { "0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5", "-0.5", "-1", "-1.5", "-2", "-2.5", "-3", "-3.5", "-4", "-4.5", "-5" };
-  public static String[] range = {"3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
+  public static Float[] volume = { 0f, 0.05f, 0.1f, 0.15f, 0.2f, 0.25f, 0.3f, 0.35f, 0.4f, 0.45f, 0.5f, 0.55f, 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f, 0.95f, 1f };
+  public static Float[] pitch = { 0f, 0.5f, 1f, 1.5f, 2f, 2.5f, 3f, 3.5f, 4f, 4.5f, 5f, -0.5f, -1f, -1.5f, -2f, -2.5f, -3f, -3.5f, -4f, -4.5f, -5f };
+  public static Integer[] range = {3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
   public FluidDetectorThread(boolean lava, boolean water){
     this.lava = lava;
@@ -34,7 +33,7 @@ public class FluidDetectorThread extends Thread{
 
     int rangeVal = 10;
     try {
-      rangeVal = Integer.parseInt(range[Config.getInt(ConfigKeys.FIND_FLUID_RANGE.getKey())] + "");
+      rangeVal = range[Config.getInt(ConfigKeys.FIND_FLUID_RANGE.getKey())];
     } catch (Exception e) {
       rangeVal = 10;
     }
@@ -46,12 +45,12 @@ public class FluidDetectorThread extends Thread{
         try {
           Float vol, pit;
           try {
-            vol = Float.parseFloat(volume[Config.getInt(ConfigKeys.FIND_FLUID_VOLUME.getKey())] + "");
+            vol = volume[Config.getInt(ConfigKeys.FIND_FLUID_VOLUME.getKey())];
           } catch (Exception e) {
             vol = 0.2f;
           }
           try {
-            pit = Float.parseFloat(pitch[Config.getInt(ConfigKeys.FIND_FLUID_PITCH.getKey())] + "");
+            pit = pitch[Config.getInt(ConfigKeys.FIND_FLUID_PITCH.getKey())];
           } catch (Exception e) {
             pit = 1f;
           }
@@ -62,11 +61,11 @@ public class FluidDetectorThread extends Thread{
         }
       }else{
         String posDifference = HudRenderCallBackClass.get_position_difference(fluidPos, client);
-        MutableText blockMutableText = new LiteralText("").append(client.world.getBlockState(fluidPos).getBlock().getName());
+        MutableText blockMutableText = client.world.getBlockState(fluidPos).getBlock().getName();
         String name = blockMutableText.getString();
     
 //        client.player.sendMessage(new LiteralText(""+name+", "+posDifference), true);
-        NarratorPlus.narrate(""+name+", "+posDifference);
+        NarratorPlus.narrate(name+", "+posDifference);
       }
     }
   }

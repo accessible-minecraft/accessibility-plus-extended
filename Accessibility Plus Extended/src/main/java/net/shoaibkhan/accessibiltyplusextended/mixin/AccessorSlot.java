@@ -10,6 +10,6 @@ import net.minecraft.screen.slot.Slot;
 @Environment(EnvType.CLIENT)
 @Mixin(Slot.class)
 public interface AccessorSlot {
-    @Accessor(value = "index")
+    @Accessor("index")
     int getInventoryIndex();
 }

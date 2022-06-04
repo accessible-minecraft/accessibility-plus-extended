@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import net.minecraft.client.resource.language.I18n;
 // Inventories
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingInventory;
@@ -96,7 +97,7 @@ public class SlotsGroup {
 
         List<SlotsGroup> foundGroups = new ArrayList<SlotsGroup>();
 
-        SlotsGroup hotbar = new SlotsGroup("Hotbar", null);
+        SlotsGroup hotbar = new SlotsGroup("hotbar", null);
         for (Slot s : slots) {
             int index = ((AccessorSlot) s).getInventoryIndex();
             if (s.inventory instanceof PlayerInventory && index >= 0 && index <= 8) {
@@ -105,7 +106,7 @@ public class SlotsGroup {
         }
         slots.removeAll(hotbar.slots);
 
-        SlotsGroup playerInventory = new SlotsGroup("Inventory", null);
+        SlotsGroup playerInventory = new SlotsGroup("inventory", null);
         for (Slot s : slots) {
             int index = ((AccessorSlot) s).getInventoryIndex();
             if (s.inventory instanceof PlayerInventory && index >= 9 && index <= 35) {
@@ -114,7 +115,7 @@ public class SlotsGroup {
         }
         slots.removeAll(playerInventory.slots);
 
-        SlotsGroup playerArmor = new SlotsGroup("Armor", null);
+        SlotsGroup playerArmor = new SlotsGroup("armor", null);
         for (Slot s : slots) {
             int index = ((AccessorSlot) s).getInventoryIndex();
             if (s.inventory instanceof PlayerInventory && index >= 36 && index <= 39) {
@@ -123,7 +124,7 @@ public class SlotsGroup {
         }
         slots.removeAll(playerArmor.slots);
 
-        SlotsGroup offHand = new SlotsGroup("Off hand", null);
+        SlotsGroup offHand = new SlotsGroup("off_hand", null);
         for (Slot s : slots) {
             int index = ((AccessorSlot) s).getInventoryIndex();
             if (s.inventory instanceof PlayerInventory && index == 40) {
@@ -160,7 +161,7 @@ public class SlotsGroup {
             List<String> names = new ArrayList<String>();
             for (int row = 1; row <= size; row++) {
                 for (int column = 1; column <= size; column++) {
-                    names.add(String.valueOf(row) + "x" + String.valueOf(column));
+                    names.add(I18n.translate("narrate.apextended.slot.crafting", row, column));
                 }
             }
             for (int i = 0; i < this.slots.size(); i++) {
@@ -173,16 +174,20 @@ public class SlotsGroup {
 
     public static String getInventoryName(Slot slot) {
         if (slot.inventory instanceof CraftingResultInventory) {
-            return "Crafting output";
+            return "crafting_output";
         } else if (slot.inventory instanceof CraftingInventory) {
-            return "Crafting input";
+            return "crafting_input";
         }
 
         if (slot instanceof FurnaceFuelSlot) {
-            return "Fuel input";
+            return "fuel_input";
         } else if (slot instanceof FurnaceOutputSlot) {
-            return "Furnace output";
+            return "furnace_output";
         }
-        return "Group";
+        return "group";
+    }
+
+    public String getName() {
+        return I18n.translate("narrate.apextended.slotGroup." + name);
     }
 }
