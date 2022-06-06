@@ -1,24 +1,32 @@
 package net.shoaibkhan.accessibiltyplusextended.features.withThreads;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.function.Predicate;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 
 import net.minecraft.block.AbstractButtonBlock;
+import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DoorBlock;
+import net.minecraft.block.FluidBlock;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.LeverBlock;
+import net.minecraft.block.OreBlock;
 import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Property;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
@@ -39,54 +47,29 @@ public class POIBlocks extends Thread {
     private float volume;
     private int delay;
 
-    private List<String> blockListWithInterface;
-    private List<String> blockList;
+    private static final List<Predicate<BlockState>> blockList = Lists.newArrayList();
     public boolean running = false;
+
+	static {
+		blockList.add(state -> state.isOf(Blocks.PISTON));
+		blockList.add(state -> state.isOf(Blocks.STICKY_PISTON));
+		blockList.add(state -> state.isOf(Blocks.RESPAWN_ANCHOR));
+		blockList.add(state -> state.isOf(Blocks.BELL));
+		blockList.add(state -> state.isOf(Blocks.OBSERVER));
+		blockList.add(state -> state.isOf(Blocks.DAYLIGHT_DETECTOR));
+		blockList.add(state -> state.isOf(Blocks.JUKEBOX));
+		blockList.add(state -> state.isOf(Blocks.LODESTONE));
+		blockList.add(state -> state.getBlock() instanceof BeehiveBlock);
+		blockList.add(state -> state.getBlock() instanceof ComposterBlock);
+		blockList.add(state -> state.isOf(Blocks.OBSERVER));
+		blockList.add(state -> state.isIn(BlockTags.FENCE_GATES));
+	}
 
     public void run() {
         client = MinecraftClient.getInstance();
         running = true;
         volume = POIHandler.getVolume();
         delay = POIHandler.getDelay();
-
-        blockListWithInterface = new ArrayList<String>();
-        blockList = new ArrayList<String>();
-        blockListWithInterface.add("chest");
-        blockListWithInterface.add("large chest");
-        blockListWithInterface.add("ender chest");
-        blockListWithInterface.add("crafting table");
-        blockListWithInterface.add("enchanting table");
-        blockListWithInterface.add("brewing stand");
-        blockListWithInterface.add("stonecutter");
-        blockListWithInterface.add("trapped chest");
-        blockListWithInterface.add("hopper");
-        blockListWithInterface.add("dispenser");
-        blockListWithInterface.add("dropper");
-        blockListWithInterface.add("loom");
-        blockListWithInterface.add("furnace");
-        blockListWithInterface.add("blast furnace");
-        blockListWithInterface.add("smoker");
-        blockListWithInterface.add("lectern");
-        blockListWithInterface.add("barrel");
-        blockListWithInterface.add("cartography table");
-        blockListWithInterface.add("fletching table");
-        blockListWithInterface.add("grindstone");
-        blockListWithInterface.add("smithing table");
-
-        blockList.add("piston");
-        blockList.add("respawn anchor");
-        blockList.add("bell");
-        blockList.add("sticky piston");
-        blockList.add("observer");
-        blockList.add("daylight detector");
-        blockList.add("jukebox");
-        blockList.add("bee nest");
-        blockList.add("bee hive");
-        blockList.add("item frame");
-        blockList.add("glow item frame");
-        blockList.add("composter");
-        blockList.add("lodestone");
-
         main();
     }
 
@@ -120,10 +103,6 @@ public class POIBlocks extends Thread {
     private void checkBlock(BlockPos blockPos, int val) {
         BlockState blockState = client.world.getBlockState(blockPos);
         Block block = blockState.getBlock();
-
-        String name = block.getName().getString();
-        name = name.toLowerCase();
-
         Vec3d playerVec3dPos = client.player.getEyePos();
         double posX = blockPos.getX();
         double posY = blockPos.getY();
@@ -136,7 +115,7 @@ public class POIBlocks extends Thread {
 
         FluidState fluidState = client.world.getFluidState(blockPos);
 
-        if ((name.contains("lava") || name.contains("water")) && Config.get(ConfigKeys.POI_FLUID_DETECTOR_Key.getKey())) {
+        if (block instanceof FluidBlock && Config.get(ConfigKeys.POI_FLUID_DETECTOR_Key.getKey())) {
             if (fluidState.getLevel() == 8) {
                 blocks.put(diff, blockVec3dPos);
                 playSound = true;
@@ -146,10 +125,10 @@ public class POIBlocks extends Thread {
             if (Config.get(ConfigKeys.POI_FLUID_DETECTOR_Key.getKey())
                     && !modInit.mainThreadMap.containsKey("fluid_detector_key")) {
                 int delay = POIHandler.getFluidDetectorDelay();
-                NarratorPlus.narrate("Warning " + name);
+                NarratorPlus.narrate(I18n.translate("narrate.apextended.poiblock.warn"));
                 modInit.mainThreadMap.put("fluid_detector_key", delay);
             }
-        } else if (name.contains("ore") || name.equalsIgnoreCase("ancient debris")) {
+        } else if (block instanceof OreBlock) {
             oreBlocks.put(diff, blockVec3dPos);
             playSound = true;
             soundType = "ore";
@@ -173,8 +152,8 @@ public class POIBlocks extends Thread {
             ImmutableSet<Entry<Property<?>, Comparable<?>>> entries = blockState.getEntries().entrySet();
             for (Entry<Property<?>, Comparable<?>> i : entries) {
 
-                if (i.getKey().getName().equalsIgnoreCase("half")) {
-                    if (i.getValue().toString().equalsIgnoreCase("upper")) {
+                if (i.getKey().getName().equals("half")) {
+                    if (i.getValue().toString().equals("upper")) {
                         doorBlocks.put(diff, blockVec3dPos);
                         playSound = true;
                         soundType = "blocks";
@@ -183,15 +162,15 @@ public class POIBlocks extends Thread {
                 }
 
             }
-        } else if (blockList.contains(name) || name.contains("fence gate")) {
+        } else if (blockList.stream().anyMatch($ -> $.test(blockState))) {
             blocks.put(diff, blockVec3dPos);
             playSound = true;
             soundType = "blocks";
-        } else if (blockListWithInterface.contains(name) || name.contains("shulker box") || name.contains("anvil")) {
+        } else if (blockState.createScreenHandlerFactory(client.world, blockPos) != null) {
             blocks.put(diff, blockVec3dPos);
             playSound = true;
             soundType = "blocksWithInterface";
-        } else if (name.equalsIgnoreCase("air") && val - 1 >= 0) {
+        } else if (blockState.isAir() && val - 1 >= 0) {
             checkBlock(new BlockPos(new Vec3d(posX, posY, posZ - 1)), val - 1); // North Block
             checkBlock(new BlockPos(new Vec3d(posX, posY, posZ + 1)), val - 1); // South Block
             checkBlock(new BlockPos(new Vec3d(posX - 1, posY, posZ)), val - 1); // West Block

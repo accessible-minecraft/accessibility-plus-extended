@@ -91,5 +91,6 @@
   "narrate.apextended.invcon.onlyOneSlot": "This group only has one slot!",
   "narrate.apextended.invcon.reachedTopGroup": "Reached the top group",
   "narrate.apextended.invcon.reachedBottomGroup": "Reached the bottom group",
-  "narrate.apextended.invcon.emptySlot": "Empty"
+  "narrate.apextended.invcon.emptySlot": "Empty",
+  "narrate.apextended.poiblock.warn": "Warning %s"
 }
