@@ -91,5 +91,6 @@
   "narrate.apextended.invcon.onlyOneSlot": "此分组只有一个槽位！",
   "narrate.apextended.invcon.reachedTopGroup": "已经位于最顶端的分组",
   "narrate.apextended.invcon.reachedBottomGroup": "已经位于最底端的分组",
-  "narrate.apextended.invcon.emptySlot": "空槽位"
+  "narrate.apextended.invcon.emptySlot": "空槽位",
+  "narrate.apextended.poiblock.warn": "警告：%s"
 }

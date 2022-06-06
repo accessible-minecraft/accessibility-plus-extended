@@ -41,7 +41,8 @@ public class CrosshairTarget {
 
 					String name = block.getName().getString();
 
-					String blockPos = (blockHitResult.getBlockPos() + "").replace("Mutable{x", "BlockPos{x");
+					// Class name in production environment can be different
+					String blockPos = blockHitResult.getBlockPos().toImmutable().toString();
 
 					String searchQuery = name + blockPos;
 

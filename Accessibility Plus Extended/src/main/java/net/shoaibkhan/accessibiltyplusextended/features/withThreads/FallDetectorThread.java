@@ -1,17 +1,16 @@
 package net.shoaibkhan.accessibiltyplusextended.features.withThreads;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
-import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 
 public class FallDetectorThread extends Thread {
 
@@ -58,26 +57,22 @@ public class FallDetectorThread extends Thread {
 	}
 
 	private void checkBlock(BlockPos blockPos, Direction direction, int limit) {
+		if (client.player.isFallFlying())
+			return;
 		if (!modInit.mainThreadMap.containsKey("fall_detector_key")) {
-			Block block = client.world.getBlockState(blockPos).getBlock();
-			MutableText blockNameMutable = (new LiteralText("")).append(block.getName());
-			String blockName = blockNameMutable.getString().toLowerCase();
-			if (blockName.equalsIgnoreCase("void air"))
+			BlockState block = client.world.getBlockState(blockPos);
+			if (block.isOf(Blocks.VOID_AIR))
 				return;
 			int posX = blockPos.getX();
 			int posY = blockPos.getY();
 			int posZ = blockPos.getZ();
 
-			if(client.player.isFallFlying()) return;
-
-			if (blockName.contains("air") && !modInit.mainThreadMap.containsKey("fluid_detector_key")
+			if (block.isAir() && !modInit.mainThreadMap.containsKey("fluid_detector_key")
 					&& !modInit.mainThreadMap.containsKey("fall_detector_key")) {
-				Block topBlock = client.world.getBlockState(new BlockPos(new Vec3d(posX, posY + 1, posZ))).getBlock();
-				MutableText topBlocklockNameMutable = (new LiteralText("")).append(topBlock.getName());
-				String topBlocklockName = topBlocklockNameMutable.getString().toLowerCase();
-				if (topBlocklockName.equalsIgnoreCase("void air"))
+				BlockState topBlock = client.world.getBlockState(new BlockPos(new Vec3d(posX, posY + 1, posZ)));
+				if (topBlock.isOf(Blocks.VOID_AIR))
 					return;
-				if (!topBlocklockName.contains("air"))
+				if (!topBlock.isAir())
 					return;
 
 				int depth = getDepth((new BlockPos(new Vec3d(posX, posY, posZ))), 15);
@@ -111,16 +106,14 @@ public class FallDetectorThread extends Thread {
 	private int getDepth(BlockPos blockPos, int limit) {
 		if (limit <= 0) return 0;
 
-		Block block = client.world.getBlockState(blockPos).getBlock();
-		String blockName = block.getName().getString().toLowerCase();
+		BlockState block = client.world.getBlockState(blockPos);
 		int posX = blockPos.getX();
 		int posY = blockPos.getY();
 		int posZ = blockPos.getZ();
 
-		if (blockName.contains("air"))
+		if (block.isAir() && !block.isOf(Blocks.VOID_AIR)) {
 			return 1 + getDepth((new BlockPos(new Vec3d(posX, posY - 1, posZ))), limit - 1);
-		else if (blockName.equalsIgnoreCase("void air"))
-			return 0;
+		}
 		return 0;
 	}
 

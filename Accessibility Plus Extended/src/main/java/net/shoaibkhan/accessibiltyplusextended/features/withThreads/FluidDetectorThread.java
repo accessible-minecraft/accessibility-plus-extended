@@ -1,11 +1,13 @@
 package net.shoaibkhan.accessibiltyplusextended.features.withThreads;
 
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -71,20 +73,14 @@ public class FluidDetectorThread extends Thread{
   }
 
   private static BlockPos findFluid(MinecraftClient client, BlockPos blockPos, int range, boolean lava, boolean water){
-    Block block = client.world.getBlockState(blockPos).getBlock();
-    String name = block.getTranslationKey();
-    if (name.contains("void_air"))
+    BlockState blockState = client.world.getBlockState(blockPos);
+    if (blockState.isOf(Blocks.VOID_AIR))
       return null;
-    name = name.substring(name.lastIndexOf(".") + 1);
-    if (name.contains("_"))
-      name = name.replace("_", " ");
-
-    // System.out.println(name);
 
     FluidState fluidState = client.world.getFluidState(blockPos);
-    if ((name.contains("lava") && lava) || (name.contains("water") && water) && fluidState.getLevel()==8) {
+    if ((fluidState.isIn(FluidTags.LAVA) && lava) || (fluidState.isIn(FluidTags.WATER) && water) && fluidState.getLevel()==8) {
       return blockPos;
-    } else if(range-1 >= 0 && name.contains("air")){
+    } else if(range-1 >= 0 && blockState.isAir()){
       int posX = blockPos.getX();
       int posY = blockPos.getY();
       int posZ = blockPos.getZ();

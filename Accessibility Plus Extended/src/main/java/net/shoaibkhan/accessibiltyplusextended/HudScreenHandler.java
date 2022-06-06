@@ -1,15 +1,16 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.CraftingScreen;
 import net.minecraft.client.gui.screen.ingame.EnchantmentScreen;
+import net.minecraft.client.gui.screen.ingame.MerchantScreen;
+import net.minecraft.client.gui.screen.ingame.StonecutterScreen;
 import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
-
-import java.awt.*;
-import java.awt.event.InputEvent;
 
 public class HudScreenHandler {
   private int minColumn;
@@ -42,43 +43,21 @@ public class HudScreenHandler {
     hudScreenOffsetY = 0;
   }
 
-  public void screenHandler(Screen screen) {
-    MutableText titleMutableText = new LiteralText("").append(screen.getTitle());
-    String titleString = titleMutableText.getString().toLowerCase();
-    {
-      if (!modInit.mainThreadMap.containsKey("stonecutter_result_slot")
-          && titleString.contains("stonecutter")) {
-        try {
-          stonecutterScreen(screen);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      } else if ((titleString.contains("armorer") || titleString.contains("butcher")
-          || titleString.contains("cartographer") || titleString.contains("cleric") || titleString.contains("farmer")
-          || titleString.contains("fisherman") || titleString.contains("fletcher")
-          || titleString.contains("leatherworker") || titleString.contains("librarian") || titleString.contains("mason")
-          || titleString.contains("shepherd") || titleString.contains("toolsmith")
-          || titleString.contains("weaponsmith") || titleString.contains("wandering trader"))) {
-        try {
-          tradingScreen(screen);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      } else if (titleString.contains("crafting")) {
-        try {
-          craftingScreen(screen);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      } else if (screen instanceof EnchantmentScreen) {
-        try {
-          enchantingScreen(screen);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      }
-    }
-  }
+	public void screenHandler(Screen screen) {
+		try {
+			if (!modInit.mainThreadMap.containsKey("stonecutter_result_slot") && screen instanceof StonecutterScreen) {
+				stonecutterScreen(screen);
+			} else if (screen instanceof MerchantScreen) {
+				tradingScreen(screen);
+			} else if (screen instanceof CraftingScreen) {
+				craftingScreen(screen);
+			} else if (screen instanceof EnchantmentScreen) {
+				enchantingScreen(screen);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
   private void stonecutterScreen(Screen screen) {
     MinecraftClient client = MinecraftClient.getInstance();
