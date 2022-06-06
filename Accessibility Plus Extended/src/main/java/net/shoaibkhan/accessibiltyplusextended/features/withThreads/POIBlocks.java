@@ -19,7 +19,6 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Property;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
@@ -122,15 +121,14 @@ public class POIBlocks extends Thread {
         BlockState blockState = client.world.getBlockState(blockPos);
         Block block = blockState.getBlock();
 
-        TranslatableText translatableText = new TranslatableText(block.getTranslationKey());
-        String name = translatableText.getString();
+        String name = block.getName().getString();
         name = name.toLowerCase();
 
-        Vec3d playerVec3dPos = client.player.getPos();
+        Vec3d playerVec3dPos = client.player.getEyePos();
         double posX = blockPos.getX();
         double posY = blockPos.getY();
         double posZ = blockPos.getZ();
-        Vec3d blockVec3dPos = new Vec3d(posX + 0.5, posY + 0.5, posZ + 0.5);
+        Vec3d blockVec3dPos = Vec3d.ofCenter(blockPos);
 
         double diff = playerVec3dPos.distanceTo(blockVec3dPos);
         boolean playSound = false;

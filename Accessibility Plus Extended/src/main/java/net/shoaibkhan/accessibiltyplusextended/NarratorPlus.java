@@ -6,6 +6,7 @@ import com.sun.jna.Native;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.NarratorManager;
 import net.minecraft.util.math.BlockPos;
 
@@ -46,6 +47,10 @@ public class NarratorPlus {
 
   public static boolean isNVDALoaded() {
     return instance.nvda != null;
+  }
+
+  public static void narrate(boolean bool) {
+      narrate(I18n.translate("narrate.apextended." + bool));
   }
 
   public static void narrate(String text) {

@@ -38,10 +38,10 @@ public class FallDetectorGui extends LightweightGuiDescription {
     doneButton.setOnClick(this::onDoneClick);
     root.add(doneButton, 12, 5, 7, 1);
 
-    WLabel label = new WLabel(new LiteralText("Fall Detector Settings"), modInit.colors("red", 100));
+    WLabel label = new WLabel(new TranslatableText("gui.apextended.config.buttons.falldetectorsettings"), modInit.colors("red", 100));
     label.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(label, 0, 1, 21, 1);
-    WLabel fakeLabel = new WLabel(new LiteralText(""), modInit.colors("red", 100));
+    WLabel fakeLabel = new WLabel(LiteralText.EMPTY, modInit.colors("red", 100));
     fakeLabel.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(fakeLabel, 0, 6, 21, 1);
 
@@ -54,7 +54,7 @@ public class FallDetectorGui extends LightweightGuiDescription {
 
   private void onBackClick() {
     this.player.closeScreen();
-    this.client.setScreen(new ConfigScreen(new SettingsGui(player, client), "settings", player));
+    this.client.setScreen(new ConfigScreen(new SettingsGui(player, client), "buttons.settings"));
 //    this.client.openScreen(new ConfigScreen(new SettingsGui(player, client), "settings", player));
   }
 

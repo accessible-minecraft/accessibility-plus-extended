@@ -1,21 +1,22 @@
 package net.shoaibkhan.accessibiltyplusextended;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.lwjgl.glfw.GLFW;
+
 import io.github.cottonmc.cotton.gui.widget.data.Color;
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 //import net.minecraft.client.options.KeyBinding;
  import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.shoaibkhan.accessibiltyplusextended.keyboard.KeyboardController;
 import net.shoaibkhan.accessibiltyplusextended.util.KeyBinds;
-import org.lwjgl.glfw.GLFW;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class modInit implements ModInitializer {
+public class modInit implements ClientModInitializer {
 	HudRenderCallBackClass hudRenderCallBackClass;
 	public static Map<String, Integer> mainThreadMap;
 	private static CustomWait mainThreadCustomWait;
@@ -26,7 +27,7 @@ public class modInit implements ModInitializer {
 	public static KeyboardController keyboardController;
 
 	@Override
-	public void onInitialize() {
+	public void onInitializeClient() {
 		keyboardController = new KeyboardController();
 
 		narrator = new NarratorPlus();
@@ -40,9 +41,9 @@ public class modInit implements ModInitializer {
 		hudRenderCallBackClass = new HudRenderCallBackClass();
 	}
 
-	private void initializeKeyBinds(){
-		KeyBinds.CONFIG_KEY.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("APE Configuration", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "AP Extended")));
-		KeyBinds.LockEntityKey.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("Lock onto Entity", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Y, "AP Extended")));
+	private void initializeKeyBinds() {
+		KeyBinds.CONFIG_KEY.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("gui.apextended.config.ext.title", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_B, "key.categories.apextended.general")));
+		KeyBinds.LockEntityKey.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.lockEntity", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_Y, "key.categories.apextended.general")));
 		KeyBinds.AP_CONFIG_KEY.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.config", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_N, "key.categories.apextended.general")));
 
 		KeyBinds.LEFT_KEY.setKeyBind(KeyBindingHelper.registerKeyBinding(new KeyBinding("key.apextended.left", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_LEFT, "key.categories.apextended.inventorycontrol")));

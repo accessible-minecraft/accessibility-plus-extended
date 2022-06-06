@@ -1,20 +1,19 @@
 package net.shoaibkhan.accessibiltyplusextended.features.withThreads;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
-import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
+import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 
 public class DurabilityThread extends Thread {
 	private final MinecraftClient client;
 	private double threshold;
-	public static String[] thresholdArray = { "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60",
-			"65", "70", "75", "80", "85", "90", "95" };
+	public static Integer[] thresholdArray = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60,
+			65, 70, 75, 80, 85, 90, 95 };
 
 	public DurabilityThread() {
 		this.client = MinecraftClient.getInstance();
@@ -23,7 +22,7 @@ public class DurabilityThread extends Thread {
 
 	public void run() {
 		try {
-			threshold = Integer.parseInt(thresholdArray[Config.getInt(ConfigKeys.DURABILITY_THRESHOLD_KEY.getKey())] + "");
+			threshold = thresholdArray[Config.getInt(ConfigKeys.DURABILITY_THRESHOLD_KEY.getKey())];
 		} catch (Exception e) {
 			threshold = 25;
 		}
@@ -35,9 +34,8 @@ public class DurabilityThread extends Thread {
 			int size = playerInventory.size();
 			for (int i = 0; i <= size; i++) {
 				ItemStack itemStack = playerInventory.getStack(i);
-				MutableText mutableText = (new LiteralText("")).append(itemStack.getName());
-				String name = mutableText.getString();
-				if (!name.equalsIgnoreCase("air") && itemStack.isDamageable()) {
+				String name = itemStack.getName().getString();
+				if (itemStack.isDamageable()) {
 					String searchQuery = name + "\t" + itemStack;
 					if (modInit.lowDurabilityItems.contains(searchQuery))
 						break;
@@ -46,7 +44,7 @@ public class DurabilityThread extends Thread {
 					double healthLeft = 100.00 - ((damage*100)/maxDamage);
 					if (healthLeft <= threshold) {
 //						this.client.player.sendMessage(new LiteralText(name + " durability is low"), true);
-						NarratorPlus.narrate(name + " durability is low");
+						NarratorPlus.narrate(I18n.translate("narrate.apextended.durability.warn", name));
 						modInit.lowDurabilityItems.add(searchQuery);
 					}
 				}

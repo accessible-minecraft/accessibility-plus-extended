@@ -4,11 +4,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Direction;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
@@ -24,6 +25,8 @@ public class CrosshairTarget {
 
 	private void main() {
 		HitResult hit = client.crosshairTarget;
+		if (hit == null)
+		    return;
 		String text = "";
 		switch (hit.getType()) {
 			case MISS:
@@ -36,41 +39,34 @@ public class CrosshairTarget {
 					BlockState blockState = client.world.getBlockState(blockHitResult.getBlockPos());
 					Block block = blockState.getBlock();
 
-					String name;
-					MutableText blockMutableText = new LiteralText("").append(block.getName());
-					name = blockMutableText.getString();
+					String name = block.getName().getString();
 
 					String blockPos = (blockHitResult.getBlockPos() + "").replace("Mutable{x", "BlockPos{x");
 
 					String searchQuery = name + blockPos;
 
 					String blockEntries = blockState.getEntries() + "" + blockState.getBlock() + "" + blockPos;
+					boolean isSign = blockState.isIn(BlockTags.SIGNS);
 
-					if (!name.toLowerCase().contains("sign") && Config.get(ConfigKeys.READ_BLOCKS_KEY.getKey())) {
+					if (!isSign && Config.get(ConfigKeys.READ_BLOCKS_KEY.getKey())) {
 						if (!modInit.mainThreadMap.containsKey(searchQuery) && !blockEntries.equalsIgnoreCase(LockingHandler.lockedOnBlockEntries)) {
 							text += name;
 
-							String side;
 							if (Config.get(ConfigKeys.NARRATE_BLOCK_SIDE_KEY.getKey())) {
-								side = blockHitResult.getSide().asString();
-								if (side.equalsIgnoreCase("up"))
-									side = "top";
-								if (side.equalsIgnoreCase("down"))
-									side = "bottom";
-								text += " " + side;
+	                            Direction side = blockHitResult.getSide();
+								text += " " + I18n.translate("narrate.apextended." + side.asString());
 							}
 
 							NarratorPlus.narrate(text);
 							modInit.mainThreadMap.put(searchQuery, 5000);
 						}
 					}
-					if (name.toLowerCase().contains("sign") && Config.get(ConfigKeys.READ_SIGNS_CONTENTS.getKey())) {
+					if (isSign && Config.get(ConfigKeys.READ_SIGNS_CONTENTS.getKey())) {
 						if (!modInit.mainThreadMap.containsKey(searchQuery)) {
 							String output = "";
 							try {
 								SignBlockEntity signentity = (SignBlockEntity) client.world
 										.getBlockEntity(blockHitResult.getBlockPos());
-								output += " says: ";
 
 								 // 1.17
 								 output += "1: " + signentity.getTextOnRow(0, false).getString() + ", ";
@@ -83,10 +79,13 @@ public class CrosshairTarget {
 //								output += "2: " + signentity.getTextOnRow(1).getString() + ", ";
 //								output += "3: " + signentity.getTextOnRow(2).getString() + ", ";
 //								output += "4: " + signentity.getTextOnRow(3).getString();
+								 
+								 output = I18n.translate("narrate.apextended.sign.says", output);
 							} catch (Exception e) {
 								e.printStackTrace();
 							} finally {
-								NarratorPlus.narrate(output);
+                                if (!output.isEmpty())
+                                    NarratorPlus.narrate(output);
 								modInit.mainThreadMap.put(searchQuery, 10000);
 							}
 						}
@@ -103,11 +102,7 @@ public class CrosshairTarget {
 							break;
 
 						if (!modInit.mainThreadMap.containsKey("entity_narrator_key")) {
-							MutableText entityMutableText = new LiteralText("")
-									.append(entityHitResult.getEntity().getName());
-							text = entityMutableText.getString();
-
-							NarratorPlus.narrate(text);
+							NarratorPlus.narrate(entityHitResult.getEntity().getName().getString());
 							modInit.mainThreadMap.put("entity_narrator_key", 5000);
 						}
 					} catch (Exception e) {

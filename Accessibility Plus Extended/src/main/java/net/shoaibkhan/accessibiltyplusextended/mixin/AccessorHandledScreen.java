@@ -10,24 +10,24 @@ import net.minecraft.screen.slot.Slot;
 @Mixin(HandledScreen.class)
 public interface AccessorHandledScreen {
     //
-    @Accessor(value = "playerInventoryTitleX")
+    @Accessor("playerInventoryTitleX")
     int getPlayerInventoryTitleX();
 
-    @Accessor(value = "playerInventoryTitleY")
+    @Accessor("playerInventoryTitleY")
     int getPlayerInventoryTitleY();
 
-    @Accessor(value = "x")
+    @Accessor("x")
     int getX();
 
-    @Accessor(value = "y")
+    @Accessor("y")
     int getY();
 
-    @Accessor(value = "handler")
+    @Accessor("handler")
     ScreenHandler getHandler();
 
-    @Accessor(value = "focusedSlot")
+    @Accessor("focusedSlot")
     Slot getFocusedSlot();
 
-    @Accessor(value = "focusedSlot")
+    @Accessor("focusedSlot")
     public void setFocusedSlot(Slot slot);
 }

@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.command.argument.EntityAnchorArgumentType.EntityAnchor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EyeOfEnderEntity;
@@ -18,7 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.HudRenderCallBackClass;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
-import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 import net.shoaibkhan.accessibiltyplusextended.util.KeyBinds;
@@ -86,7 +86,7 @@ public class LockingHandler {
 
         if (KeyBinds.LockEntityKey.getKeyBind().wasPressed()) {
             if (HudRenderCallBackClass.isAltPressed && (lockedOnEntity != null || lockedOnBlock != null)) {
-                NarratorPlus.narrate("Unlocked");
+                NarratorPlus.narrate("narrate.apextended.locking.unlocked");
                 lockedOnEntity = null;
                 lockedOnBlockEntries = "";
                 lockedOnBlock = null;
@@ -99,7 +99,7 @@ public class LockingHandler {
                     Entry<Double, Entity> entry = POIHandler.eyeOfEnderEntity.firstEntry();
                     Entity entity = entry.getValue();
 
-                    String text = "Tracking Eye of Ender";
+                    String text = I18n.translate("narrate.apextended.locking.trackingEyeOfEnder");
                     lockedOnEntity = entity;
                     lockedOnBlockEntries = "";
 
@@ -111,8 +111,7 @@ public class LockingHandler {
                     Entry<Double, Entity> entry = POIHandler.hostileEntity.firstEntry();
                     Entity entity = entry.getValue();
 
-                    MutableText mutableText = (new LiteralText("")).append(entity.getName());
-                    String name = mutableText.getString();
+                    String name = entity.getName().getString();
                     String text = name;
                     lockedOnEntity = entity;
                     lockedOnBlockEntries = "";

@@ -2,9 +2,11 @@ package net.shoaibkhan.accessibiltyplusextended.features.withThreads;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
@@ -15,8 +17,8 @@ public class FallDetectorThread extends Thread {
 
 	public boolean alive = false, finished = false;
 	private MinecraftClient client;
-	public static String[] range = { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
-	public static String[] depthArray = { "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
+	public static Integer[] range = { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+	public static Integer[] depthArray = { 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 
 	public void run() {
 		alive = true;
@@ -28,26 +30,26 @@ public class FallDetectorThread extends Thread {
 
 		int rangeVal = 10;
 		try {
-			rangeVal = Integer.parseInt(range[Config.getInt(ConfigKeys.FALL_DETECTOR_RANGE_KEY.getKey())] + "");
+			rangeVal = range[Config.getInt(ConfigKeys.FALL_DETECTOR_RANGE_KEY.getKey())];
 			rangeVal = rangeVal - 1;
 		} catch (Exception e) {
 			rangeVal = 10;
 		}
 
-		String dir = client.player.getHorizontalFacing().toString().toLowerCase().trim();
-		if (dir.equalsIgnoreCase("north")) {
+		Direction dir = client.player.getHorizontalFacing();
+		if (dir == Direction.NORTH) {
 			checkBlock(new BlockPos(new Vec3d(posX - 1, posY, posZ - 1)), dir, rangeVal);
 			checkBlock(new BlockPos(new Vec3d(posX, posY, posZ - 1)), dir, rangeVal);
 			checkBlock(new BlockPos(new Vec3d(posX + 1, posY, posZ - 1)), dir, rangeVal);
-		} else if (dir.equalsIgnoreCase("south")) {
+		} else if (dir == Direction.SOUTH) {
 			checkBlock(new BlockPos(new Vec3d(posX - 1, posY, posZ + 1)), dir, rangeVal);
 			checkBlock(new BlockPos(new Vec3d(posX, posY, posZ + 1)), dir, rangeVal);
 			checkBlock(new BlockPos(new Vec3d(posX + 1, posY, posZ + 1)), dir, rangeVal);
-		} else if (dir.equalsIgnoreCase("east")) {
+		} else if (dir == Direction.EAST) {
 			checkBlock(new BlockPos(new Vec3d(posX + 1, posY, posZ - 1)), dir, rangeVal);
 			checkBlock(new BlockPos(new Vec3d(posX + 1, posY, posZ)), dir, rangeVal);
 			checkBlock(new BlockPos(new Vec3d(posX + 1, posY, posZ + 1)), dir, rangeVal);
-		} else if (dir.equalsIgnoreCase("west")) {
+		} else if (dir == Direction.WEST) {
 			checkBlock(new BlockPos(new Vec3d(posX - 1, posY, posZ - 1)), dir, rangeVal);
 			checkBlock(new BlockPos(new Vec3d(posX - 1, posY, posZ)), dir, rangeVal);
 			checkBlock(new BlockPos(new Vec3d(posX - 1, posY, posZ + 1)), dir, rangeVal);
@@ -55,7 +57,7 @@ public class FallDetectorThread extends Thread {
 		finished = true;
 	}
 
-	private void checkBlock(BlockPos blockPos, String direction, int limit) {
+	private void checkBlock(BlockPos blockPos, Direction direction, int limit) {
 		if (!modInit.mainThreadMap.containsKey("fall_detector_key")) {
 			Block block = client.world.getBlockState(blockPos).getBlock();
 			MutableText blockNameMutable = (new LiteralText("")).append(block.getName());
@@ -82,7 +84,7 @@ public class FallDetectorThread extends Thread {
 
 				int depthVal;
 				try {
-					depthVal = Integer.parseInt(depthArray[Config.getInt(ConfigKeys.FALL_DETECTOR_DEPTH.getKey())] + "");
+					depthVal = depthArray[Config.getInt(ConfigKeys.FALL_DETECTOR_DEPTH.getKey())];
 				} catch (Exception e) {
 					depthVal = 5;
 				}
@@ -90,17 +92,17 @@ public class FallDetectorThread extends Thread {
 				if (depth >= depthVal && !modInit.mainThreadMap.containsKey("fall_detector_key")) {
 					modInit.mainThreadMap.put("fall_detector_key", 5000);
 //					client.player.sendMessage(new LiteralText("warning Fall Detected"), true);
-					NarratorPlus.narrate("warning Fall Detected");
+					NarratorPlus.narrate(I18n.translate("narrate.apextended.falldetector"));
 				}
 			}
 
-			if (direction.equalsIgnoreCase("north") && limit > 0) {
+			if (direction == Direction.NORTH && limit > 0) {
 				checkBlock(new BlockPos(new Vec3d(posX, posY, posZ - 1)), direction, limit - 1);
-			} else if (direction.equalsIgnoreCase("south") && limit > 0) {
+			} else if (direction == Direction.SOUTH && limit > 0) {
 				checkBlock(new BlockPos(new Vec3d(posX, posY, posZ + 1)), direction, limit - 1);
-			} else if (direction.equalsIgnoreCase("east") && limit > 0) {
+			} else if (direction == Direction.EAST && limit > 0) {
 				checkBlock(new BlockPos(new Vec3d(posX + 1, posY, posZ)), direction, limit - 1);
-			} else if (direction.equalsIgnoreCase("west") && limit > 0) {
+			} else if (direction == Direction.WEST && limit > 0) {
 				checkBlock(new BlockPos(new Vec3d(posX - 1, posY, posZ)), direction, limit - 1);
 			}
 		}
@@ -110,8 +112,7 @@ public class FallDetectorThread extends Thread {
 		if (limit <= 0) return 0;
 
 		Block block = client.world.getBlockState(blockPos).getBlock();
-		MutableText blockNameMutable = (new LiteralText("")).append(block.getName());
-		String blockName = blockNameMutable.getString().toLowerCase();
+		String blockName = block.getName().getString().toLowerCase();
 		int posX = blockPos.getX();
 		int posY = blockPos.getY();
 		int posZ = blockPos.getZ();

@@ -49,7 +49,7 @@ public class SettingsGui extends LightweightGuiDescription {
 		WLabel label = new WLabel(new TranslatableText("gui.apextended.config.buttons.settings"), modInit.colors("red", 100));
 		label.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(label, 0, 1, 21, 1);
-		WLabel fakeLabel = new WLabel(new LiteralText(""), modInit.colors("red", 100));
+		WLabel fakeLabel = new WLabel(LiteralText.EMPTY, modInit.colors("red", 100));
 		fakeLabel.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(fakeLabel, 0, 8, 21, 1);
 
@@ -63,29 +63,29 @@ public class SettingsGui extends LightweightGuiDescription {
 	private void onBackClick() {
 		this.player.closeScreen();
 		this.client.setScreen(
-				new ConfigScreen(new ConfigGui(client.player, client), "AP Extended Configuration", player));
+				new ConfigScreen(new ConfigGui(client.player, client), "ext.title"));
 //		this.client.openScreen(
 //				new ConfigScreen(new ConfigGui(client.player, client), "AP Extended Configuration", player));
 	}
 
 	private void onOreDetectorClick() {
 		this.player.closeScreen();
-		this.client.setScreen(new ConfigScreen(new POIGui(player, client), "POI Settings", player));
+		this.client.setScreen(new ConfigScreen(new POIGui(player, client), "buttons.poisettings"));
 	}
 
 	private void onFallDetectorClick() {
 		this.player.closeScreen();
-		this.client.setScreen(new ConfigScreen(new FallDetectorGui(player, client), "Fall Detector Settings", player));
+		this.client.setScreen(new ConfigScreen(new FallDetectorGui(player, client), "buttons.falldetectorsettings"));
 	}
 
 	private void onFindFluidClick() {
 		this.player.closeScreen();
-		this.client.setScreen(new ConfigScreen(new FindFluidGui(player, client), "Find Fluid Settings", player));
+		this.client.setScreen(new ConfigScreen(new FindFluidGui(player, client), "buttons.finddluidsettings"));
 	}
 
 	private void onDurabilityCheckerClick() {
 		this.player.closeScreen();
-		this.client.setScreen( new ConfigScreen(new DurabilityCheckerGui(player, client), "Durability Checker Settings", player));
+		this.client.setScreen( new ConfigScreen(new DurabilityCheckerGui(player, client), "buttons.durabilitycheckersettings"));
 	}
 
 	@Override
