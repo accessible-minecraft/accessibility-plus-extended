@@ -25,6 +25,8 @@ dependencies {
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+	modImplementation include("io.github.cottonmc:LibGui:${project.libgui_version}")
+
 	// Detect hotkeys in screen
 	modApi "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
 	include "me.shedaniel.cloth.api:cloth-client-events-v0:${project.cloth_client_events_version}"
