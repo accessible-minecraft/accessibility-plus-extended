@@ -14,6 +14,7 @@ import net.minecraft.entity.EyeOfEnderEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Property;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.shoaibkhan.accessibiltyplusextended.HudRenderCallBackClass;

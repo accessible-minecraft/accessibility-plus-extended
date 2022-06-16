@@ -5,8 +5,8 @@ import java.util.List;
 import org.lwjgl.glfw.GLFW;
 
 import blue.endless.jankson.annotation.Nullable;
-import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
-import me.shedaniel.cloth.api.client.events.v0.ScreenHooks;
+//import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
+//import me.shedaniel.cloth.api.client.events.v0.ScreenHooks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
@@ -59,7 +59,7 @@ public class KeyboardController {
     }
   }
 
-  private static ActionResult onScreenOpen(MinecraftClient mc, Screen currentScreen, ScreenHooks screenHooks) {
+  private static ActionResult onScreenOpen(MinecraftClient mc, Screen currentScreen/*, ScreenHooks screenHooks*/) {
     client = mc;
     groups = null;
     screen = null;
