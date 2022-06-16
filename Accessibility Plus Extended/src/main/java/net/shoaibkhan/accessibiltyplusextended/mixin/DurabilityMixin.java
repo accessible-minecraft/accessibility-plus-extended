@@ -2,6 +2,7 @@ package net.shoaibkhan.accessibiltyplusextended.mixin;
 
 import java.util.List;
 
+import net.minecraft.client.resource.language.I18n;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,7 +13,6 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
@@ -26,15 +26,15 @@ public class DurabilityMixin {
 		ItemStack itemStack = (ItemStack) ((Object) this);
 		
 //		if(HudRenderCallBackClass.isTradeScreenOpen) {
-//			MutableText mutableText = new LiteralText("").append(list.get(0));
-//			list.set(0, new LiteralText(itemStack.getCount() + " " + mutableText.getString()) );
+//			MutableText mutableText = Text.empty().append(list.get(0));
+//			list.set(0, Text.of(itemStack.getCount() + " " + mutableText.getString()) );
 //		}
 		
 		if (Config.get(ConfigKeys.DURABILITY_TOOL_TIP_KEY.getKey()) && Config.get(ConfigKeys.DURABILITY_CHECK_KEY.getKey())) {
 			if (itemStack.getItem().isDamageable()) {
 				int totalDurability = itemStack.getItem().getMaxDamage();
 				int currrRemainingDurability = totalDurability - itemStack.getDamage();
-                list.add(1, (new TranslatableText("narrate.apextended.durability", currrRemainingDurability, totalDurability).formatted(Formatting.GREEN)));
+                list.add(1, Text.of((I18n.translate("narrate.apextended.durability", currrRemainingDurability, totalDurability).formatted(Formatting.GREEN))));
 			}
 		}
 	}

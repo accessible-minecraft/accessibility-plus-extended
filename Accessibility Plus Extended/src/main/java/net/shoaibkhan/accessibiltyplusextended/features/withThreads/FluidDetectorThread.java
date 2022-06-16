@@ -66,7 +66,7 @@ public class FluidDetectorThread extends Thread{
         MutableText blockMutableText = client.world.getBlockState(fluidPos).getBlock().getName();
         String name = blockMutableText.getString();
     
-//        client.player.sendMessage(new LiteralText(""+name+", "+posDifference), true);
+//        client.player.sendMessage(Text.of(""+name+", "+posDifference), true);
         NarratorPlus.narrate(name+", "+posDifference);
       }
     }

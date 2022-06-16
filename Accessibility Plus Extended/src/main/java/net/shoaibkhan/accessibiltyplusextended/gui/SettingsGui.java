@@ -8,8 +8,8 @@ import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.text.Text;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 
 public class SettingsGui extends LightweightGuiDescription {
@@ -22,34 +22,34 @@ public class SettingsGui extends LightweightGuiDescription {
 		WGridPanel root = new WGridPanel();
 		setRootPanel(root);
 
-		WButton poiButton = new WButton(new TranslatableText("gui.apextended.config.buttons.poisettings"));
+		WButton poiButton = new WButton(Text.of(I18n.translate("gui.apextended.config.buttons.poisettings")));
 		poiButton.setOnClick(this::onOreDetectorClick);
 		root.add(poiButton, 1, 3, 7, 1);
 
-		WButton fallDetectorButton = new WButton(new TranslatableText("gui.apextended.config.buttons.falldetectorsettings"));
+		WButton fallDetectorButton = new WButton(Text.of(I18n.translate("gui.apextended.config.buttons.falldetectorsettings")));
 		fallDetectorButton.setOnClick(this::onFallDetectorClick);
 		root.add(fallDetectorButton, 12, 3, 7, 1);
 
-		WButton findFluidButton = new WButton(new TranslatableText("gui.apextended.config.buttons.finddluidsettings"));
+		WButton findFluidButton = new WButton(Text.of(I18n.translate("gui.apextended.config.buttons.finddluidsettings")));
 		findFluidButton.setOnClick(this::onFindFluidClick);
 		root.add(findFluidButton, 1, 5, 7, 1);
 
-		WButton durabilityCheckerButton = new WButton(new TranslatableText("gui.apextended.config.buttons.durabilitycheckersettings"));
+		WButton durabilityCheckerButton = new WButton(Text.of(I18n.translate("gui.apextended.config.buttons.durabilitycheckersettings")));
 		durabilityCheckerButton.setOnClick(this::onDurabilityCheckerClick);
 		root.add(durabilityCheckerButton, 11, 5, 9, 1);
 
-		WButton backButton = new WButton(new TranslatableText("gui.apextended.config.buttons.back"));
+		WButton backButton = new WButton(Text.of(I18n.translate("gui.apextended.config.buttons.back")));
 		backButton.setOnClick(this::onBackClick);
 		root.add(backButton, 2, 7, 7, 1);
 
-		WButton doneButton = new WButton(new TranslatableText("gui.apextended.config.buttons.done"));
+		WButton doneButton = new WButton(Text.of(I18n.translate("gui.apextended.config.buttons.done")));
 		doneButton.setOnClick(this::onDoneClick);
 		root.add(doneButton, 12, 7, 7, 1);
 
-		WLabel label = new WLabel(new TranslatableText("gui.apextended.config.buttons.settings"), modInit.colors("red", 100));
+		WLabel label = new WLabel(Text.of(I18n.translate("gui.apextended.config.buttons.settings")), modInit.colors("red", 100));
 		label.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(label, 0, 1, 21, 1);
-		WLabel fakeLabel = new WLabel(LiteralText.EMPTY, modInit.colors("red", 100));
+		WLabel fakeLabel = new WLabel(Text.empty(), modInit.colors("red", 100));
 		fakeLabel.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(fakeLabel, 0, 8, 21, 1);
 

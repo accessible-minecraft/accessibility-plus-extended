@@ -11,7 +11,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
@@ -31,8 +30,8 @@ public class ItemStackTooltipInject {
       if (!itemStack.isStackable() || itemStack.getItem().isDamageable())
         break addCount;
 
-      MutableText mutableText = new LiteralText("").append(list.get(0));
-      list.set(0, new LiteralText(itemStack.getCount() + " " + mutableText.getString()));
+      MutableText mutableText = Text.empty().append(list.get(0));
+      list.set(0, Text.of(itemStack.getCount() + " " + mutableText.getString()));
     }
 
     narrateToolTip: {

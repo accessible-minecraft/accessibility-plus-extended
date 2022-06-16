@@ -8,8 +8,8 @@ import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.text.Text;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 import net.shoaibkhan.accessibiltyplusextended.modInit;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
@@ -43,18 +43,18 @@ public class ConfigGui extends LightweightGuiDescription {
     ArrayButton cnStatus = new ArrayButton("gui.apextended.config.buttons.chatnarration", ConfigKeys.CHAT_NARRATION.getKey(), NarratorPlus.chatOptions);
     root.add(cnStatus, 12, 7, 10, 1);
 
-    WButton settingsButton = new WButton(new TranslatableText("gui.apextended.config.buttons.settings"));
+    WButton settingsButton = new WButton(Text.of(I18n.translate("gui.apextended.config.buttons.settings")));
     settingsButton.setOnClick(this::onSettingsClick);
     root.add(settingsButton, 2, 9, 7, 1);
 
-    WButton doneButton = new WButton(new TranslatableText("gui.apextended.config.buttons.done"));
+    WButton doneButton = new WButton(Text.of(I18n.translate("gui.apextended.config.buttons.done")));
     doneButton.setOnClick(this::onDoneClick);
     root.add(doneButton, 12, 9, 7, 1);
 
-    WLabel label = new WLabel(new TranslatableText("gui.apextended"), modInit.colors("red", 100));
+    WLabel label = new WLabel(Text.of(I18n.translate("gui.apextended")), modInit.colors("red", 100));
     label.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(label, 0, 1, 21, 1);
-    WLabel fakeLabel = new WLabel(LiteralText.EMPTY, modInit.colors("red", 100));
+    WLabel fakeLabel = new WLabel(Text.empty(), modInit.colors("red", 100));
     fakeLabel.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(fakeLabel, 0, 10, 21, 1);
 

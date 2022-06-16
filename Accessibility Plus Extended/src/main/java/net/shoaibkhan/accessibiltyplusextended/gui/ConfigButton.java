@@ -4,7 +4,7 @@ import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.text.MutableText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
 public class ConfigButton extends WButton {
@@ -27,9 +27,9 @@ public class ConfigButton extends WButton {
 		return InputResult.PROCESSED;
 	}
 
-	private static MutableText generateTitle(String translateKey, String jsonKey, boolean enabled) {
+	private static Text generateTitle(String translateKey, String jsonKey, boolean enabled) {
 		String translatedOption = I18n.translate("gui.apextended.config.buttons." + (enabled ? "on" : "off"));
-		return new TranslatableText(translateKey, translatedOption);
+		return Text.of(I18n.translate(translateKey, translatedOption));
 	}
 
 	// 1.16

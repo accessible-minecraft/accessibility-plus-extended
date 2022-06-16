@@ -7,7 +7,8 @@ import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.text.Text;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
 
 public class AccessibilityPlusConfigGui extends LightweightGuiDescription {
@@ -35,11 +36,11 @@ public class AccessibilityPlusConfigGui extends LightweightGuiDescription {
         ConfigButton actionBarButton = new ConfigButton("gui.apextended.config.buttons.actionbar", ConfigKeys.ATION_BAR_KEY.getKey());
         root.add(actionBarButton, 0, 3, 10, 1);
 
-        WButton doneButton = new WButton(new TranslatableText("gui.apextended.config.buttons.done"));
+        WButton doneButton = new WButton(Text.of(I18n.translate("gui.apextended.config.buttons.done")));
         doneButton.setOnClick(this::onDoneClick);
         root.add(doneButton, 7, 8, 7, 1);
 
-        WLabel label = new WLabel(new TranslatableText("gui.apextended.config.title"), 0xFFFFFF);
+        WLabel label = new WLabel(Text.of(I18n.translate("gui.apextended.config.title")), 0xFFFFFF);
         label.setHorizontalAlignment(HorizontalAlignment.CENTER);
         root.add(label, 0, 0, 21, 1);
 

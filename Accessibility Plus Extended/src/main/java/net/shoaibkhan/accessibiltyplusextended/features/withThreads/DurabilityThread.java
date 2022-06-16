@@ -43,7 +43,7 @@ public class DurabilityThread extends Thread {
 					double damage = itemStack.getDamage();
 					double healthLeft = 100.00 - ((damage*100)/maxDamage);
 					if (healthLeft <= threshold) {
-//						this.client.player.sendMessage(new LiteralText(name + " durability is low"), true);
+//						this.client.player.sendMessage(Text.of(name + " durability is low"), true);
 						NarratorPlus.narrate(I18n.translate("narrate.apextended.durability.warn", name));
 						modInit.lowDurabilityItems.add(searchQuery);
 					}

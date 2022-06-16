@@ -43,10 +43,12 @@ public class KeyboardController {
   }
 
   public KeyboardController() {
+    /*
     if(Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
       ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
       ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
     }
+    */
   }
 
   public static boolean hasControlOverMouse() {

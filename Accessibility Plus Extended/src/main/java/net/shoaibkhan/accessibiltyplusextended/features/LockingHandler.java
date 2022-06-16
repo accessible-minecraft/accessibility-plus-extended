@@ -13,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EyeOfEnderEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Property;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -237,7 +236,7 @@ public class LockingHandler {
             Entry<Double, Vec3d> closestOreBlockEntry, Double closestOreBlockDouble) {
 
         if (closest.equals(closestPassiveEntityDouble) && closestPassiveEntityDouble != -9999.0) {
-            MutableText mutableText = (new LiteralText("")).append(closestPassiveEntityEntry.getValue().getName());
+            MutableText mutableText = (Text.empty()).append(closestPassiveEntityEntry.getValue().getName());
             String name = mutableText.getString();
             String text = name;
 
@@ -295,7 +294,7 @@ public class LockingHandler {
 
             Block closestBlock = blockState.getBlock();
 
-            MutableText mutableText = (new LiteralText("")).append(closestBlock.getName());
+            MutableText mutableText = (Text.empty()).append(closestBlock.getName());
             String name = mutableText.getString();
             String text = name;
             if (Config.get(ConfigKeys.POI_BLOCKS_LOCKING_NARRATE_DISTANCE_KEY.getKey())) {

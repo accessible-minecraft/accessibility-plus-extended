@@ -86,7 +86,7 @@ public class FallDetectorThread extends Thread {
 
 				if (depth >= depthVal && !modInit.mainThreadMap.containsKey("fall_detector_key")) {
 					modInit.mainThreadMap.put("fall_detector_key", 5000);
-//					client.player.sendMessage(new LiteralText("warning Fall Detected"), true);
+//					client.player.sendMessage(Text.of("warning Fall Detected"), true);
 					NarratorPlus.narrate(I18n.translate("narrate.apextended.falldetector"));
 				}
 			}

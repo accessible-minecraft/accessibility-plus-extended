@@ -1,10 +1,13 @@
 package net.shoaibkhan.accessibiltyplusextended.mixin;
 
-import net.minecraft.network.MessageType;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.NarratorMode;
+import net.minecraft.network.message.MessageSender;
+import net.minecraft.network.message.MessageType;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,6 +29,8 @@ public class NarratorManagerInject {
     }
   }
 
+  // pre 1.19
+  /*
   @Inject(at = @At("HEAD"), method = "onChatMessage", cancellable = true)
   public void onChatMessage(MessageType messageType, Text message, UUID sender, CallbackInfo ci) {
     String option = NarratorPlus.chatOptions[Config.getInt(ConfigKeys.CHAT_NARRATION.getKey())];
@@ -52,6 +57,35 @@ public class NarratorManagerInject {
       }
       case "default":{
         break;
+      }
+    }
+  }
+  */
+
+  // post 1.19
+  @Inject(at = @At("HEAD"), method = "onChatMessage", cancellable = true)
+  public void onChatMessage(MessageType type, Text message, @Nullable MessageSender sender, CallbackInfo ci) {
+    String option = NarratorPlus.chatOptions[Config.getInt(ConfigKeys.CHAT_NARRATION.getKey())];
+
+    switch (option) {
+      case "on" -> {
+        if (NarratorPlus.isNVDALoaded()) {
+          NarratorMode narratorMode = MinecraftClient.getInstance().options.getNarrator().getValue();
+          type.narration().ifPresent((narrationRule) -> {
+            if (narratorMode.shouldNarrate(narrationRule.kind())) {
+              Text text2 = narrationRule.apply(message, sender);
+              String string = text2.getString();
+              NarratorPlus.narrate(string);
+              ci.cancel();
+            }
+
+          });
+        }
+      }
+      case "off" -> {
+        ci.cancel();
+      }
+      case "default" -> {
       }
     }
   }
