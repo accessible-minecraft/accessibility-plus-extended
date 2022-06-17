@@ -49,7 +49,7 @@ public class SettingsGui extends LightweightGuiDescription {
 		WLabel label = new WLabel(Text.of(I18n.translate("gui.apextended.config.buttons.settings")), modInit.colors("red", 100));
 		label.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(label, 0, 1, 21, 1);
-		WLabel fakeLabel = new WLabel(Text.empty(), modInit.colors("red", 100));
+		WLabel fakeLabel = new WLabel(Text.of(""), modInit.colors("red", 100));
 		fakeLabel.setHorizontalAlignment(HorizontalAlignment.CENTER);
 		root.add(fakeLabel, 0, 8, 21, 1);
 
@@ -62,30 +62,32 @@ public class SettingsGui extends LightweightGuiDescription {
 
 	private void onBackClick() {
 		this.player.closeScreen();
-		this.client.setScreen(
-				new ConfigScreen(new ConfigGui(client.player, client), "ext.title"));
-//		this.client.openScreen(
-//				new ConfigScreen(new ConfigGui(client.player, client), "AP Extended Configuration", player));
+		this.client.setScreen(new ConfigScreen(new ConfigGui(client.player, client), "ext.title"));
+//		this.client.openScreen(new ConfigScreen(new ConfigGui(client.player, client), "ext.title"));
 	}
 
 	private void onOreDetectorClick() {
 		this.player.closeScreen();
-		this.client.setScreen(new ConfigScreen(new POIGui(player, client), "buttons.poisettings"));
+		this.client.setScreen(new ConfigScreen(new POIGui(player, client), "buttons.poisettings")); // post 1.18
+//		this.client.openScreen(new ConfigScreen(new POIGui(player, client), "buttons.poisettings")); // pre 1.18
 	}
 
 	private void onFallDetectorClick() {
 		this.player.closeScreen();
-		this.client.setScreen(new ConfigScreen(new FallDetectorGui(player, client), "buttons.falldetectorsettings"));
+		this.client.setScreen(new ConfigScreen(new FallDetectorGui(player, client), "buttons.falldetectorsettings")); // post 1.18
+//		this.client.openScreen(new ConfigScreen(new FallDetectorGui(player, client), "buttons.falldetectorsettings")); // pre 1.18
 	}
 
 	private void onFindFluidClick() {
 		this.player.closeScreen();
-		this.client.setScreen(new ConfigScreen(new FindFluidGui(player, client), "buttons.finddluidsettings"));
+		this.client.setScreen(new ConfigScreen(new FindFluidGui(player, client), "buttons.finddluidsettings")); // post 1.18
+//		this.client.openScreen(new ConfigScreen(new FindFluidGui(player, client), "buttons.finddluidsettings")); // pre 1.18
 	}
 
 	private void onDurabilityCheckerClick() {
 		this.player.closeScreen();
-		this.client.setScreen( new ConfigScreen(new DurabilityCheckerGui(player, client), "buttons.durabilitycheckersettings"));
+		this.client.setScreen( new ConfigScreen(new DurabilityCheckerGui(player, client), "buttons.durabilitycheckersettings")); // post 1.18
+//		this.client.openScreen( new ConfigScreen(new DurabilityCheckerGui(player, client), "buttons.durabilitycheckersettings")); // pre 1.18
 	}
 
 	@Override

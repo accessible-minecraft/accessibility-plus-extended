@@ -89,13 +89,15 @@ public class HudRenderCallBackClass {
 		while (KeyBinds.CONFIG_KEY.getKeyBind().wasPressed()) {
 			if (!isControlPressed) {
 				Screen screen = new ConfigScreen(new ConfigGui(client.player, client), "ext.title");
-				client.setScreen(screen);
+//				client.openScreen(screen); // pre 1.18
+				client.setScreen(screen); // post 1.18
 				return;
 			}
 		}
 
 		while (KeyBinds.AP_CONFIG_KEY.getKeyBind().wasPressed()) {
-			client.setScreen(new ConfigScreen(new AccessibilityPlusConfigGui(client.player), "title"));
+			client.setScreen(new ConfigScreen(new AccessibilityPlusConfigGui(client.player), "title")); // post 1.18
+//			client.openScreen(new ConfigScreen(new AccessibilityPlusConfigGui(client.player), "title")); // pre 1.18
 			return;
 		}
 
@@ -105,7 +107,8 @@ public class HudRenderCallBackClass {
 		ClientPlayerEntity player = client.player;
 		Direction dir = client.player.getHorizontalFacing();
 
-		Vec3d diff = player.getEyePos().subtract(Vec3d.ofCenter(blockPos));
+		Vec3d diff = player.getEyePos().subtract(Vec3d.ofCenter(blockPos)); // post 1.17
+//		Vec3d diff = (new Vec3d(client.player.getX(), client.player.getEyeY(), client.player.getZ())).subtract(Vec3d.ofCenter(blockPos)); // pre 1.17
 		BlockPos diffBlockPos = new BlockPos(Math.round(diff.x), Math.round(diff.y), Math.round(diff.z));
 
 		String diffXBlockPos = "";

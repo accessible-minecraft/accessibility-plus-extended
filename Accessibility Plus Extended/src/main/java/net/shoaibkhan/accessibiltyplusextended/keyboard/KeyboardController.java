@@ -5,8 +5,6 @@ import java.util.List;
 import org.lwjgl.glfw.GLFW;
 
 import blue.endless.jankson.annotation.Nullable;
-//import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
-//import me.shedaniel.cloth.api.client.events.v0.ScreenHooks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
@@ -43,12 +41,11 @@ public class KeyboardController {
   }
 
   public KeyboardController() {
-    /*
-    if(Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
-      ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
-      ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
-    }
-    */
+    // post 1.19
+//    if(Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
+//      ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
+//      ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
+//    }
   }
 
   public static boolean hasControlOverMouse() {

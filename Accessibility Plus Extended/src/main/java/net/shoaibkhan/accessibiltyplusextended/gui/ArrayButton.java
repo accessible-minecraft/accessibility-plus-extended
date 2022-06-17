@@ -1,9 +1,7 @@
 package net.shoaibkhan.accessibiltyplusextended.gui;
 
 import io.github.cottonmc.cotton.gui.widget.WButton;
-import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.minecraft.client.resource.language.I18n;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 
@@ -19,9 +17,9 @@ public class ArrayButton extends WButton {
     this.array = array.clone();
   }
 
-	//   1.17
+	// post 1.17
 	@Override
-	public InputResult onClick(int x, int y, int button) {
+	public io.github.cottonmc.cotton.gui.widget.data.InputResult onClick(int x, int y, int button) {
 		super.onClick(x, y, button);
 		if (this.isEnabled()) {
 			int val = Config.getInt(jsonKey) + 1;
@@ -30,7 +28,7 @@ public class ArrayButton extends WButton {
 			Config.setString(jsonKey, val + "");
 			this.setLabel(generateTitle(translateKey, jsonKey, array));
 		}
-		return InputResult.PROCESSED;
+		return io.github.cottonmc.cotton.gui.widget.data.InputResult.PROCESSED;
 	}
 
 	private static Text generateTitle(String translateKey, String jsonKey, Object[] array) {
@@ -44,7 +42,7 @@ public class ArrayButton extends WButton {
 		return Text.of(I18n.translate(translateKey, translatedOption));
 	}
 
- //1.16
+ // pre 1.17
 //  @Override
 //  public void onClick(int x, int y, int button) {
 //    super.onClick(x, y, button);
@@ -53,7 +51,7 @@ public class ArrayButton extends WButton {
 //      if (val == array.length)
 //        val = 0;
 //      Config.setString(jsonKey, val + "");
-//      TranslatableText newButtonText = new TranslatableText(this.translateKey , array[Config.getInt(jsonKey)]);
+//      net.minecraft.text.TranslatableText newButtonText = new net.minecraft.text.TranslatableText(this.translateKey , array[Config.getInt(jsonKey)]);
 //      this.setLabel(newButtonText);
 //    }
 //  }

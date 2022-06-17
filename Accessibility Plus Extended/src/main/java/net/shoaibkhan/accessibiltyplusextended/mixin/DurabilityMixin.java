@@ -26,7 +26,7 @@ public class DurabilityMixin {
 		ItemStack itemStack = (ItemStack) ((Object) this);
 		
 //		if(HudRenderCallBackClass.isTradeScreenOpen) {
-//			MutableText mutableText = Text.empty().append(list.get(0));
+//			MutableText mutableText = Text.of("").append(list.get(0));
 //			list.set(0, Text.of(itemStack.getCount() + " " + mutableText.getString()) );
 //		}
 		
@@ -34,7 +34,8 @@ public class DurabilityMixin {
 			if (itemStack.getItem().isDamageable()) {
 				int totalDurability = itemStack.getItem().getMaxDamage();
 				int currrRemainingDurability = totalDurability - itemStack.getDamage();
-                list.add(1, Text.of((I18n.translate("narrate.apextended.durability", currrRemainingDurability, totalDurability).formatted(Formatting.GREEN))));
+                list.add(1, Text.of((I18n.translate("narrate.apextended.durability", currrRemainingDurability, totalDurability).formatted(Formatting.GREEN)))); // post 1.17
+//				list.add(1, new net.minecraft.text.TranslatableText("narrate.apextended.durability", currrRemainingDurability, totalDurability).formatted(Formatting.GREEN)); // pre 1.17
 			}
 		}
 	}

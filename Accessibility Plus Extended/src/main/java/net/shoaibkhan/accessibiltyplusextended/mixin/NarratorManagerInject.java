@@ -7,7 +7,6 @@ import net.minecraft.network.message.MessageType;
 import net.minecraft.text.Text;
 import net.shoaibkhan.accessibiltyplusextended.config.Config;
 import net.shoaibkhan.accessibiltyplusextended.config.ConfigKeys;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,39 +31,39 @@ public class NarratorManagerInject {
   // pre 1.19
   /*
   @Inject(at = @At("HEAD"), method = "onChatMessage", cancellable = true)
-  public void onChatMessage(MessageType messageType, Text message, UUID sender, CallbackInfo ci) {
+  public void onChatMessage(MessageType type, Text message, UUID sender, CallbackInfo ci) {
     String option = NarratorPlus.chatOptions[Config.getInt(ConfigKeys.CHAT_NARRATION.getKey())];
 
-    switch (option){
+    switch (option) {
       case "on": {
         if (NarratorPlus.isNVDALoaded()) {
-          Object text2;
-          if (message instanceof TranslatableText && "chat.type.text".equals(((TranslatableText) message).getKey())) {
-            text2 = new TranslatableText("chat.type.text.narrate", ((TranslatableText) message).getArgs());
+          Text text2;
+          if (message instanceof net.minecraft.text.TranslatableText && "chat.type.text".equals(((net.minecraft.text.TranslatableText) message).getKey())) {
+            text2 = new net.minecraft.text.TranslatableText("chat.type.text.narrate", ((net.minecraft.text.TranslatableText) message).getArgs());
           } else {
             text2 = message;
           }
 
-          String string = ((Text) text2).getString();
+          String string = text2.getString();
           NarratorPlus.narrate(string);
           ci.cancel();
+          break;
         }
-        break;
       }
-      case "off": {
+      case "off" : {
         ci.cancel();
         break;
       }
-      case "default":{
+      case "default" : {
         break;
       }
     }
   }
-  */
+   */
 
   // post 1.19
   @Inject(at = @At("HEAD"), method = "onChatMessage", cancellable = true)
-  public void onChatMessage(MessageType type, Text message, @Nullable MessageSender sender, CallbackInfo ci) {
+  public void onChatMessage(MessageType type, Text message, MessageSender sender, CallbackInfo ci) {
     String option = NarratorPlus.chatOptions[Config.getInt(ConfigKeys.CHAT_NARRATION.getKey())];
 
     switch (option) {

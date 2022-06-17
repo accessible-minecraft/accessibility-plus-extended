@@ -69,7 +69,7 @@ public class POIGui extends LightweightGuiDescription {
     label.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(label, 0, 1, 21, 1);
 
-    WLabel fakeLabel = new WLabel(Text.empty(), modInit.colors("red", 100));
+    WLabel fakeLabel = new WLabel(Text.of(""), modInit.colors("red", 100));
     fakeLabel.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(fakeLabel, 0, 16, 21, 1);
 
@@ -83,7 +83,7 @@ public class POIGui extends LightweightGuiDescription {
   private void onBackClick() {
     this.player.closeScreen();
     this.client.setScreen(new ConfigScreen(new SettingsGui(player, client), "buttons.settings"));
-//    this.client.openScreen(new ConfigScreen(new SettingsGui(player, client), "settings", player));
+//    this.client.openScreen(new ConfigScreen(new SettingsGui(player, client), "buttons.settings"));
   }
 
   @Override

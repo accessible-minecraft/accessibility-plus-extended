@@ -47,7 +47,7 @@ public class FindFluidGui extends LightweightGuiDescription {
     WLabel label = new WLabel(Text.of(I18n.translate("gui.apextended.config.buttons.finddluidsettings")), modInit.colors("red", 100));
     label.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(label, 0, 1, 21, 1);
-    WLabel fakeLabel = new WLabel(Text.empty(), modInit.colors("red", 100));
+    WLabel fakeLabel = new WLabel(Text.of(""), modInit.colors("red", 100));
     fakeLabel.setHorizontalAlignment(HorizontalAlignment.CENTER);
     root.add(fakeLabel, 0, 10, 21, 1);
 
@@ -61,7 +61,7 @@ public class FindFluidGui extends LightweightGuiDescription {
   private void onBackClick() {
     this.player.closeScreen();
     this.client.setScreen(new ConfigScreen(new SettingsGui(player, client), "buttons.settings"));
-//    this.client.openScreen(new ConfigScreen(new SettingsGui(player, client), "settings", player));
+//    this.client.openScreen(new ConfigScreen(new SettingsGui(player, client), "buttons.settings"));
   }
 
   @Override

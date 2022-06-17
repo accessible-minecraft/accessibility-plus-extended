@@ -103,7 +103,9 @@ public class POIBlocks extends Thread {
     private void checkBlock(BlockPos blockPos, int val) {
         BlockState blockState = client.world.getBlockState(blockPos);
         Block block = blockState.getBlock();
-        Vec3d playerVec3dPos = client.player.getEyePos();
+        Vec3d playerVec3dPos = client.player.getEyePos(); // post 1.17
+//        Vec3d playerVec3dPos = (new Vec3d(client.player.getX(), client.player.getEyeY(), client.player.getZ())); // pre 1.17
+
         double posX = blockPos.getX();
         double posY = blockPos.getY();
         double posZ = blockPos.getZ();

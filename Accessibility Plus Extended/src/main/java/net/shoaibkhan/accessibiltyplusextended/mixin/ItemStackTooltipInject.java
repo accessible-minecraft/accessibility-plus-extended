@@ -30,7 +30,8 @@ public class ItemStackTooltipInject {
       if (!itemStack.isStackable() || itemStack.getItem().isDamageable())
         break addCount;
 
-      MutableText mutableText = Text.empty().append(list.get(0));
+      MutableText mutableText = Text.literal("").append(list.get(0)); // post 1.19
+//      MutableText mutableText = new net.minecraft.text.LiteralText("").append(list.get(0)); // pre 1.19
       list.set(0, Text.of(itemStack.getCount() + " " + mutableText.getString()));
     }
 

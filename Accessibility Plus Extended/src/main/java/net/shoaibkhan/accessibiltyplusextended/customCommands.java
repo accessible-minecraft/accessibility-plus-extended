@@ -9,19 +9,22 @@ public class customCommands {
   public customCommands() {
     // pre 1.19
     /*
-      ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("getxp").executes(source -> {
+      net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.DISPATCHER
+              .register(net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.literal("getxp").executes(source -> {
       client = MinecraftClient.getInstance();
       NarratorPlus.narrate(""+client.player.experienceLevel);
       return 1;
     }));
 
-      ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("isfullscreen").executes(source -> {
+      net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.DISPATCHER
+              .register(net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.literal("isfullscreen").executes(source -> {
       client = MinecraftClient.getInstance();
       NarratorPlus.narrate(client.options.fullscreen);
       return 1;
     }));
 
-      ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("findlava").executes(source -> {
+      net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.DISPATCHER
+              .register(net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.literal("findlava").executes(source -> {
       try {
         FluidDetectorThread fluidDetectorThread = new FluidDetectorThread(true, false);
         fluidDetectorThread.start();
@@ -31,7 +34,8 @@ public class customCommands {
       return 1;
     }));
 
-      ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("findwater").executes(source -> {
+      net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.DISPATCHER
+              .register(net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.literal("findwater").executes(source -> {
       try {
         FluidDetectorThread fluidDetectorThread = new FluidDetectorThread(false, true);
         fluidDetectorThread.start();

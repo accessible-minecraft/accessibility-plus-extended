@@ -237,7 +237,8 @@ public class LockingHandler {
             Entry<Double, Vec3d> closestOreBlockEntry, Double closestOreBlockDouble) {
 
         if (closest.equals(closestPassiveEntityDouble) && closestPassiveEntityDouble != -9999.0) {
-            MutableText mutableText = (Text.empty()).append(closestPassiveEntityEntry.getValue().getName());
+            MutableText mutableText = (Text.literal("")).append(closestPassiveEntityEntry.getValue().getName()); // post 1.19
+//            MutableText mutableText = (new net.minecraft.text.LiteralText("")).append(closestPassiveEntityEntry.getValue().getName()); // pre 1.19
             String name = mutableText.getString();
             String text = name;
 
@@ -295,7 +296,8 @@ public class LockingHandler {
 
             Block closestBlock = blockState.getBlock();
 
-            MutableText mutableText = (Text.empty()).append(closestBlock.getName());
+            MutableText mutableText = (Text.literal("")).append(closestBlock.getName()); // post 1.19
+//            MutableText mutableText = (new net.minecraft.text.LiteralText("")).append(closestBlock.getName()); // pre 1.19
             String name = mutableText.getString();
             String text = name;
             if (Config.get(ConfigKeys.POI_BLOCKS_LOCKING_NARRATE_DISTANCE_KEY.getKey())) {
