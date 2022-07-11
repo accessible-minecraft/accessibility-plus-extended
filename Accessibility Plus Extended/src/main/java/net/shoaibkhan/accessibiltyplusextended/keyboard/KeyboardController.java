@@ -2,6 +2,8 @@ package net.shoaibkhan.accessibiltyplusextended.keyboard;
 
 import java.util.List;
 
+import me.shedaniel.cloth.api.client.events.v0.ClothClientHooks;
+import me.shedaniel.cloth.api.client.events.v0.ScreenHooks;
 import org.lwjgl.glfw.GLFW;
 
 import blue.endless.jankson.annotation.Nullable;
@@ -41,11 +43,10 @@ public class KeyboardController {
   }
 
   public KeyboardController() {
-    // post 1.19
-//    if(Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
-//      ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
-//      ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
-//    }
+    if(Config.get(ConfigKeys.INV_KEYBOARD_CONTROL_KEY.getKey())) {
+      ClothClientHooks.SCREEN_INIT_POST.register(KeyboardController::onScreenOpen);
+      ClothClientHooks.SCREEN_KEY_PRESSED.register(KeyboardController::onKeyPress);
+    }
   }
 
   public static boolean hasControlOverMouse() {
@@ -56,7 +57,7 @@ public class KeyboardController {
     }
   }
 
-  private static ActionResult onScreenOpen(MinecraftClient mc, Screen currentScreen/*, ScreenHooks screenHooks*/) {
+  private static ActionResult onScreenOpen(MinecraftClient mc, Screen currentScreen, ScreenHooks screenHooks) {
     client = mc;
     groups = null;
     screen = null;

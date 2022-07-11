@@ -15,8 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.client.util.NarratorManager;
 import net.shoaibkhan.accessibiltyplusextended.NarratorPlus;
 
-import java.util.UUID;
-
 @Mixin(NarratorManager.class)
 public class NarratorManagerInject {
 
