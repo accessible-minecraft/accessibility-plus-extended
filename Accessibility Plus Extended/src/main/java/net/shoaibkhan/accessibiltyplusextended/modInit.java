@@ -34,7 +34,7 @@ public class modInit implements ClientModInitializer {
 		this.initializeKeyBinds();
 		System.setProperty("java.awt.headless", "false");
 
-		new customCommands(); // post 1.19
+		new customCommands();
 
 
 		mainThreadMap = new HashMap<String, Integer>();

@@ -29,7 +29,7 @@ public class NarratorManagerInject {
   // pre 1.19
   /*
   @Inject(at = @At("HEAD"), method = "onChatMessage", cancellable = true)
-  public void onChatMessage(MessageType type, Text message, UUID sender, CallbackInfo ci) {
+  public void onChatMessage(MessageType type, Text message, java.util.UUID sender, CallbackInfo ci) {
     String option = NarratorPlus.chatOptions[Config.getInt(ConfigKeys.CHAT_NARRATION.getKey())];
 
     switch (option) {
